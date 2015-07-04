@@ -33,21 +33,35 @@ if [[ $- != *i* ]]; then
 	return
 fi
 
-DEFAULT=$'\e[m'
-GRAY=$'\e[1;30m'
-LIGHT_GRAY=$'\e[0;37m'
-WHITE=$'\e[1;37m'
-LIGHT_RED=$'\e[1;31m'
-LIGHT_BLUE=$'\e[1;36m'
-YELLOW=$'\e[1;33m'
-PURPLE=$'\e[1;35m'
-GREEN=$'\e[0;32m'
-LIGHT_GREEN=$'\e[1;32m'
-BLUE=$'\e[1;34m'
-CYAN=$'\e[0;36m'
+DEFAULT='\[\e[0m\]'
+WHITE='\[\e[1;37m\]'
+GRAY='\[\e[1;30m\]'
+BLUE='\[\e[1;34m\]'
+CYAN='\[\e[0;36m\]'
+GREEN='\[\e[0;32m\]'
+YELLOW='\[\e[1;33m\]'
+PURPLE='\[\e[1;35m\]'
+LIGHT_RED='\[\e[1;31m\]'
+LIGHT_BLUE='\[\e[1;36m\]'
+LIGHT_GRAY='\[\e[0;37m\]'
+LIGHT_GREEN='\[\e[1;32m\]'
 
-export PS1='\[$(__ps1_status $?)\]'
-export PS2="\[${LIGHT_BLUE}-:${DEFAULT}\]"
+case $TERM in
+	xterm*|rxvt*|Eterm) 
+		PS1=${LIGHT_RED}'$(__exit_status $?)'
+		PS1=${PS1}${LIGHT_GREEN}['$(__abbrev_pwd)']
+		PS1=${PS1}${PURPLE}$(LC_TIME=C date "+%m/%d(%a)%H:%M")
+		PS1=${PS1}${LIGHT_BLUE}": "${DEFAULT}
+		#status value
+		;;
+	screen*)
+		PS1=${PURPLE}'\u'${LIGHT_BULE}:
+		PS1=${PS1}${LIGHT_RED}'$(__exit_status $?)'${DEFAULT}
+		;;
+esac
+
+export PS1
+export PS2="${LIGHT_BLUE}-:${DEFAULT}"
 if [[ ! $PROMPT_COMMAND = *__set_title* ]] ; then
 	 export PROMPT_COMMAND="__set_title;$PROMPT_COMMAND"
 	 #function update_teminal_cwd is defined in /etc/bashrc
@@ -55,24 +69,12 @@ fi
 
 ###
 # Private functions for the prompt
-
-function __ps1_status {
-case $TERM in
-	xterm*|rxvt*|Eterm) 
-		echo -ne ${PURPLE}$(LC_TIME=C date "+%m/%d(%a)%H:%M")
-		echo -ne ${LIGHT_GREEN}[$(__abbrev_pwd)]
-		#status value
-		;;
-	screen*)
-		echo -ne ${PURPLE}${USER}
-		;;
-esac
-if [[ $1 -eq 0 ]] ; then
-	echo -ne "${LIGHT_BLUE}:"
-else
-	echo -ne "${LIGHT_RED}X"
-fi
-echo -ne " ${DEFAULT}"
+function __exit_status {
+	if [[ $1 -eq 0 ]] ; then
+		echo -n " "
+	else
+		echo -n "X"
+	fi
 }
 
 function __abbrev_pwd {
