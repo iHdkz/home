@@ -33,43 +33,43 @@ PROMPT2=$GREEN"-"$YELLOW"-"$DARK_MAGENTA'>'$DEFAULT' '
 
 #functions
 
-function chpwd() {
-if [ $(/bin/ls |wc -l) -le 50 ] ; then
-    ls
-else
-    echo "\e[32m" "many files exist"
-fi
-dirTitle
+function chpwd {
+	if [ $(/bin/ls |wc -l) -le 50 ] ; then
+		ls
+	else
+		echo "\e[32m" "many files exist"
+	fi
+	pwd_title
 }
 
 function pd {
-pd_pwd=$(builtin pwd)
-builtin pushd +1 > /dev/null
-dirTitle
-echo "\e[32m" "$pd_pwd -> $(builtin pwd)"
+	pd_pwd=$(builtin pwd)
+	builtin pushd +1 > /dev/null
+	pwd_title
+	echo "\e[32m" "$pd_pwd -> $(builtin pwd)"
 }
 
 function nd {
-nd_pwd=$(builtin pwd)
-builtin pushd -0 > /dev/null
-dirTitle
-echo "\e[32m" "$nd_pwd -> $(builtin pwd)"
+	nd_pwd=$(builtin pwd)
+	builtin pushd -0 > /dev/null
+	pwd_title
+	echo "\e[32m" "$nd_pwd -> $(builtin pwd)"
 }
 
 function title {
-if [[ $TERM == "screen" ]]; then
-    #print -nR $'\033k'$1$'\033'\\\
-    print -nR $'\033_'$1$'\033'\\\
+	if [[ $TERM == "screen" ]]; then
+		#print -nR $'\033k'$1$'\033'\\\
+		print -nR $'\033_'$1$'\033'\\\
 
-elif [[ $TERM == "xterm" || $TERM == "rxvt" ]]; then
-    print -nR $'\033]0;'$*$'\a'
-fi
+	elif [[ $TERM == "xterm" || $TERM == "rxvt" ]]; then
+		print -nR $'\033]0;'$*$'\a'
+	fi
 }
 
-function dirTitle {
-#title "$(pwd | sed "s#^$HOME#\~#;s#^\(\~*/[^/]*/\).*\(/[^/]*\)#\1...\2#")"
-title "$USERNAME@$(hostname):$(pwd | sed "s#^$HOME#\~#")"
+function pwd_title {
+	#title "$(pwd | sed "s#^$HOME#\~#;s#^\(\~*/[^/]*/\).*\(/[^/]*\)#\1...\2#")"
+	title "$USERNAME@$(hostname):$(pwd | sed "s#^$HOME#\~#")"
 }
-dirTitle
+pwd_title
 
 
