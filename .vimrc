@@ -1,9 +1,25 @@
 syntax on
+filetype plugin on
+filetype indent on
 
 set nocompatible
 set number
+"set cursorline
 set autoindent smartindent
 set autowrite backup writebackup
+set nostartofline showmatch
+set incsearch ignorecase smartcase wrapscan hlsearch
+set helpheight=10 cmdheight=1
+
+set wildmenu wildmode=list:longest,full
+set history=1000
+
+set clipboard=unnamed,unnamedplus
+
+"FileStatus function is defined in this file
+set statusline=[%n]\ %f\ %(\ %M%R%H)%)\=
+set statusline+=%{FileStatus()}\ Pos=<%l\,%c%V>\ ASCII=%b\ HEX=%B
+set laststatus=2
 set showcmd showmode
 
 if &encoding !=# 'utf-8'
@@ -47,6 +63,4 @@ function! FileStatus()
  endif
  return str
 endfunction
-set statusline=[%n]\ %f\ %(\ %M%R%H)%)\=%{FileStatus()}\ Pos=<%l\,%c%V>\ ASCII=%b\ HEX=%B
-set laststatus=2
 
