@@ -5,7 +5,7 @@ case "${OSTYPE}" in
 	linux*)
 		alias ls='ls -BF --color=auto --show-control-char'
 		;;
-	BSD*)
+	*bsd*)
 		if [[ -x gls ]] ; then
 			alias ls="gls -BF --color=auto --show-control-char"
 		else
