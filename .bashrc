@@ -8,10 +8,9 @@
 #PATH=$PATH:$HOME/.local/bin
 umask 022
 
-#CONFIGURE=${HOME}/.userconfig/
-#source /etc/bash_completion
-#source /etc/profile.d/bash-completion
-#source ${CONFIGURE}/settings
+FPATH=${HOME}/.local/functions
+source ${FPATH}/aliases.sh
+
 HISTSIZE=5000
 HISTCONTROL=ignoreboth
 HISTFILESIZE=1000
@@ -50,12 +49,12 @@ case $TERM in
 	xterm*|rxvt*|Eterm) 
 		PS1=${LIGHT_RED}'$(__exit_status $?)'
 		PS1=${PS1}${LIGHT_GREEN}['$(__abbrev_pwd)']
-		PS1=${PS1}${PURPLE}$(LC_TIME=C date "+%m/%d(%a)%H:%M")
+		PS1=${PS1}${LIGHT_RED}$(LC_TIME=C date "+%m/%d(%a)%H:%M")
 		PS1=${PS1}${LIGHT_BLUE}": "${DEFAULT}
 		#status value
 		;;
 	screen*)
-		PS1=${PURPLE}'\u'${LIGHT_BULE}:
+		PS1=${LIGHT_GREEN}'\u'${LIGHT_BLUE}:
 		PS1=${PS1}${LIGHT_RED}'$(__exit_status $?)'${DEFAULT}
 		;;
 esac
@@ -78,7 +77,7 @@ function __exit_status {
 }
 
 function __abbrev_pwd {
-pwd | sed "s#^$HOME#\~#;s#^\(\~*/[^/]*/\).*\(/[^/]*\)#\1...\2#"
+	pwd | sed "s#^$HOME#\~#;s#^\(\~*/[^/]*/\).*\(/[^/]*\)#\1...\2#"
 }
 
 function __set_title {
@@ -100,19 +99,6 @@ esac
 }
 ###
 
-case "${OSTYPE}" in
-	darwin*)
-		alias ls="ls -G"
-		alias ll="ls -lG"
-		alias la="ls -laG"
-		;;
-	linux*)
-		alias ls='ls --color'
-		alias ll='ls -l --color'
-		alias la='ls -la --color'
-		;;
-esac
-
 function cd {
 if builtin pushd "${1:-$HOME}" > /dev/null ; then
     if [ $(/bin/ls |wc -l) -le 100 ] ; then
@@ -126,12 +112,12 @@ fi
 function pd {
 	builtin pushd +1 > /dev/null
 	builtin pwd
-ls
+	ls
 }
 
 function nd {
 	builtin pushd -0 > /dev/null
 	builtin pwd
-ls
+	ls
 }
 

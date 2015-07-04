@@ -4,25 +4,28 @@ manpath=(/usr/pkg/man $MANPATH)
 fpath=(${HOME}/.local/functions $fpath)
 cdpath=( ~ )
 
-autoload -U incr.zsh	&& incr.zsh
+autoload -Uz add-zsh-hook
+autoload -Uz aliases.sh		&& aliases.sh
+autoload -U  incr.zsh		&& incr.zsh
+#autoload predict-on	&& predict-on
 
 local DEFAULT=$'%{\e[00m%}'
 local GRAY=$'%{\e[1;30m%}'
-local DARK_GRAY=$'%{\e[0;30m%}'
-local RED=$'%{\e[1;31m%}'
-local DARK_RED=$'%{\e[0;31m%}'
-local GREEN=$'%{\e[1;32m%}'
-local DARK_GREEN=$'%{\e[0;32m%}'
-local YELLOW=$'%{\e[1;33m%}'
-local DARK_YELLOW=$'%{\e[0;33m%}'
-local BLUE=$'%{\e[1;34m%}'
-local DARK_BLUE=$'%{\e[0;34m%}'
-local MAGENTA=$'%{\e[1;35m%}'
-local DARK_MAGENTA=$'%{\e[0;35m%}'
-local CYAN=$'%{\e[1;36m%}'
-local DARK_CYAN=$'%{\e[0;36m%}'
 local WHITE=$'%{\e[1;37m%}'
+local RED=$'%{\e[1;31m%}'
+local GREEN=$'%{\e[1;32m%}'
+local YELLOW=$'%{\e[1;33m%}'
+local BLUE=$'%{\e[1;34m%}'
+local CYAN=$'%{\e[1;36m%}'
+local MAGENTA=$'%{\e[1;35m%}'
+local DARK_GRAY=$'%{\e[0;30m%}'
 local DARK_WHITE=$'%{\e[0;37m%}'
+local DARK_RED=$'%{\e[0;31m%}'
+local DARK_GREEN=$'%{\e[0;32m%}'
+local DARK_YELLOW=$'%{\e[0;33m%}'
+local DARK_BLUE=$'%{\e[0;34m%}'
+local DARK_CYAN=$'%{\e[0;36m%}'
+local DARK_MAGENTA=$'%{\e[0;35m%}'
 
 case ${SSH_CLIENT:-"DontUseSSH"} in
 "DontUseSSH" ) PROMPT=$CYAN'%(!.#.>)%(!.#.>) '$DEFAULT ;;
@@ -33,27 +36,26 @@ PROMPT2=$GREEN"-"$YELLOW"-"$DARK_MAGENTA'>'$DEFAULT' '
 
 #functions
 
-function chpwd {
-	if [ $(/bin/ls |wc -l) -le 50 ] ; then
+add-zsh-hook chpwd __with_ls
+add-zsh-hook chpwd pwd_title
+function __with_ls {
+	if [[ $(/bin/ls |wc -l) -le 50 ]] ; then
 		ls
 	else
-		echo "\e[32m" "many files exist"
+		echo $GREEN "many files exist"
 	fi
-	pwd_title
 }
 
 function pd {
-	pd_pwd=$(builtin pwd)
+	local pd_pwd=$(builtin pwd)
 	builtin pushd +1 > /dev/null
-	pwd_title
-	echo "\e[32m" "$pd_pwd -> $(builtin pwd)"
+	echo -e $GREEN "$pd_pwd -> $(builtin pwd)"
 }
 
 function nd {
-	nd_pwd=$(builtin pwd)
+	local nd_pwd=$(builtin pwd)
 	builtin pushd -0 > /dev/null
-	pwd_title
-	echo "\e[32m" "$nd_pwd -> $(builtin pwd)"
+	echo -e $GREEN "$nd_pwd -> $(builtin pwd)"
 }
 
 function title {
@@ -71,5 +73,4 @@ function pwd_title {
 	title "$USERNAME@$(hostname):$(pwd | sed "s#^$HOME#\~#")"
 }
 pwd_title
-
 
