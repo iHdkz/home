@@ -32,35 +32,38 @@ if [[ $- != *i* ]]; then
 	return
 fi
 
-DEFAULT='\[\e[0m\]'
-WHITE='\[\e[1;37m\]'
-GRAY='\[\e[1;30m\]'
-BLUE='\[\e[1;34m\]'
-CYAN='\[\e[0;36m\]'
-GREEN='\[\e[0;32m\]'
-YELLOW='\[\e[1;33m\]'
-PURPLE='\[\e[1;35m\]'
-LIGHT_RED='\[\e[1;31m\]'
-LIGHT_BLUE='\[\e[1;36m\]'
-LIGHT_GRAY='\[\e[0;37m\]'
-LIGHT_GREEN='\[\e[1;32m\]'
+DEFAULT='\e[0m'
+WHITE='\e[1;37m'
+GRAY='\e[1;30m'
+BLUE='\e[1;34m'
+CYAN='\e[0;36m'
+GREEN='\e[0;32m'
+YELLOW='\e[1;33m'
+PURPLE='\e[1;35m'
+LIGHT_RED='\e[1;31m'
+LIGHT_BLUE='\e[1;36m'
+LIGHT_GRAY='\e[0;37m'
+LIGHT_GREEN='\e[1;32m'
 
+function _paren {
+	echo -n '\['$1'\]'
+}
 case $TERM in
 	xterm*|rxvt*|Eterm) 
-		PS1=${LIGHT_RED}'$(__exit_status $?)'
-		PS1=${PS1}${LIGHT_GREEN}['$(__abbrev_pwd)']
-		PS1=${PS1}${LIGHT_RED}$(LC_TIME=C date "+%m/%d(%a)%H:%M")
-		PS1=${PS1}${LIGHT_BLUE}": "${DEFAULT}
-		#status value
-		;;
+	 PS1=$(_paren $LIGHT_RED)'$(__exit_status $?)'
+	 PS1=$PS1$(_paren $LIGHT_GREEN)['$(__abbrev_pwd)']
+#	 PS1=$PS1${LIGHT_RED}$(LC_TIME=C date "+%m/%d(%a)%H:%M")
+	 PS1=$PS1$(_paren $LIGHT_BLUE)": "$(_paren $DEFAULT)
+	 #status value
+	;;
 	screen*)
-		PS1=${LIGHT_GREEN}'\u'${LIGHT_BLUE}:
-		PS1=${PS1}${LIGHT_RED}'$(__exit_status $?)'${DEFAULT}
-		;;
+	 PS1=$(_paren $LIGHT_GREEN)'\u'$(_paren $LIGHT_BLUE):
+	 PS1=$PS1$(_paren $LIGHT_RED)'$(__exit_status $?)'$(_paren $DEFAULT)
+	;;
 esac
 
 export PS1
-export PS2="${LIGHT_BLUE}-:${DEFAULT}"
+export PS2=$(_paren LIGHT_BLUE)"-:"$(_paren $DEFAULT)
 if [[ ! $PROMPT_COMMAND = *__set_title* ]] ; then
 	 export PROMPT_COMMAND="__set_title;$PROMPT_COMMAND"
 	 #function update_teminal_cwd is defined in /etc/bashrc
@@ -101,7 +104,7 @@ esac
 
 function cd {
 if builtin pushd "${1:-$HOME}" > /dev/null ; then
-    if [ $(/bin/ls |wc -l) -le 100 ] ; then
+    if [[ $(/bin/ls |wc -l) -le 100 ]] ; then
 		ls
     else
 		echo ${LIGHT_RED} "many files exist" ${DEFAULT}
