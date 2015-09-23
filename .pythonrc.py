@@ -17,3 +17,8 @@ except IOError:
     pass
 atexit.register(readline.write_history_file, histfile)
 del os, histfile, readline, rlcompleter, atexit
+
+# gnuplot.py
+from Gnuplot import Gnuplot
+from numpy import *
+from scipy import *
