@@ -1,19 +1,19 @@
 umask 022
 
-fpath=(${HOME}/.local/functions $fpath)
-autoload -Uz conf.sh	&& conf.sh
-autoload -Uz func.zsh	&& func.zsh
-
-manpath=(/usr/pkg/man $MANPATH)
-#cdpath=( ~ )
-
 HISTFILE=${HOME}/.zhistory
 HISTSIZE=10000
 SAVEHIST=10000
 
+#cdpath=( ~ )
+manpath=(/usr/pkg/man $MANPATH)
+
+fpath=(${HOME}/.local/functions $fpath)
+autoload -Uz conf.sh	&& conf.sh
+autoload -Uz func.zsh	&& func.zsh
+autoload -U  incr.zsh	&& incr.zsh
+
 autoload -Uz add-zsh-hook
 autoload -Uz compinit 	&& compinit
-autoload -U  incr.zsh	&& incr.zsh
 
 #zstyle ':completion:*:default' list-colors ${(s.:.)LS_COLORS}
 
@@ -42,7 +42,6 @@ RPROMPT='%{''%(?.%F{white}.%F{red})''%}''X'
 RPROMPT=$RPROMPT'%{'$DEFAULT'%}''['${__SSH:-""}'%{'$DARK_MAGENTA'%}'"%(3~,%-1~/.../%1~,%~)"'%{'$DEFAULT'%}'']'
 
 #functions
-
 add-zsh-hook preexec	__default_color
 add-zsh-hook chpwd	__and_ls
 add-zsh-hook chpwd	__pwd_title

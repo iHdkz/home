@@ -15,10 +15,29 @@
 #    fi
 #fi
 
-export PYTHONPATH=/opt/local/Library/Frameworks/Python.framework/Versions/2.7/lib/python2.7/site-packages
-export PYTHONSTARTUP=~/.pythonrc.py
-
 # set PATH so it includes user's private bin if it exists
 if [ -d ~/bin ] ; then
     PATH=~/bin:"${PATH}"
 fi
+# set PATH so it includes additional installed bin if it exists
+if [ -d /Applications/Racket\ v6.1.1/bin ] ; then
+	PATH=/Applications/Racket\ v6.1.1/bin:${PATH}
+fi
+if [ -d /opt/local/lib/fpc/bin ] ; then
+	PATH=/opt/local/lib/fpc/bin:${PATH}
+fi
+if [ -d $HOME/Library/Haskell/bin ] ; then
+	PATH=$HOME/Library/Haskell/bin:${PATH}
+fi
+
+# Finished adapting your PATH environment variable for use with MacPorts.
+PATH=/opt/local/bin:/opt/local/sbin:${PATH}
+#### EXPORTING "PATH" ####
+export PATH
+##########################
+
+export PYTHONPATH=/opt/local/Library/Frameworks/Python.framework/Versions/2.7/lib/python2.7/site-packages
+export PYTHONSTARTUP=~/.pythonrc.py
+
+# [ -z ${TMUX} ]
+#[ -x $(which tmux) ] && [ $SHLVL = 1 ] && exec tmux

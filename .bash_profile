@@ -9,16 +9,9 @@ SHELL=$(which bash)
 
 [[ -f ~/.profile ]] && . ~/.profile
 
-if [[ -z ${TMUX} ]] ; then
-export PATH=/opt/local/bin:/opt/local/sbin:$PATH
-# Finished adapting your PATH environment variable for use with MacPorts.
-	 if [[ -x $(which tmux) ]] && [[ $SHLVL = 1 ]]; then
-		 tmux
-	 fi
-fi
 
 if [[ -f /opt/local/etc/profile.d/bash_completion.sh ]]; then
  . /opt/local/etc/profile.d/bash_completion.sh
 fi
 
-#[[ -f ~/.bashrc ]] && . ~/.bashrc
+[[ -f ~/.bashrc ]] && . ~/.bashrc

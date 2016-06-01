@@ -11,7 +11,6 @@ set nostartofline showmatch
 set incsearch ignorecase smartcase wrapscan hlsearch
 set helpheight=10 cmdheight=1
 
-
 set wildmenu wildmode=list:longest,full
 set history=1000
 
@@ -62,5 +61,17 @@ hi Statement	cterm=none ctermfg=DarkCyan	term=none
 hi Type		cterm=none ctermfg=DarkCyan	term=none
 hi Search		   ctermfg=Magenta	term=none
 hi Todo			   ctermfg=Magenta	term=none
+
+" vim -b : edit binary using xxd-format!
+augroup Binary
+	au!
+	au BufReadPre   *.bin let &bin=1
+	au BufReadPost  *.bin if &bin | silent %!xxd
+	au BufReadPost  *.bin set ft=xxd | endif
+	au BufWritePre  *.bin if &bin | silent %!xxd -r
+	au BufWritePre  *.bin endif
+	au BufWritePost *.bin if &bin | %!xxd
+	au BufWritePost *.bin set nomod | endif
+augroup END
 
 

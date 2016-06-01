@@ -9,7 +9,7 @@
 umask 022
 
 FPATH=${HOME}/.local/functions
-source ${FPATH}/aliases.sh
+source ${FPATH}/conf.sh
 
 HISTSIZE=5000
 HISTCONTROL=ignoreboth
@@ -45,25 +45,22 @@ LIGHT_BLUE='\e[1;36m'
 LIGHT_GRAY='\e[0;37m'
 LIGHT_GREEN='\e[1;32m'
 
-function _paren {
-	echo -n '\['$1'\]'
-}
 case $TERM in
 	xterm*|rxvt*|Eterm) 
-	 PS1=$(_paren $LIGHT_RED)'$(__exit_status $?)'
-	 PS1=$PS1$(_paren $LIGHT_GREEN)['$(__abbrev_pwd)']
+	 PS1='\['$LIGHT_RED'\]''$(__exit_status $?)'
+	 PS1=$PS1'\['$LIGHT_GREEN'\]'['$(__abbrev_pwd)']
 #	 PS1=$PS1${LIGHT_RED}$(LC_TIME=C date "+%m/%d(%a)%H:%M")
-	 PS1=$PS1$(_paren $LIGHT_BLUE)": "$(_paren $DEFAULT)
+	 PS1=$PS1'\['$LIGHT_BLUE'\]'": "'\['$DEFAULT'\]'
 	 #status value
 	;;
 	screen*)
-	 PS1=$(_paren $LIGHT_GREEN)'\u'$(_paren $LIGHT_BLUE):
-	 PS1=$PS1$(_paren $LIGHT_RED)'$(__exit_status $?)'$(_paren $DEFAULT)
+	 PS1='\['$LIGHT_GREEN'\]''\u''\['$LIGHT_BLUE'\]':
+	 PS1=$PS1'\['$LIGHT_RED'\]''$(__exit_status $?)''\['$DEFAULT'\]'
 	;;
 esac
 
 export PS1
-export PS2=$(_paren LIGHT_BLUE)"-:"$(_paren $DEFAULT)
+export PS2='\['$LIGHT_BLUE'\]'-:'\['$DEFAULT'\]'
 if [[ ! $PROMPT_COMMAND = *__set_title* ]] ; then
 	 export PROMPT_COMMAND="__set_title;$PROMPT_COMMAND"
 	 #function update_teminal_cwd is defined in /etc/bashrc

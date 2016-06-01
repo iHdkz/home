@@ -30,7 +30,6 @@ unalias grep 2> /dev/null ; alias grep="grep --color=auto"
 unalias lftp 2> /dev/null ; alias lftp="lftp -e 'set bmk:save-passwords on && set cmd:prompt \[\e[34m\]\w\[\e[32m\]\ \>\>\[\e[0m\]\ '"
 alias ...='cd ../..'
 alias ....='cd ../../..'
-alias .....='cd ../../../..'
-alias ......='cd ../../../../..'
-alias .......='cd ../../../../../..'
+
+alias sakura='ssh studynote@www1690.sakura.ne.jp'
 
