@@ -1,0 +1,10 @@
+#include <stdio.h>
+#include "opbit.h"
+#include "lagresp.h"
+
+double complex z = cexp( CMPLX(0.0, M_PI / 2 * I));
+int main(void)
+{
+	printf("%f\n",creal(z));
+	return 0;
+}
