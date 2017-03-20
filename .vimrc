@@ -63,15 +63,12 @@ hi Search		   ctermfg=Magenta	term=none
 hi Todo			   ctermfg=Magenta	term=none
 
 " vim -b : edit binary using xxd-format!
-augroup Binary
-	au!
-	au BufReadPre   *.bin let &bin=1
-	au BufReadPost  *.bin if &bin | silent %!xxd
-	au BufReadPost  *.bin set ft=xxd | endif
-	au BufWritePre  *.bin if &bin | silent %!xxd -r
-	au BufWritePre  *.bin endif
-	au BufWritePost *.bin if &bin | %!xxd
-	au BufWritePost *.bin set nomod | endif
+augroup BinaryXXD
+	autocmd!
+	autocmd BufReadPre   *.bin let &binary=1
+	autocmd BufReadPost  * if &binary | silent %!xxd -g 1
+	autocmd BufReadPost  * set ft=xxd | endif
+	autocmd BufWritePre  * if &binary | %!xxd -r | endif
+	autocmd BufWritePost * if &binary | silent %!xxd -g 1
+	autocmd BufWritePost * set nomod | endif
 augroup END
-
-
