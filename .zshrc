@@ -11,6 +11,7 @@ fpath=(${HOME}/.local/functions $fpath)
 autoload -Uz conf.sh	&& conf.sh
 autoload -Uz func.zsh	&& func.zsh
 autoload -U  incr.zsh	&& incr.zsh
+autoload -Uz iab.zsh	&& iab.zsh
 
 autoload -Uz add-zsh-hook
 autoload -Uz compinit 	&& compinit
