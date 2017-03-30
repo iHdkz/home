@@ -33,3 +33,6 @@ alias ....='cd ../../..'
 
 alias sakura='ssh studynote@www1690.sakura.ne.jp'
 
+if [[ "$ZSH_NAME" == "zsh" ]]; then
+	alias -s gp="gnuplot"
+fi
