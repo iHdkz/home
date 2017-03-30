@@ -10,12 +10,12 @@
 
 #define bit_sizeof(b) sizeof(b)*8
 	
-#define align3B(n) ((n) & 0xFFFFFF)
-#define align2B(n) ((n) & 0xFFFF)
-#define align1B(n) ((n) & 0xFF)
-#define align6b(n) ((n) & 0x3F)
-#define align4b(n) ((n) & 0xF)
-#define align2b(n) ((n) & 0x3)
+#define trim3B(n) ((n) & 0xFFFFFF)
+#define trim2B(n) ((n) & 0xFFFF)
+#define trim1B(n) ((n) & 0xFF)
+#define trim6b(n) ((n) & 0x3F)
+#define trim4b(n) ((n) & 0xF)
+#define trim2b(n) ((n) & 0x3)
 
 static inline unsigned int toBin4(unsigned int n) {
 	return    (n & 0x1)
@@ -24,27 +24,30 @@ static inline unsigned int toBin4(unsigned int n) {
 		+ ((n >> 3) & 0x1) * 1000;
 }
 
-static inline unsigned int to1Byte(unsigned int n) {
-	return    toBin4(align4b(n >> 4)) * 10000
-		+ toBin4(align4b(n));
+static inline
+unsigned int to1Byte(unsigned int n) {
+	return    toBin4((n >> 4) & 0xF) * 10000
+		+ toBin4(n & 0xF);
 }
 
-static inline unsigned int pickNbit(unsigned int b, int n) {
+static inline
+unsigned int pickNbit(unsigned int b, int n) {
 	check_bit_order(n < bit_sizeof(b));
 	return (b >> (n-1)) & 0x1;
 }
 
-static inline void setNbit(unsigned int* b,  int n) {
+static inline
+unsigned int setNbit(unsigned int* b,  int n) {
 	check_bit_order(n < bit_sizeof(b));
 	(*b) |= 0x1 << n;
-	return;
+	return *b;
 }
 
-static inline void clrNbit(unsigned int* b, int n) {
+static inline
+unsigned int clrNbit(unsigned int* b, int n) {
 	check_bit_order(n < bit_sizeof(b));
 	(*b) &= ~(0x1 << n);
-	return;
+	return *b;
 }
 
-extern void putBin(unsigned int /* input data */, int /* total bit size */, int /* bit unit size */);
-extern void putB64(char, FILE*);
+extern void putBin(unsigned int /*input*/, int /* total bit size */, int /* bit unit size */);
