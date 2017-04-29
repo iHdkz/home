@@ -1,9 +1,11 @@
-syntax on
+".vimrc file.
 filetype plugin on
 filetype indent on
 
-set nocompatible
-set number
+syntax on
+colorscheme mycolor "located at $HOME/.vim/after/colors/mycolor.vim
+
+set nocompatible number
 "set cursorline
 set autoindent smartindent
 set autowrite backup writebackup
@@ -17,16 +19,12 @@ set history=1000
 set clipboard=unnamed,unnamedplus
 
 "FileStatus function is defined in this file
-set statusline=[%n]\ %f\ %(\ %M%R%H!%)
-set statusline+=[%{&fileformat}][%{&fileencoding}]
+set statusline=[%n]\ %f\ %(\ %M%R%H!%)[%{&fileformat}][%{&fileencoding}]
 set statusline+=<r=%l\,c=%c%V>\ ASCII=%b\ HEX=%B
 set laststatus=2
 set showcmd showmode
 
-if &encoding !=# 'utf-8'
-	set encoding=japan
-	set fileencoding=japan
-endif
+if &encoding !=# 'utf-8' | set encoding=japan fileencoding=japan | endif
 
 nnoremap j gj
 nnoremap k gk
@@ -46,17 +44,6 @@ nnoremap g* g*zz
 nnoremap g# g#zz
 
 nnoremap <ESC><ESC> :nohlsearch<ESC>
-
-highlight Normal	ctermfg=Black
-highlight PreProc	ctermfg=DarkMagenta
-highlight Constant	ctermfg=DarkMagenta
-highlight Special	ctermfg=DarkMagenta
-highlight Comment	ctermfg=DarkGreen
-highlight Identifier	ctermfg=DarkCyan
-highlight Statement	ctermfg=DarkCyan
-highlight Type		ctermfg=DarkCyan
-highlight Search	ctermfg=Magenta
-highlight Todo		ctermfg=Magenta
 
 " vim -b : edit binary using xxd-format!
 augroup BinaryXXD
