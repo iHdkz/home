@@ -18,14 +18,10 @@ set clipboard=unnamed,unnamedplus
 
 "FileStatus function is defined in this file
 set statusline=[%n]\ %f\ %(\ %M%R%H!%)
-set statusline+=%{FileStatus()}
-set statusline+=Pos=<%l\,%c%V>\ ASCII=%b\ HEX=%B
+set statusline+=[%{&fileformat}][%{&fileencoding}]
+set statusline+=<r=%l\,c=%c%V>\ ASCII=%b\ HEX=%B
 set laststatus=2
 set showcmd showmode
-
-function FileStatus()
- return '[' . &fileformat . ']' . '[' . &fileencoding . ']' . ' '
-endfunction
 
 if &encoding !=# 'utf-8'
 	set encoding=japan
@@ -35,32 +31,32 @@ endif
 nnoremap j gj
 nnoremap k gk
 nnoremap <Down> g<Down>
-nnoremap <Up> g<Up>
+nnoremap <Up>   g<Up>
 
 vnoremap j gj
 vnoremap k gk
 vnoremap <Down> g<Down>
-vnoremap <Up> g<Up>
+vnoremap <Up>   g<Up>
 
-nnoremap n nzz
-nnoremap N Nzz
-nnoremap * *zz
-nnoremap # #zz
+nnoremap n  nzz
+nnoremap N  Nzz
+nnoremap *  *zz
+nnoremap #  #zz
 nnoremap g* g*zz
 nnoremap g# g#zz
 
 nnoremap <ESC><ESC> :nohlsearch<ESC>
 
-hi Normal	cterm=none ctermfg=Black	term=none
-hi PreProc	cterm=none ctermfg=DarkMagenta	term=none
-hi Constant	cterm=none ctermfg=DarkMagenta	term=none
-hi Special	cterm=none ctermfg=DarkMagenta	term=none
-hi Comment	cterm=none ctermfg=DarkGreen	term=none
-hi Identifier	cterm=none ctermfg=DarkCyan	term=none
-hi Statement	cterm=none ctermfg=DarkCyan	term=none
-hi Type		cterm=none ctermfg=DarkCyan	term=none
-hi Search		   ctermfg=Magenta	term=none
-hi Todo			   ctermfg=Magenta	term=none
+highlight Normal	ctermfg=Black
+highlight PreProc	ctermfg=DarkMagenta
+highlight Constant	ctermfg=DarkMagenta
+highlight Special	ctermfg=DarkMagenta
+highlight Comment	ctermfg=DarkGreen
+highlight Identifier	ctermfg=DarkCyan
+highlight Statement	ctermfg=DarkCyan
+highlight Type		ctermfg=DarkCyan
+highlight Search	ctermfg=Magenta
+highlight Todo		ctermfg=Magenta
 
 " vim -b : edit binary using xxd-format!
 augroup BinaryXXD
@@ -70,5 +66,6 @@ augroup BinaryXXD
 	autocmd BufReadPost  * set ft=xxd | endif
 	autocmd BufWritePre  * if &binary | %!xxd -r | endif
 	autocmd BufWritePost * if &binary | silent %!xxd -g 1
-	autocmd BufWritePost * set nomod | endif
+	autocmd BufWritePost * set nomod  | endif
 augroup END
+
