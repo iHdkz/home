@@ -1,0 +1,2 @@
+#!/usr/bin/env bash
+open /opt/local/share/doc/gnuplot/gnuplot.pdf

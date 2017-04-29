@@ -14,37 +14,61 @@
 # set encoding locale
 #set xrange [-1:1]
 #set yrange [-1:1]
-#set size ratio 1
+#set size ratio 1;	print "set size ratio 1";
+set grid;	print "set grid";
+
+###
+### Macro definitions
+###
+set macros;	print "set macros";
+pts = "with points";
+dts = "with dots";
+vts = "with vectors";
+
+ls1 = "linestyle 1";
+ls2 = "linestyle 2";
+ls3 = "linestyle 3";
 
 ###
 ### Default line colors and repeat cycle
 ###
-# set linetype 1 lc rgb "dark-violet" lw 1
-# set linetype 2 lc rgb "#009e73" lw 1
-# set linetype 3 lc rgb "#56b4e9" lw 1
-# set linetype 4 lc rgb "#e69f00" lw 1
-# set linetype 5 lc rgb "#f0e442" lw 1
-# set linetype 6 lc rgb "#0072b2" lw 1
-# set linetype 7 lc rgb "#e51e10" lw 1
-# set linetype 8 lc rgb "black"   lw 1
-# set linetype cycle 8
+rgb(r,g,b) = sprintf("#%02x%02x%02x",r%256,g%256,b%256);
+hsv(h,s,v) = sprintf("#%06x",hsv2rgb(h,s,v))
 
+set linetype 1 linewidth 1 linecolor rgb "red-orange"
+set linetype 2 linewidth 1 linecolor rgb "dark-violet"
+#set linetype 3 linewidth 1 linecolor rgb "#56b4e9"
+#set linetype 4 linewidth 1 linecolor rgb "#e69f00"
+#set linetype 5 linewidth 1 linecolor rgb "#f0e442"
+#set linetype 6 linewidth 1 linecolor rgb "#0072b2"
+#set linetype 7 linewidth 1 linecolor rgb "#e51e10"
+#set linetype 8 linewidth 1 linecolor rgb "black"
+set linetype cycle 8
+
+#set style line 1 linecolor rgb 'black' pt 5   # square
+#set style line 2 linecolor rgb 'black' pt 7   # circle
+#set style line 3 linecolor rgb 'black' pt 9   # triangle
 ###
 ### Initialize the default loadpath for shared gnuplot scripts and data.
 ### Please confirm that this path is correct before uncommented the line below.
 ###
-# set loadpath "/usr/local/share/gnuplot/4.7/demo"
+set loadpath "/opt/local/share/doc/gnuplot/demo" "~/.gnuplot.d/";
+mode_anim  = "modes/conf_animation.gp";
+mode_inter = "modes/conf_interactive.gp";
+mode_disc  = "modes/conf_discrete.gp";
 
 ###
 ### Some commonly used functions that are not built in
 ###
-# sinc(x) = sin(x)/x
-# rgb(r,g,b) = sprintf("#%06x",256.*256.*255.*r+256.*255.*g+255.*b)
-# hsv(h,s,v) = sprintf("#%06x",hsv2rgb(h,s,v))
-cointoss(x) = (rand(0)<0.5) ? 1 : 0 # 'x' is a dummy variable.
+_=" ";
+__FUNCS="sinc"._."cointoss"._."ndist"._."P"._."C";
+do for[n=1:words(__FUNCS)] { call "functions/".word(__FUNCS,n).".gp"; }
 
 ###
 ### Other preferences
 ###
 # set clip two
+
+# the imaginary unit in complex number.
+i = {0.0,1.0};
 
