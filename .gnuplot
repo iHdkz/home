@@ -6,7 +6,10 @@
 ### Any commands placed here will affect all users.
 ### To customize gnuplot's initial state for an individual user,
 ### place commands in a private file ~/.gnuplot instead.
+if(exist("__INITIALIZATION__") != 0) exit;
+__INITIALIZATION__ = "done";
 
+reset;
 ###
 ### Language initialization
 ###
@@ -15,7 +18,9 @@
 #set xrange [-1:1]
 #set yrange [-1:1]
 #set size ratio 1;	print "set size ratio 1";
-set grid;	print "set grid";
+set size square;	print "set size square";
+set grid;		print "set grid";
+set key right bottom;	print "set key right bottom";
 
 ###
 ### Macro definitions
@@ -60,9 +65,12 @@ mode_disc  = "modes/conf_discrete.gp";
 ###
 ### Some commonly used functions that are not built in
 ###
-_=" ";
-__FUNCS="sinc"._."cointoss"._."ndist"._."P"._."C";
-do for[n=1:words(__FUNCS)] { call "functions/".word(__FUNCS,n).".gp"; }
+_=" "
+__FUNCNAMES="sinc"._."P"._."C"._."cointoss"._."ndist";
+do for [n=1:words(__FUNCNAMES)] {
+	call "functions/".word(__FUNCNAMES,n).".gp";
+	eval sprintf("print 'import function '.__FUNC_%s", word(__FUNCNAMES,n));
+	}
 
 ###
 ### Other preferences
@@ -72,3 +80,4 @@ do for[n=1:words(__FUNCS)] { call "functions/".word(__FUNCS,n).".gp"; }
 # the imaginary unit in complex number.
 i = {0.0,1.0};
 
+#
