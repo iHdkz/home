@@ -1,9 +1,27 @@
 #/bin/bash 
 
+function __c {
+case "$1" in
+	default)	echo -ne '\[\e[0m\]'    ;;
+	white)		echo -ne '\[\e[1;37m\]' ;;
+	gray)		echo -ne '\[\e[1;30m\]' ;; 
+	blue)		echo -ne '\[\e[1;34m\]' ;;
+	cyan)		echo -ne '\[\e[0;36m\]' ;;
+	green)		echo -ne '\[\e[0;32m\]' ;;
+	yellow)		echo -ne '\[\e[1;33m\]' ;;
+	purple)		echo -ne '\[\e[1;35m\]' ;;
+	light_red)	echo -ne '\[\e[1;31m\]' ;;
+	light_blue)	echo -ne '\[\e[1;36m\]' ;;
+	light_gray)	echo -ne '\[\e[0;37m\]' ;;
+	light_green)	echo -ne '\[\e[1;32m\]' ;;
+esac
+return 0
+}
+
 function cd {
 	if builtin pushd "${1:-$HOME}" > /dev/null ; then
 	 [[ $(\ls |wc -l) -le 100 ]] && ls && return
- 	 echo ${LIGHT_RED} "many files exist" ${DEFAULT}
+	 echo $(__c "light_red")"many files exist"$(__c "default")
 	fi
 }
 
@@ -36,15 +54,15 @@ case $TERM in
 		echo -ne "\033]0;" #BEGIN set title
 		echo -ne "[$(__abbrev_pwd)]"
 		echo -ne "\007"    #END set title
-	;;
+		;;
 	screen*)
 		echo -ne "\033k"   #BEGIN set window title
 		echo -ne [$(__abbrev_pwd)]
 		echo -ne '\033\\'  #END set window title
-#		echo -ne "\033P\033]0;" #BEGIN set
-#		echo -ne "ok"
-#		echo -ne '\007\033\\'   #END set
-	;;
+		#		echo -ne "\033P\033]0;" #BEGIN set
+		#		echo -ne "ok"
+		#		echo -ne '\007\033\\'   #END set
+		;;
 esac
 }
 ###
