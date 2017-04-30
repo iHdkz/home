@@ -1,38 +1,27 @@
-case "${OSTYPE}" in
-	darwin*)
-		alias ls='ls -G'
-		;;
-	linux*)
-		alias ls='ls -BF --color=auto --show-control-char'
-		;;
-	*bsd*)
-		if [[ -x gls ]] ; then
-			alias ls="gls -BF --color=auto --show-control-char"
-		else
-			alias ls="/bin/ls -Fw"
-		fi
-		;;
-esac
+[[ $OSTYPE == darwin* ]] && __LS_OPT='-G'
+[[ $OSTYPE == linux*  ]] && __LS_OPT='-BF --color=auto --show-control-char'
+[[ $OSTYPE == *bsd*   ]] && __LS_OPT='-Fw'
+alias ls="\ls "$__LS_OPT
+[[ -x gls ]] && alias ls="gls -BF --color=auto --show-control-char"
 
 alias l.="ls .*"
 alias la="ls -a"
 alias ll="ls -hl"
 alias lla="ls -ahl"
-alias less=${PAGER:=less}
+alias less=${PAGER:=w3m}
 alias man="w3mman"
-alias mv='/bin/mv -iv'
-alias cp='/bin/cp -iv'
-alias rm='/bin/rm -iv'
-alias info='/usr/bin/info --vi-keys'
-alias bc='/usr/bin/bc -l'
+alias mv='\mv -iv'
+alias cp='\cp -iv'
+alias rm='\rm -iv'
+alias info='\info --vi-keys'
+alias bc='\bc -l'
 #alias ln='/usr/bin/ln -i'
-unalias grep 2> /dev/null ; alias grep="grep --color=auto"
-unalias lftp 2> /dev/null ; alias lftp="lftp -e 'set bmk:save-passwords on && set cmd:prompt \[\e[34m\]\w\[\e[32m\]\ \>\>\[\e[0m\]\ '"
+alias grep="\grep --color=auto --line-number -H"
+alias lftp="\lftp -e 'set bmk:save-passwords on && set cmd:prompt \[\e[34m\]\w\[\e[32m\]\ \>\>\[\e[0m\]\ '"
 alias ...='cd ../..'
 alias ....='cd ../../..'
 
-alias sakura='ssh studynote@www1690.sakura.ne.jp'
-
-if [[ "$ZSH_NAME" == "zsh" ]]; then
+if [[ $ZSH_NAME == zsh ]]; then
 	alias -s gp="gnuplot"
+	alias -s gnu="gnuplot"
 fi
