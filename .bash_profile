@@ -7,11 +7,9 @@ echo "reading .bash_profile ..."
 # Set up Japanese environment
 SHELL=$(which bash)
 
-[[ -f ~/.profile ]] && . ~/.profile
+[[ -f $HOME/.profile ]] && . $HOME/.profile
 
+__BASHCOMPLETION=/opt/local/etc/profile.d/bash_completion.sh
+[[ -f ${__BASHCOMPLETION} ]] && . ${__BASHCOMPLETION}
 
-if [[ -f /opt/local/etc/profile.d/bash_completion.sh ]]; then
- . /opt/local/etc/profile.d/bash_completion.sh
-fi
-
-[[ -f ~/.bashrc ]] && . ~/.bashrc
+[[ -f $HOME/.bashrc ]] && . $HOME/.bashrc
