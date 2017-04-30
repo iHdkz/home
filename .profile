@@ -5,7 +5,7 @@
 # the files are located in the bash-doc package.
 
 # the default umask is set in /etc/profile
-#umask 022
+umask 022
 
 # if running bash
 #if [ -n "$BASH_VERSION" ]; then
@@ -16,22 +16,20 @@
 #fi
 
 # set PATH so it includes user's private bin if it exists
-if [ -d ~/bin ] ; then
-    PATH=~/bin:"${PATH}"
-fi
+[ -d ${HOME}/bin ] && PATH=${HOME}/bin:${PATH}
 # set PATH so it includes additional installed bin if it exists
-if [ -d /Applications/Racket\ v6.1.1/bin ] ; then
-	PATH=/Applications/Racket\ v6.1.1/bin:${PATH}
-fi
-if [ -d /opt/local/lib/fpc/bin ] ; then
-	PATH=/opt/local/lib/fpc/bin:${PATH}
-fi
-if [ -d $HOME/Library/Haskell/bin ] ; then
-	PATH=$HOME/Library/Haskell/bin:${PATH}
-fi
+__RACKETPATH__="/Applications/Racket v6.1.1/bin" 
+[ -d ${__RACKETPATH__} ]  && PATH=${__RACKETPATH__}:${PATH}
+
+__FORTRANPATH__=/opt/local/lib/fpc/bin
+[ -d ${__FORTRANPATH__} ] && PATH=${__FORTRANPATH__}:${PATH}
+
+__HASKELLPATH__=${HOME}/Library/Haskell/bin
+[ -d ${__HASKELLPATH__} ] && PATH=${__HASKELLPATH__}:${PATH}
 
 # Finished adapting your PATH environment variable for use with MacPorts.
-PATH=/opt/local/bin:/opt/local/sbin:${PATH}
+__MACPATH__=/opt/local
+[ -d ${__MACPATH__} ] && PATH=${__MACPATH__}/bin:${__MACPATH__}/sbin:${PATH}
 #### EXPORTING "PATH" ####
 export PATH
 ##########################

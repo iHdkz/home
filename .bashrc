@@ -8,8 +8,13 @@
 #PATH=$PATH:$HOME/.local/bin
 umask 022
 
+# outputting anything in those cases.
+# Shell is non-interactive.  Be done now
+[[ $- != *i* ]] && return
+
 FPATH=${HOME}/.local/functions
 source ${FPATH}/conf.sh
+source ${FPATH}/bash_funcs.sh
 
 HISTSIZE=5000
 HISTCONTROL=ignoreboth
@@ -25,12 +30,6 @@ shopt -s checkwinsize
 shopt -s checkhash
 shopt -s no_empty_cmd_completion
 shopt -s extglob
-
-# outputting anything in those cases.
-if [[ $- != *i* ]]; then
-	# Shell is non-interactive.  Be done now
-	return
-fi
 
 DEFAULT='\e[0m'
 WHITE='\e[1;37m'
@@ -61,10 +60,8 @@ esac
 
 export PS1
 export PS2='\['$LIGHT_BLUE'\]'-:'\['$DEFAULT'\]'
-if [[ ! $PROMPT_COMMAND = *__set_title* ]] ; then
-	 export PROMPT_COMMAND="__set_title;$PROMPT_COMMAND"
-	 #function update_teminal_cwd is defined in /etc/bashrc
-fi
+export PROMPT_COMMAND="__set_title;"
+#function update_teminal_cwd is defined in /etc/bashrc
 
 ###
 # Private functions for the prompt
@@ -98,26 +95,3 @@ case $TERM in
 esac
 }
 ###
-
-function cd {
-if builtin pushd "${1:-$HOME}" > /dev/null ; then
-    if [[ $(/bin/ls |wc -l) -le 100 ]] ; then
-		ls
-    else
-		echo ${LIGHT_RED} "many files exist" ${DEFAULT}
-    fi
-fi
-}
-
-function pd {
-	builtin pushd +1 > /dev/null
-	builtin pwd
-	ls
-}
-
-function nd {
-	builtin pushd -0 > /dev/null
-	builtin pwd
-	ls
-}
-
