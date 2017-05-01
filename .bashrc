@@ -12,17 +12,13 @@ umask 022
 # Shell is non-interactive.  Be done now
 [[ $- != *i* ]] && return
 
-HISTSIZE=5000
-HISTCONTROL=ignoreboth
-HISTFILESIZE=1000
-shopt -u hostcomplete cdspell cdable_vars sourcepath
-shopt -s histappend histreedit histverify
+shopt -u cdspell cdable_vars sourcepath extglob
 shopt -s checkwinsize checkhash
-shopt -s no_empty_cmd_completion extglob
+shopt -s hostcomplete no_empty_cmd_completion
 
-FPATH=${HOME}/.local/functions
-source ${FPATH}/conf.sh
-source ${FPATH}/bash_funcs.sh
+fpath=${HOME}/.local/functions
+source ${fpath}/conf.sh
+source ${fpath}/bash_funcs.sh
 
 PS1=$(__c "light_red")'$(__exit_status $?)'
 PS1=$PS1$(__c "light_green")['$(__abbrev_pwd)']
