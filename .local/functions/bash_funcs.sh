@@ -2,18 +2,18 @@
 
 function __c {
 case "$1" in
-	default)	echo -ne '\x1B[0m'    ;;
-	white)		echo -ne '\x1B[1;37m' ;;
-	gray)		echo -ne '\x1B[1;30m' ;; 
-	blue)		echo -ne '\x1B[1;34m' ;;
-	cyan)		echo -ne '\x1B[0;36m' ;;
-	green)		echo -ne '\x1B[0;32m' ;;
-	yellow)		echo -ne '\x1B[1;33m' ;;
-	purple)		echo -ne '\x1B[1;35m' ;;
-	light_red)	echo -ne '\x1B[1;31m' ;;
-	light_blue)	echo -ne '\x1B[1;36m' ;;
-	light_gray)	echo -ne '\x1B[0;37m' ;;
-	light_green)	echo -ne '\x1B[1;32m' ;;
+	default)	echo -ne '\033[0m'    ;;
+	white)		echo -ne '\033[1;37m' ;;
+	gray)		echo -ne '\033[1;30m' ;; 
+	blue)		echo -ne '\033[1;34m' ;;
+	cyan)		echo -ne '\033[0;36m' ;;
+	green)		echo -ne '\033[0;32m' ;;
+	yellow)		echo -ne '\033[1;33m' ;;
+	purple)		echo -ne '\033[1;35m' ;;
+	light_red)	echo -ne '\033[1;31m' ;;
+	light_blue)	echo -ne '\033[1;36m' ;;
+	light_gray)	echo -ne '\033[0;37m' ;;
+	light_green)	echo -ne '\033[1;32m' ;;
 esac
 return 0
 }
@@ -21,7 +21,7 @@ return 0
 function cd {
 	if builtin pushd "${1:-$HOME}" > /dev/null ; then
 	 [[ $(\ls |wc -l) -le 100 ]] && ls && return
-	 echo -e $(__c "light_red")"many files exist"$(__c "default")
+	 echo -e $(__c "light_blue")"many files exist"$(__c "default")
 	fi
 }
 
