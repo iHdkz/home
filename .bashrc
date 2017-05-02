@@ -20,11 +20,10 @@ fpath=${HOME}/.local/functions
 source ${fpath}/conf.sh
 source ${fpath}/bash_funcs.sh
 
-PS1=$(__c "light_red")'$(__exit_status $?)'
-PS1=$PS1$(__c "light_green")['$(__abbrev_pwd)']
-PS1=$PS1$(__c "light_blue")": "$(__c "default")
+PS1='$(__exit_status $?)'$(__c "light_green" 1)['$(__abbrev_pwd)']
+PS1=$PS1$(__c "light_blue" 1)": "$(__c "default" 1)
 export PS1
-export PS2=$(__c "light_blue")-:$(__c "default")
+export PS2=$(__c "light_blue" 1)-:$(__c "default" 1)
 export PROMPT_COMMAND="__set_title;"
 #function update_teminal_cwd is defined in /etc/bashrc
 
