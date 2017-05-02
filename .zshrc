@@ -21,8 +21,7 @@ RPROMPT="%{%(?.%F{white}.%F{red})%}X%f["${SSH_CLIENT:+"%F{blue}remote:%f"}
 RPROMPT=$RPROMPT"%F{magenta}%(3~,%-1~/.../%1~,%~)%f]"
 
 #function hookings.
-autoload -Uz colors	&& colors
-autoload -Uz func.zsh	&& func.zsh
+autoload -Uz colors ; autoload -Uz func.zsh	&& func.zsh
 autoload -Uz add-zsh-hook
 add-zsh-hook preexec	__default_color
 add-zsh-hook chpwd	__and_ls

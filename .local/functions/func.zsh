@@ -1,30 +1,29 @@
 #/usr/bin/env zsh
 
 #autoload -Uz colors	&& colors
+colors
 function __default_color {
 	print -nR ${reset_color}
 }
 
 function __and_ls {
-	if [[ $(/bin/ls |wc -l) -le 50 ]] ; then
-		ls ${__LS_OPT:-"-G"}
+	if [[ $(\ls |\wc -l) -le 50 ]] ; then
+		\ls ${__LS_OPT:-"-G"}
 	else
 		echo "${fg[green]}many files exist"
 	fi
 }
 
 function title {
-	if [[ $TERM == "screen" ]]; then
-		#print -nR $'\033k'$1$'\033'\\\
-		print -nR $'\033_'$1$'\033'\\
-	elif [[ $TERM == "xterm" || $TERM == "rxvt" ]]; then
-		print -nR $'\033]0;'$*$'\a'
-	fi
+	local __format="\033]0;%s\007"
+	[[ $TERM == "screen" ]] && __format="\033k%s\033\\"
+	printf $__format $1
 }
 
 function __pwd_title {
-	#title "$(pwd | sed "s#^$HOME#\~#;s#^\(\~*/[^/]*/\).*\(/[^/]*\)#\1...\2#")"
-	title "$USERNAME@$(hostname):$(pwd | sed "s#^$HOME#\~#")"
+	#title "$USERNAME@$(hostname):$(\pwd | \sed "s#^$HOME#\~#")"
+	[[ $TERM == "screen" ]] && return
+	title "$(pwd | sed "s#^$HOME#\~#;s#^\(\~*/[^/]*/\).*\(/[^/]*\)#\1...\2#")"
 }
 
 function google {
