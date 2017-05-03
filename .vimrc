@@ -25,10 +25,15 @@ set showcmd showmode
 
 if &encoding !=# 'utf-8' | set encoding=japan fileencoding=japan | endif
 
-noremap j	gj
-noremap k	gk
-noremap <Down> g<Down>
-noremap <Up>   g<Up>
+nnoremap j	gj
+nnoremap k	gk
+nnoremap <Down> g<Down>
+nnoremap <Up>   g<Up>
+
+vnoremap j	gj
+vnoremap k	gk
+vnoremap <Down> g<Down>
+vnoremap <Up>   g<Up>
 
 "for searching
 nnoremap n  nzz
