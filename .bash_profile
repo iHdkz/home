@@ -12,4 +12,5 @@ SHELL=$(which bash)
 __BASHCOMPLETION=/opt/local/etc/profile.d/bash_completion.sh
 [[ -f ${__BASHCOMPLETION} ]] && . ${__BASHCOMPLETION}
 
-[[ -f $HOME/.bashrc ]] && . $HOME/.bashrc
+#[[ -f $HOME/.bashrc ]] && . $HOME/.bashrc
+

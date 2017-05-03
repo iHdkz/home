@@ -8,12 +8,9 @@
 umask 022
 
 # if running bash
-#if [ -n "$BASH_VERSION" ]; then
-    # include .bashrc if it exists
-#    if [ -f ~/.bashrc ]; then
-#	. ~/.bashrc
-#    fi
-#fi
+[ -n "$BASH_VERSION" ] && [ -f "$HOME/.bashrc" ] && . $HOME/.bashrc
+# include .bashrc if it exists
+
 
 # set PATH so it includes user's private bin if it exists
 [ -d ${HOME}/bin ] && PATH=${HOME}/bin:${PATH}
@@ -34,8 +31,12 @@ __MACPATH__=/opt/local
 export PATH
 ##########################
 
-export PYTHONPATH=/opt/local/Library/Frameworks/Python.framework/Versions/2.7/lib/python2.7/site-packages
-export PYTHONSTARTUP=~/.pythonrc.py
+PYTHONPATH=${__MACPATH__}/Library/Frameworks/Python.framework/Versions/2.7/lib/python2.7/site-packages
+PYTHONPATH=$HOME/.python.d:$PYTHONPATH
+export PYTHONPATH
+
+PYTHONSTARTUP=$HOME/.pythonrc.py
+export PYTHONSTARTUP
 
 # [ -z ${TMUX} ]
 #[ -x $(which tmux) ] && [ $SHLVL = 1 ] && exec tmux
