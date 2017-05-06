@@ -30,6 +30,7 @@ __MACPATH__=/opt/local
 #### EXPORTING "PATH" ####
 export PATH
 ##########################
+[ -z "$INFOPATH" ] && export INFOPATH=${__MACPATH__}/share/info
 
 PYTHONPATH=${__MACPATH__}/Library/Frameworks/Python.framework/Versions/2.7/lib/python2.7/site-packages
 PYTHONPATH=$HOME/.python.d:$PYTHONPATH
