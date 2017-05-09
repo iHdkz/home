@@ -24,6 +24,7 @@ function limit-completion
 		zle -M ""
 	elif ((compstate[list_lines] > 6)); then
 		compstate[list]=""
+		echo -n "\e[32m" # tput AF 2
 		zle -M "too many matches."
 	fi
 }
@@ -104,7 +105,6 @@ function expand-or-complete-prefix-incr
 		if zle expand-or-complete-prefix; then
 		    #show-prediction
 		fi
-
 	fi
 }
 
