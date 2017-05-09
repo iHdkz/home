@@ -3,6 +3,9 @@ umask 022
 HISTFILE=${HOME}/.zhistory
 HISTSIZE=10000
 SAVEHIST=10000
+setopt hist_ignore_dups extended_history
+setopt auto_pushd notify no_beep
+setopt auto_menu magic_equal_subst
 
 #cdpath=( ~ )
 manpath=(/usr/pkg/man $MANPATH)
@@ -10,10 +13,9 @@ manpath=(/usr/pkg/man $MANPATH)
 fpath=(${HOME}/.local/functions $fpath)
 autoload -Uz conf.sh	&& conf.sh
 autoload -Uz iab.zsh	&& iab.zsh
-autoload -Uz compinit #	&& compinit
 autoload -U  incr.zsh	&& incr.zsh
 
-#zstyle ':completion:*:default' list-colors ${(s.:.)LS_COLORS}
+autoload -Uz compinit #	&& compinit -u
 
 PROMPT="%F{cyan}%(!.#.>)%(!.#.>)%f "
 PROMPT2="%F{cyan}--%f "
