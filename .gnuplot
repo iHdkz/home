@@ -6,6 +6,7 @@
 ### Any commands placed here will affect all users.
 ### To customize gnuplot's initial state for an individual user,
 ### place commands in a private file ~/.gnuplot instead.
+
 if(exist("__INITIALIZATION__") != 0) exit;
 __INITIALIZATION__ = "done";
 
@@ -26,6 +27,8 @@ set key right bottom;	print "set key right bottom";
 ### Macro definitions
 ###
 set macros;	print "set macros";
+urng = "[-1:1]"
+
 pts = "with points";
 dts = "with dots";
 vts = "with vectors";
@@ -65,12 +68,13 @@ mode_disc  = "modes/conf_discrete.gp";
 ###
 ### Some commonly used functions that are not built in
 ###
-_=" "
-__FUNCNAMES="sinc"._."P"._."C"._."cointoss"._."ndist";
-do for [n=1:words(__FUNCNAMES)] {
-	call "functions/".word(__FUNCNAMES,n).".gp";
-	eval sprintf("print 'import function '.__FUNC_%s", word(__FUNCNAMES,n));
-	}
+
+func_ndist="ndist(x,mu,sigma)=1/(sqrt(2*pi) * sigma) * exp(-(x - mu)**2 / (2*sigma**2));"
+func_sinc="sinc(x) = sin(pi * x)/(pi * x);"
+func_cointoss="cointoss(dummy) = (rand(0)<0.5) ? 1 : 0;"
+func_C="C(n,r)=(r<=0 ? 1.0 : 1.0*(n-r+1)/r*C(n,r-1));"
+func_P="P(n,r)=(r<=1 ? n : n*P(n-1,r-1));"
+func_bindist="bindist(n,r,p)=C(n,r)*(p**r)*((1.0-p)**(n-r));"
 
 ###
 ### Other preferences
