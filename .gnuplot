@@ -61,10 +61,10 @@ set linetype cycle 8
 ### Please confirm that this path is correct before uncommented the line below.
 ###
 set loadpath "/opt/local/share/doc/gnuplot/demo" "~/.gnuplot.d/";
-mode_anim  = "modes/conf_animation.gp";
-mode_inter = "modes/conf_interactive.gp";
-mode_disc  = "modes/conf_discrete.gp";
 
+mode_inter = "set autoscale;" .  "unset xrange;" .  "unset yrange;"
+mode_disc  = "__N = 50;" . "set sample __N;" . "set xrange [0: __N - 1];"
+mode_anim  = "set noautoscale;"
 ###
 ### Some commonly used functions that are not built in
 ###
