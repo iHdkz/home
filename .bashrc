@@ -12,18 +12,17 @@ umask 022
 # Shell is non-interactive.  Be done now
 [[ $- != *i* ]] && return
 
-shopt -u cdspell cdable_vars sourcepath extglob
-shopt -s checkwinsize checkhash
+shopt -u cdspell cdable_vars sourcepath # unset options
+shopt -s checkwinsize checkhash extglob # set options
 shopt -s hostcomplete no_empty_cmd_completion
 
 fpath=${HOME}/.local/functions
 source ${fpath}/conf.sh
 source ${fpath}/bash_funcs.sh
 
-PS1='$(__exit_status $?)'$(__c "light_green" 1)['$(__abbrev_pwd)']
-PS1=$PS1$(__c "light_blue" 1)": "$(__c "default" 1)
-export PS1
-export PS2=$(__c "light_blue" 1)-:$(__c "default" 1)
+PS1=$(clrs 9)'$([[ $? != 0 ]] && echo -ne "X")'$(clrs 10)['$(__abbrev_pwd)']
+export PS1=$PS1$(clrs 44)": "$(clrs -1)
+export PS2=$(clrs 111)-:$(clrs -1)
 export PROMPT_COMMAND="__set_title;"
 #function update_teminal_cwd is defined in /etc/bashrc
 
