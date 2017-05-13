@@ -67,7 +67,7 @@ __inline__ static complex double CMPLXVAL(struct value v)
     return 0;	/* precluded by sanity check above */
 }
 
-#define DEFINE_GPFUNC_INT(FNAME_INT,NUMERIC_FUNC) \
+#define EXPORT_GPFUNC_INT(FNAME_INT,NUMERIC_FUNC) \
 DLLEXPORT struct value FNAME_INT(int nargs, struct value *arg, void *p) \
 { \
   struct value result; result.type = INTGR; \
@@ -77,7 +77,7 @@ DLLEXPORT struct value FNAME_INT(int nargs, struct value *arg, void *p) \
   return result; \
 }
 
-#define DEFINE_GPFUNC_C(FNAME_C, NUMERIC_FUNC) \
+#define EXPORT_GPFUNC_C(FNAME_C, NUMERIC_FUNC) \
 DLLEXPORT struct value FNAME_C(int nargs, struct value *arg, void *p) \
 { \
   struct value result; result.type = CMPLX; \
@@ -88,7 +88,7 @@ DLLEXPORT struct value FNAME_C(int nargs, struct value *arg, void *p) \
   return result; \
 }
 
-#define DEFINE_GPFUNC_CC(FNAME_CC, NUMERIC_FUNC) \
+#define EXPORT_GPFUNC_CC(FNAME_CC, NUMERIC_FUNC) \
 DLLEXPORT struct value FNAME_CC(int nargs, struct value *arg, void *p) \
 { \
   struct value result; result.type = CMPLX; \
@@ -101,7 +101,7 @@ DLLEXPORT struct value FNAME_CC(int nargs, struct value *arg, void *p) \
   return result; \
 }
 
-#define DEFINE_GPFUNC_CCC(FNAME_CCC, NUMERIC_FUNC) \
+#define EXPORT_GPFUNC_CCC(FNAME_CCC, NUMERIC_FUNC) \
 DLLEXPORT struct value FNAME_CCC(int nargs, struct value *arg, void *p) \
 { \
   struct value result; result.type = CMPLX; \

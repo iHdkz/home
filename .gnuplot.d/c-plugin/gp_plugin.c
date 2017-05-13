@@ -14,4 +14,4 @@
 #include "gp_plugin.h"
 
 complex double id(complex double c) { return c; }
-DEFINE_GPFUNC_C(s, id);
+EXPORT_GPFUNC_C(s, id);
