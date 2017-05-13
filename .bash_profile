@@ -1,6 +1,5 @@
 # /etc/skel/.bash_profile:
 # $Header: /virtual/aloe/cvsroot/dot.files/.bash_profile,v 1.1 2007/09/04 05:39:53 aloe Exp $
-echo "reading .bash_profile ..."
 # This file is sourced by bash for login shells.  The following line
 # runs your .bashrc and is recommended by the bash info pages.
 
@@ -12,5 +11,6 @@ SHELL=$(which bash)
 __BASHCOMPLETION=/opt/local/etc/profile.d/bash_completion.sh
 [[ -f ${__BASHCOMPLETION} ]] && . ${__BASHCOMPLETION}
 
-#[[ -f $HOME/.bashrc ]] && . $HOME/.bashrc
+echo ".bash_profile loded"
 
+[[ -z ${TMUX} ]] && [[ $SHLVL == 1 ]] && [[ -x $(which tmux) ]] && exec tmux

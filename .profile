@@ -16,13 +16,13 @@ umask 022
 [ -d ${HOME}/bin ] && PATH=${HOME}/bin:${PATH}
 # set PATH so it includes additional installed bin if it exists
 __RACKETPATH__="/Applications/Racket v6.1.1/bin" 
-[ -d ${__RACKETPATH__} ]  && PATH=${__RACKETPATH__}:${PATH}
+[ -d "${__RACKETPATH__}" ]  && PATH=${__RACKETPATH__}:${PATH}
 
 __FORTRANPATH__=/opt/local/lib/fpc/bin
-[ -d ${__FORTRANPATH__} ] && PATH=${__FORTRANPATH__}:${PATH}
+[ -d "${__FORTRANPATH__}" ] && PATH=${__FORTRANPATH__}:${PATH}
 
 __HASKELLPATH__=${HOME}/Library/Haskell/bin
-[ -d ${__HASKELLPATH__} ] && PATH=${__HASKELLPATH__}:${PATH}
+[ -d "${__HASKELLPATH__}" ] && PATH=${__HASKELLPATH__}:${PATH}
 
 # Finished adapting your PATH environment variable for use with MacPorts.
 __MACPATH__=/opt/local
@@ -39,5 +39,3 @@ export PYTHONPATH
 PYTHONSTARTUP=$HOME/.pythonrc.py
 export PYTHONSTARTUP
 
-# [ -z ${TMUX} ]
-#[ -x $(which tmux) ] && [ $SHLVL = 1 ] && exec tmux
