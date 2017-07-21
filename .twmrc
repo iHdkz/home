@@ -3,38 +3,115 @@
 NoGrabServer
 RestartPreviousState
 DecorateTransients
+#RandomPlacement
+StartIconified
 
-TitleFont	"-adobe-helvetica-bold-r-normal--*-120-*-*-*-*-*-*"
-ResizeFont	"-adobe-helvetica-bold-r-normal--*-120-*-*-*-*-*-*"
-MenuFont	"-adobe-helvetica-bold-r-normal--*-120-*-*-*-*-*-*"
-IconFont	"-adobe-helvetica-bold-r-normal--*-100-*-*-*-*-*-*"
-IconManagerFont "-adobe-helvetica-bold-r-normal--*-100-*-*-*"
+TitleFont	"mplus_j12r"
+ResizeFont	"mplus_j12r"
+MenuFont	"mplus_j12r"
+IconFont	"mplus_j10r"
+IconManagerFont	"mplus_j10r"
+#TitleFont	"-adobe-helvetica-bold-r-normal--*-120-*-*-*-*-*-*"
+#ResizeFont	"-adobe-helvetica-bold-r-normal--*-120-*-*-*-*-*-*"
+#MenuFont	"-adobe-helvetica-bold-r-normal--*-120-*-*-*-*-*-*"
+#IconFont	"-adobe-helvetica-bold-r-normal--*-100-*-*-*-*-*-*"
+#IconManagerFont "-adobe-helvetica-bold-r-normal--*-100-*-*-*"
 
+# Settings effecting window borders etc -----------------------------------
+#
+BorderWidth  2 		 # Number of pixels for border around entire window
+FramePadding 1		 # Number of pixels between titlebar buttons & frame
+TitleButtonBorderWidth 0 # Number of pixels for button border
+TitlePadding 15		 # Number of pixels around title buttons
+ButtonIndent 1 		 # Larger seems to squash buttons together
+MenuBorderWidth 2 	 # Number of pixels for menu border
+NoMenuShadows 		 # No shadow behind the menu
+
+# Title bar buttons
+
+IconDirectory    "~/.local/icons" # Directory for non default icons
+LeftTitleButton  "resize.xbm"=f.resize
+RightTitleButton "min.xbm"=f.iconify
+RightTitleButton "O.xbm"=f.fullzoom
+RightTitleButton "X.xbm"=f.delete
+
+# -------------------------------------------------------------------------
 #ClientBorderWidth
+ShowIconManager
+IconManagerHighlight "#000000"
+SqueezeTitle
+
+NoTitle
+{
+	"TWM Icon Manager"
+}
+
+NoTitleHighlit
+{
+	"TWM Icon Manager"
+}
 
 Color
 {
-    BorderColor		"slategrey"
-    DefaultBackground	"rgb:2/a/9"
-    DefaultForeground	"gray85"
-    TitleBackground	"rgb:2/a/9"
-    TitleForeground	"gray85"
-    MenuBackground	"rgb:2/a/9"
-    MenuForeground	"gray85"
-    MenuBorderColor	"slategrey"
-    MenuTitleBackground "gray70"
-    MenuTitleForeground "rgb:2/a/9"
-    IconBackground	"rgb:2/a/9"
-    IconForeground	"gray85"
-    IconBorderColor	"gray85"
-    IconManagerBackground "rgb:2/a/9"
-    IconManagerForeground "gray85"
+	BorderColor	   	"#4E4E4E"
+	DefaultBackground	"#D6D6D6"
+	DefaultForeground	"#000000"
+
+	TitleBackground    	"#4E4E4E"
+	TitleForeground    	"White"
+
+	MenuTitleBackground	"#4E4E4E"
+	MenuTitleForeground	"White"
+
+	MenuBackground     	"#D6D6D6"
+	MenuForeground     	"#4E4E4E"
+
+	MenuShadowColor    	"#303639"
+	MenuBorderColor    	"#000000"
+
+	IconBackground		"#4E4E4E"
+	IconForeground		"White"
+	IconBorderColor		"#000000"
+
+	IconManagerBackground	"#4E4E4E"
+	IconManagerForeground	"White"
+}
+
+#
+# And a menus with the usual things
+#
+menu "TwmMenu"
+{
+	"Twm"		f.title
+	"Operations"	f.menu "TwmOperations"
+	""		f.nop
+	"Xterm"		f.exec "exec xterm &"
+	""		f.nop
+	"Show Iconmgr"	f.showiconmgr
+	"Hide Iconmgr"	f.hideiconmgr
+	""		f.nop
+	"Restart"	f.restart
+	"Exit"		f.quit
+}
+menu "TwmOperations"
+{
+	"Iconify"	f.iconify
+	"Resize"	f.resize
+	"Move"		f.move
+	"Raise"		f.raise
+	"Lower"		f.lower
+	""		f.nop
+	"Focus"		f.focus
+	"Unfocus"	f.unfocus
+	""		f.nop
+	"Kill"		f.destroy
+	"Delete"	f.delete
 }
 
 #
 # Define some useful functions for motion-based actions.
 #
-MoveDelta 3
+#MoveDelta 3
 Function "move-or-lower"   { f.move f.deltastop f.lower }
 Function "move-or-raise"   { f.move f.deltastop f.raise }
 Function "move-or-iconify" { f.move f.deltastop f.iconify }
@@ -42,43 +119,32 @@ Function "move-or-iconify" { f.move f.deltastop f.iconify }
 #
 # Set some useful bindings.  Sort of uwm-ish, sort of simple-button-ish
 #
-Button1 =   : root : f.menu "defops"
 
 Button1 = m : window|icon : f.function "move-or-lower"
 Button2 = m : window|icon : f.iconify
 Button3 = m : window|icon : f.function "move-or-raise"
 
 Button1 =   : title : f.function "move-or-raise"
-Button2 =   : title : f.raiselower
+#Button2 =   : title : f.raiselower
+Button3 =   : title | frame : f.menu "TwmMenu"
 
-Button1 =   : icon  : f.function "move-or-iconify"
-Button2 =   : icon  : f.iconify
+Button1 =   : icon 	: f.function "move-or-iconify"
+Button1 =   : iconmgr	: f.iconify
 
-Button1 =   : iconmgr : f.iconify
-Button2 =   : iconmgr : f.iconify
-
+# Mouse settings and Window beahviours ------------------------------------
 #
-# And a menus with the usual things
-#
-menu "defops"
-{
-"Twm"		f.title
-"Iconify"	f.iconify
-"Resize"	f.resize
-"Move"		f.move
-"Raise"		f.raise
-"Lower"		f.lower
-""		f.nop
-"Focus"		f.focus
-"Unfocus"	f.unfocus
-"Show Iconmgr"	f.showiconmgr
-"Hide Iconmgr"	f.hideiconmgr
-""		f.nop
-"Xterm"		f.exec "exec xterm &"
-""		f.nop
-"Kill"		f.destroy
-"Delete"	f.delete
-""		f.nop
-"Restart"	f.restart
-"Exit"		f.quit
-}
+# Button1=left, Button2=middle, Button3=right, m=alt, c=ctrl, s=shift
+
+# The root window actions i.e. clicking on the backgound
+Button1 = : root : f.menu "TwmMenu"
+Button2 = : root : f.menu "TwmOperations"
+Button3 = : root : f.menu "TwmWindows"
+
+# Left click the window title to lower / raise + gain focus or move
+Movedelta 1
+
+Button3 = : title | frame : f.menu "TwmOperations"
+#Button2 = : title|frame : f.menu "WindowMenu"
+
+DefaultFunction f.nop
+# -------------------------------------------------------------------------
