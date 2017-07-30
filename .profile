@@ -7,13 +7,18 @@
 # the default umask is set in /etc/profile
 umask 022
 
-# if running bash
-[ -n "$BASH_VERSION" ] && [ -f "$HOME/.bashrc" ] && . $HOME/.bashrc
-# include .bashrc if it exists
+ENV=$HOME/.shrc
+export ENV
 
+# if running bash and including .bashrc if it exists
+[ -n "$BASH_VERSION" ] && [ -f "$HOME/.bashrc" ] && . $HOME/.bashrc
+
+
+PATH=/sbin:/usr/sbin:/usr/X11R7/bin:${PATH}
 
 # set PATH so it includes user's private bin if it exists
-[ -d ${HOME}/bin ] && PATH=${HOME}/bin:${PATH}
+# [ -d ${HOME}/bin ] && PATH=${HOME}/bin:${PATH}
+
 # set PATH so it includes additional installed bin if it exists
 __RACKETPATH__="/Applications/Racket v6.1.1/bin" 
 [ -d "${__RACKETPATH__}" ]  && PATH=${__RACKETPATH__}:${PATH}
@@ -27,9 +32,10 @@ __HASKELLPATH__=${HOME}/Library/Haskell/bin
 # Finished adapting your PATH environment variable for use with MacPorts.
 __MACPATH__=/opt/local
 [ -d ${__MACPATH__} ] && PATH=${__MACPATH__}/bin:${__MACPATH__}/sbin:${PATH}
-#### EXPORTING "PATH" ####
+
 export PATH
-##########################
+
+
 [ -z "$INFOPATH" ] && export INFOPATH=${__MACPATH__}/share/info
 
 PYTHONPATH=${__MACPATH__}/Library/Frameworks/Python.framework/Versions/2.7/lib/python2.7/site-packages

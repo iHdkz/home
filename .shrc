@@ -1,0 +1,16 @@
+#       $NetBSD: shrc,v 1.7 2010/12/27 03:38:52 christos Exp $
+#
+# System-wide .shrc file for sh(1).
+
+ll() { ls -l ${1+"$@"}; }
+
+[ "${-}" = "${-#*i}" ] && return
+HOST=${HOST:=$(hostname)}
+PS1="${HOST%%.*}$PS1"
+
+set -o emacs
+# This file is used by shells that might not support
+# set -o tabcomplete, so check before trying to use it.
+( set -o tabcomplete 2>/dev/null ) && set -o tabcomplete
+
+. $HOME/.local/functions/conf.sh

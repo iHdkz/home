@@ -4,6 +4,7 @@ NoDefaults
 NoGrabServer
 RestartPreviousState
 DecorateTransients
+<<<<<<< HEAD
 RandomPlacement
 StartIconified
 
@@ -22,18 +23,48 @@ TitlePadding		12 # Number of pixels around title buttons
 ButtonIndent		 1 # Larger seems to squash buttons together
 MenuBorderWidth		 2 # Number of pixels for menu border
 NoMenuShadows 		   # No shadow behind the menu
+=======
+#RandomPlacement
+StartIconified
+
+TitleFont	"mplus_j12r"
+ResizeFont	"mplus_j12r"
+MenuFont	"mplus_j12r"
+IconFont	"mplus_j10r"
+IconManagerFont	"mplus_j10r"
+#TitleFont	"-adobe-helvetica-bold-r-normal--*-120-*-*-*-*-*-*"
+#ResizeFont	"-adobe-helvetica-bold-r-normal--*-120-*-*-*-*-*-*"
+#MenuFont	"-adobe-helvetica-bold-r-normal--*-120-*-*-*-*-*-*"
+#IconFont	"-adobe-helvetica-bold-r-normal--*-100-*-*-*-*-*-*"
+#IconManagerFont "-adobe-helvetica-bold-r-normal--*-100-*-*-*"
+
+# Settings effecting window borders etc -----------------------------------
+#
+BorderWidth  2 		 # Number of pixels for border around entire window
+FramePadding 1		 # Number of pixels between titlebar buttons & frame
+TitleButtonBorderWidth 0 # Number of pixels for button border
+TitlePadding 15		 # Number of pixels around title buttons
+ButtonIndent 1 		 # Larger seems to squash buttons together
+MenuBorderWidth 2 	 # Number of pixels for menu border
+NoMenuShadows 		 # No shadow behind the menu
+>>>>>>> 5976c91e9415138c3831d6411b991c8b120414b3
 
 # Title bar buttons
 
 IconDirectory    "~/.local/icons" # Directory for non default icons
 LeftTitleButton  "resize.xbm"=f.resize
 RightTitleButton "min.xbm"=f.iconify
+<<<<<<< HEAD
 RightTitleButton "max.xbm"=f.fullzoom
+=======
+RightTitleButton "O.xbm"=f.fullzoom
+>>>>>>> 5976c91e9415138c3831d6411b991c8b120414b3
 RightTitleButton "X.xbm"=f.delete
 
 # -------------------------------------------------------------------------
 #ClientBorderWidth
 ShowIconManager
+<<<<<<< HEAD
 IconManagerHighlight	"#000000"
 IconManagerGeometry	"=1024x20-0+0" 8
 SqueezeTitle
@@ -44,6 +75,20 @@ AutoRaise {
 	"TWM Icon Manager"
 	"xterm"
 	}
+=======
+IconManagerHighlight "#000000"
+SqueezeTitle
+
+NoTitle
+{
+	"TWM Icon Manager"
+}
+
+NoTitleHighlit
+{
+	"TWM Icon Manager"
+}
+>>>>>>> 5976c91e9415138c3831d6411b991c8b120414b3
 
 Color
 {
@@ -68,7 +113,11 @@ Color
 	IconBorderColor		"#000000"
 
 	IconManagerBackground	"#4E4E4E"
+<<<<<<< HEAD
 	IconManagerForeground	"gray"
+=======
+	IconManagerForeground	"White"
+>>>>>>> 5976c91e9415138c3831d6411b991c8b120414b3
 }
 
 #
@@ -87,7 +136,10 @@ menu "TwmMenu"
 	"Restart"	f.restart
 	"Exit"		f.quit
 }
+<<<<<<< HEAD
 
+=======
+>>>>>>> 5976c91e9415138c3831d6411b991c8b120414b3
 menu "TwmOperations"
 {
 	"Iconify"	f.iconify
@@ -101,6 +153,7 @@ menu "TwmOperations"
 	""		f.nop
 	"Kill"		f.destroy
 	"Delete"	f.delete
+<<<<<<< HEAD
 }
 
 menu "IconmgrOperations"
@@ -122,6 +175,8 @@ menu "IconmgrOperations"
 	"lower"		f.lower
 	""		f.nop
 	"Kill Window"	f.destroy
+=======
+>>>>>>> 5976c91e9415138c3831d6411b991c8b120414b3
 }
 
 #
@@ -141,6 +196,7 @@ Button1 = m : window|icon : f.function "move-or-lower"
 Button3 = m : window|icon : f.function "move-or-raise"
 
 Button1 =   : title : f.function "move-or-raise"
+<<<<<<< HEAD
 Button2 =   : title | icon  : f.identify
 Button3 =   : title | frame : f.menu "TwmMenu"
 
@@ -149,14 +205,24 @@ Button1 =   : icon 	: f.function "move-or-iconify"
 Button1 =   : iconmgr	: f.raiselower
 Button2 =   : iconmgr   : f.iconify
 Button3 =   : iconmgr	: f.menu "IconmgrOperations"
+=======
+#Button2 =   : title : f.raiselower
+Button3 =   : title | frame : f.menu "TwmMenu"
+
+Button1 =   : icon 	: f.function "move-or-iconify"
+Button1 =   : iconmgr	: f.iconify
+>>>>>>> 5976c91e9415138c3831d6411b991c8b120414b3
 
 # Mouse settings and Window beahviours ------------------------------------
 #
 # Button1=left, Button2=middle, Button3=right, m=alt, c=ctrl, s=shift
 
+<<<<<<< HEAD
 Function "toggle-windows" { f.forwiconmgr f.lower }
 "Tab" = m : all : f.function "toggle-windows"
 "Escape" = m : all : f.delete
+=======
+>>>>>>> 5976c91e9415138c3831d6411b991c8b120414b3
 # The root window actions i.e. clicking on the backgound
 Button1 = : root : f.menu "TwmMenu"
 Button2 = : root : f.menu "TwmOperations"
@@ -165,3 +231,11 @@ Button3 = : root : f.menu "TwmWindows"
 # Left click the window title to lower / raise + gain focus or move
 Movedelta 1
 
+<<<<<<< HEAD
+=======
+Button3 = : title | frame : f.menu "TwmOperations"
+#Button2 = : title|frame : f.menu "WindowMenu"
+
+DefaultFunction f.nop
+# -------------------------------------------------------------------------
+>>>>>>> 5976c91e9415138c3831d6411b991c8b120414b3
