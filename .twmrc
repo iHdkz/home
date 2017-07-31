@@ -38,7 +38,7 @@ IconManagerHighlight	"#000000"
 IconManagerGeometry	"=1024x20-0+0" 8
 SqueezeTitle
 
-NoTitle		{ "TWM Icon Manager" }
+NoTitle		{ "TWM Icon Manager" "xclock" }
 NoTitleHighlit	{ "TWM Icon Manager" }
 AutoRaise {
 	"TWM Icon Manager"
@@ -79,7 +79,7 @@ menu "TwmMenu"
 	"Twm"		f.title
 	"Operations"	f.menu "TwmOperations"
 	""		f.nop
-	"Xterm"		f.exec "exec xterm &"
+	"Xterm"		f.exec "exec xterm -fs 16 -fa "M+ 2m" -fd "M+ 2m" &"
 	""		f.nop
 	"Show Iconmgr"	f.showiconmgr
 	"Hide Iconmgr"	f.hideiconmgr
