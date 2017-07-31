@@ -7,41 +7,49 @@
 # the default umask is set in /etc/profile
 umask 022
 
-ENV=$HOME/.shrc
-export ENV
+PATH=/sbin:${PATH}
+PATH=/usr/sbin:${PATH}
+PATH=/usr/X11R7/bin:${PATH}
+export PATH
 
-# if running bash and including .bashrc if it exists
-[ -n "$BASH_VERSION" ] && [ -f "$HOME/.bashrc" ] && . $HOME/.bashrc
+ENV=$HOME/.shrc		; export ENV
+LANG=ja_JP.UTF-8 	; export LANG
+LC_MESSAGES=C		; export LC_MESSAGES
 
-
-PATH=/sbin:/usr/sbin:/usr/X11R7/bin:${PATH}
+#BSD_BASESITE="ftp://ftp.NetBSD.org/pub/"
+BSD_BASESITE="https://ihdkz.github.io/raspi"
+PKG_PATH="${BSD_BASESITE}/pkgsrc/packages/$(uname -s)/$(uname -m)/8.0/All"
+export PKG_PATH
 
 # set PATH so it includes user's private bin if it exists
 # [ -d ${HOME}/bin ] && PATH=${HOME}/bin:${PATH}
 
 # set PATH so it includes additional installed bin if it exists
-__RACKETPATH__="/Applications/Racket v6.1.1/bin" 
-[ -d "${__RACKETPATH__}" ]  && PATH=${__RACKETPATH__}:${PATH}
+if [ -d "/opt/local" ] ; then
+	__MACPATH__=/opt/local
+	[ -d ${__MACPATH__} ] && PATH=${__MACPATH__}/bin:${__MACPATH__}/sbin:${PATH}
 
-__FORTRANPATH__=/opt/local/lib/fpc/bin
-[ -d "${__FORTRANPATH__}" ] && PATH=${__FORTRANPATH__}:${PATH}
+	__FORTRANPATH__=/opt/local/lib/fpc/bin
+	[ -d "${__FORTRANPATH__}" ] && PATH=${__FORTRANPATH__}:${PATH}
 
-__HASKELLPATH__=${HOME}/Library/Haskell/bin
-[ -d "${__HASKELLPATH__}" ] && PATH=${__HASKELLPATH__}:${PATH}
+	__RACKETPATH__="/Applications/Racket v6.1.1/bin" 
+	[ -d "${__RACKETPATH__}" ]  && PATH=${__RACKETPATH__}:${PATH}
 
-# Finished adapting your PATH environment variable for use with MacPorts.
-__MACPATH__=/opt/local
-[ -d ${__MACPATH__} ] && PATH=${__MACPATH__}/bin:${__MACPATH__}/sbin:${PATH}
+	__HASKELLPATH__=${HOME}/Library/Haskell/bin
+	[ -d "${__HASKELLPATH__}" ] && PATH=${__HASKELLPATH__}:${PATH}
+	# Finished adapting your PATH environment variable for use with MacPorts.
 
-export PATH
+	[ -z "$INFOPATH" ] && export INFOPATH=${__MACPATH__}/share/info
 
+	PYTHONPATH=${__MACPATH__}/Library/Frameworks/Python.framework/Versions/2.7/lib/python2.7/site-packages
+fi
 
-[ -z "$INFOPATH" ] && export INFOPATH=${__MACPATH__}/share/info
+PYTHONPATH=$HOME/.python.d:$PYTHONPATH	; export PYTHONPATH
+PYTHONSTARTUP=$HOME/.pythonrc.py	; export PYTHONSTARTUP
 
-PYTHONPATH=${__MACPATH__}/Library/Frameworks/Python.framework/Versions/2.7/lib/python2.7/site-packages
-PYTHONPATH=$HOME/.python.d:$PYTHONPATH
-export PYTHONPATH
+XMODIFIERS=@im=uim
+GTK_IM_MODULE=uim
 
-PYTHONSTARTUP=$HOME/.pythonrc.py
-export PYTHONSTARTUP
+# if running bash and including .bashrc if it exists
+[ -n "$BASH_VERSION" ] && [ -f "$HOME/.bashrc" ] && . $HOME/.bashrc
 

@@ -1,20 +1,18 @@
 
-__OSNAME=$(uname)
-[ "${__OSNAME}" != "${__OSNAME%darwin*}" ] && __LS_OPT='-G'
-[ "${__OSNAME}" != "${__OSNAME%linux* }" ] && __LS_OPT='-BF --color=auto --show-control-char'
-[ "${__OSNAME}" != "${__OSNAME#*BSD}"    ] && __LS_OPT='-Fw'
+__ls_call() {
+	local __OSNAME=$(uname)
+	local __LS_OPT='-BF --color=auto --show-control-char' #GNU ls
+	[ -x \gls ] && echo "gls "${__LS_OPT} && return
+	[ "${__OSNAME}" != "${__OSNAME%darwin*}" ] && __LS_OPT='-G'
+	[ "${__OSNAME}" != "${__OSNAME#*BSD}"    ] && __LS_OPT='-Fw'
+	echo "\ls "${__LS_OPT}
+}
 
-alias ls="\ls "$__LS_OPT
-[ -x gls ] && alias ls="gls -BF --color=auto --show-control-char"
-
+alias ls=$(__ls_call)
 alias l.="ls .*"
 alias la="ls -a"
 alias ll="ls -hl"
 alias lla="ls -ahl"
-[ ! -z $(which vim) ]    && alias vi="\vim"
-[ ! -z $(which w3mman) ] && alias man="\w3mman"
-[ ! -z $(which w3m) ]    && PAGER=w3m
-alias less=${PAGER:=less}
 alias mv='\mv -iv'
 alias cp='\cp -iv'
 alias rm='\rm -iv'
@@ -26,7 +24,21 @@ alias lftp="\lftp -e 'set bmk:save-passwords on && set cmd:prompt \[\e[34m\]\w\[
 alias ...='cd ../..'
 alias ....='cd ../../..'
 
+#alias less=${PAGER:=\less}
+[ ! -z $(which vim) ]  && alias vi="\vim"
+
+if [ ! -z "$(which w3m)" ] ; then
+	PAGER="\w3m"
+	alias less=$PAGER
+	alias man="\w3mman"
+	ggl() {
+		local base_url="https://www.google.com/search?q=" ;
+		\w3m ${base_url}$(echo "$*" | sed -e "s/ /+/g") ;
+	}
+fi
+
 if [ ! -z "$ZSH_NAME" ]; then
 	alias -s gp="gnuplot"
 	alias -s gnu="gnuplot"
 fi
+
