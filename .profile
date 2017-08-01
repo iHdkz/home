@@ -7,9 +7,18 @@
 # the default umask is set in /etc/profile
 umask 022
 
-PATH=/sbin:${PATH}
-PATH=/usr/sbin:${PATH}
-PATH=/usr/X11R7/bin:${PATH}
+add_new_path() {
+	if [ -d "$1" ] ; then
+		case "$PATH" in
+			*"$1"*	) echo "" ;;
+			*	) echo "$PATH"":""$1" ;;
+		esac
+	fi
+}
+
+PATH=$(add_new_path "/sbin")
+PATH=$(add_new_path "/usr/sbin")
+PATH=$(add_new_path "/usr/X11R7/bin")
 export PATH
 
 ENV=$HOME/.shrc		; export ENV
@@ -27,16 +36,11 @@ export PKG_PATH
 # set PATH so it includes additional installed bin if it exists
 if [ -d "/opt/local" ] ; then
 	__MACPATH__=/opt/local
-	[ -d ${__MACPATH__} ] && PATH=${__MACPATH__}/bin:${__MACPATH__}/sbin:${PATH}
-
-	__FORTRANPATH__=/opt/local/lib/fpc/bin
-	[ -d "${__FORTRANPATH__}" ] && PATH=${__FORTRANPATH__}:${PATH}
-
-	__RACKETPATH__="/Applications/Racket v6.1.1/bin" 
-	[ -d "${__RACKETPATH__}" ]  && PATH=${__RACKETPATH__}:${PATH}
-
-	__HASKELLPATH__=${HOME}/Library/Haskell/bin
-	[ -d "${__HASKELLPATH__}" ] && PATH=${__HASKELLPATH__}:${PATH}
+	PATH=$(add_new_path "/opt/local/bin")
+	PATH=$(add_new_path "/opt/local/sbin")
+	PATH=$(add_new_path "/opt/local/lib/fpc/bin")
+	PATH=$(add_new_path "/Applications/Racket v6.1.1/bin")
+	PATH=$(add_new_path "$HOME/Library/Haskell/bin")
 	# Finished adapting your PATH environment variable for use with MacPorts.
 
 	[ -z "$INFOPATH" ] && export INFOPATH=${__MACPATH__}/share/info
@@ -44,12 +48,12 @@ if [ -d "/opt/local" ] ; then
 	PYTHONPATH=${__MACPATH__}/Library/Frameworks/Python.framework/Versions/2.7/lib/python2.7/site-packages
 fi
 
-PYTHONPATH=$HOME/.python.d:$PYTHONPATH	; export PYTHONPATH
+PYTHONPATH=$HOME/.python.d:"$PYTHONPATH"	; export PYTHONPATH
 PYTHONSTARTUP=$HOME/.pythonrc.py	; export PYTHONSTARTUP
 
 XMODIFIERS=@im=uim
 GTK_IM_MODULE=uim
 
 # if running bash and including .bashrc if it exists
-[ -n "$BASH_VERSION" ] && [ -f "$HOME/.bashrc" ] && . $HOME/.bashrc
+#[ -n "$BASH_VERSION" ] && [ -f "$HOME/.bashrc" ] && . $HOME/.bashrc
 

@@ -8,7 +8,7 @@ __ls_call() {
 	echo "\ls "${__LS_OPT}
 }
 
-alias ls=$(__ls_call)
+alias ls="$(__ls_call)"
 alias l.="ls .*"
 alias la="ls -a"
 alias ll="ls -hl"
@@ -35,6 +35,12 @@ if [ ! -z "$(which w3m)" ] ; then
 		local base_url="https://www.google.com/search?q=" ;
 		\w3m ${base_url}$(echo "$*" | sed -e "s/ /+/g") ;
 	}
+fi
+
+if [ "$(uname -s)" = "NetBSD" ] ; then
+	alias get_pkgsrc="cd /usr && cvs -q -z3 -d anoncvs@anoncvs.NetBSD.org:/cvsroot checkout -P pkgsrc"
+	alias update_pkgsrc="cd /usr/pkgsrc && cvs update -dP"
+	alias mk_pkg_summary="/usr/pkg/sbin/pkg_info -aX | gzip > ./pkg_summary.gz"
 fi
 
 if [ ! -z "$ZSH_NAME" ]; then

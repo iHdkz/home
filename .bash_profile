@@ -13,4 +13,4 @@ __BASHCOMPLETION=/opt/local/etc/profile.d/bash_completion.sh
 
 echo ".bash_profile loded"
 
-[[ -z ${TMUX} ]] && [[ $SHLVL == 1 ]] && [[ -x $(which tmux) ]] && exec tmux
+#[[ -z ${TMUX} ]] && [[ $SHLVL == 1 ]] && [[ -x $(which tmux) ]] && exec tmux
