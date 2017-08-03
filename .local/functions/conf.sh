@@ -2,10 +2,10 @@
 __ls_call() {
 	local __OSNAME=$(uname)
 	local __LS_OPT='-BF --color=auto --show-control-char' #GNU ls
-	[ -x \gls ] && echo "gls "${__LS_OPT} && return
+	[ -x \gls ] && echo "\gls ""${__LS_OPT}" && return
 	[ "${__OSNAME}" != "${__OSNAME%darwin*}" ] && __LS_OPT='-G'
-	[ "${__OSNAME}" != "${__OSNAME#*BSD}"    ] && __LS_OPT='-Fw'
-	echo "\ls "${__LS_OPT}
+	[ "${__OSNAME}" != "${__OSNAME#*BSD}"    ] && __LS_OPT='-Fwx'
+	echo "\ls ""${__LS_OPT}"
 }
 
 alias ls="$(__ls_call)"
@@ -32,19 +32,40 @@ if [ ! -z "$(which w3m)" ] ; then
 	alias less=$PAGER
 	alias man="\w3mman"
 	ggl() {
-		local base_url="https://www.google.com/search?q=" ;
-		\w3m ${base_url}$(echo "$*" | sed -e "s/ /+/g") ;
+		local g_url="https://www.google.com" ;
+		local opts="/search?"
+		\w3m "${g_url}${opts}&q="$(echo "$*" | sed -e "s/ /+/g") ;
 	}
 fi
 
+### pkgsrc settings
 if [ "$(uname -s)" = "NetBSD" ] ; then
 	alias get_pkgsrc="cd /usr && cvs -q -z3 -d anoncvs@anoncvs.NetBSD.org:/cvsroot checkout -P pkgsrc"
 	alias update_pkgsrc="cd /usr/pkgsrc && cvs update -dP"
-	alias mk_pkg_summary="/usr/pkg/sbin/pkg_info -aX | gzip > ./pkg_summary.gz"
+	alias mk_pkg_summary="cd /usr/pkgsrc/packages && /usr/pkg/sbin/pkg_info -X | gzip > ./pkg_summary.gz"
 fi
 
+### Zsh options
 if [ ! -z "$ZSH_NAME" ]; then
 	alias -s gp="gnuplot"
 	alias -s gnu="gnuplot"
 fi
+
+### define functions ###
+show_color_codes() {
+	local c=0
+	while [ $c -lt 256 ] ; do
+		tput setaf $c ; echo -n "$c "
+		c=$(expr 1 + $c)
+	done
+	tput sgr0 ; echo
+}
+
+set_title() {
+	local frmt="\033]0;%s\007"
+	[ "${TERM}" != "${TERM#*screen*}" ] && frmt="\033k%s\033\\"
+	printf $frmt "$@"
+}
+
+abbrev_pwd() { \pwd | \sed "s#^$HOME#\~#;s#^\(\~*/[^/]*/\).*\(/[^/]*\)#\1...\2#" ; }
 

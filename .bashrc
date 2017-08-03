@@ -16,13 +16,22 @@ shopt -u cdspell cdable_vars sourcepath # unset options
 shopt -s checkwinsize checkhash extglob # set options
 shopt -s hostcomplete no_empty_cmd_completion
 
-fpath=${HOME}/.local/functions
-source ${fpath}/conf.sh
-source ${fpath}/bash_funcs.sh
+source ${HOME}/.local/functions/conf.sh
+###
+# define functions
+function cd {
+	if builtin cd "${1:-$HOME}" ; then
+		[[ $(\ls |\wc -l) -le 100 ]] && ls && return
+		echo -e $(tput setaf 5)"many files exist"$(tput sgr0)
+	fi
+}
 
-PS1=$(clrs 9)'$([[ $? != 0 ]] && echo -ne "X")'$(clrs 10)['$(__abbrev_pwd)']
-export PS1=$PS1$(clrs 44)": "$(clrs -1)
-export PS2=$(clrs 111)-:$(clrs -1)
-export PROMPT_COMMAND="__set_title;"
+function clrs { echo -n "\[$(tput sgr0)\]" && [[ $# != 0 ]] && echo -n "\[$(tput setaf $1)\]" ; }
+###
+
+PS1=$(clrs 9)'$([[ $? != 0 ]] && echo -ne "X")'
+export PS1=$PS1$(clrs 2)['$(abbrev_pwd)']"$(clrs 44): $(clrs)"
+export PS2=$(clrs 111)-:$(clrs)
+export PROMPT_COMMAND='set_title "[$(abbrev_pwd)]" ;'
 #function update_teminal_cwd is defined in /etc/bashrc
 
