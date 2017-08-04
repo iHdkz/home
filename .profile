@@ -11,11 +11,13 @@ ENV=$HOME/.shrc		; export ENV
 LANG=ja_JP.UTF-8 	; export LANG
 LC_MESSAGES=C		; export LC_MESSAGES
 
-XMODIFIERS=@im=uim	; export XMODIFIERS
+XMODIFIERS="@im=uim"	; export XMODIFIERS
 GTK_IM_MODULE=uim	; export GTK_IM_MODULE
 
 PYTHONPATH=$HOME/.python.d		; export PYTHONPATH
 PYTHONSTARTUP=$HOME/.pythonrc.py	; export PYTHONSTARTUP
+
+GITHUB="https://github.com/iHdkz/"	; export GITHUB
 
 is_contain_in() {
 	case "$2" in
@@ -23,11 +25,7 @@ is_contain_in() {
 		*	) false ;;
 	esac
 }
-
-add_new_path() {
-	[ -d "$1" ] && ! is_contain_in "$1" "$PATH" && echo "$PATH:$1" && return
-	echo ""
-}
+add_new_path() { echo ""$( [ -d "$1" ] && ! is_contain_in "$1" "$PATH" && echo "$PATH:$1") ; }
 
 PATH=$(add_new_path "/sbin")
 PATH=$(add_new_path "/usr/sbin")
@@ -45,7 +43,7 @@ if is_contain_in "BSD" "$(uname -s)" ; then
 fi
 
 # set PATH so it includes additional installed bin if it exists
-if [ -d "/opt/local" ] ; then
+if is_contain_in "Darwin" "$(uname -s)" ; then
 	__MACPATH__=/opt/local
 	PATH=$(add_new_path "/opt/local/bin")
 	PATH=$(add_new_path "/opt/local/sbin")
