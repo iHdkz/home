@@ -32,9 +32,14 @@ if [ ! -z "$(which w3m)" ] ; then
 	alias less=$PAGER
 	alias man="\w3mman"
 	ggl() {
-		local g_url="https://www.google.com" ;
+		local g_url="https://www.google.com"
 		local opts="/search?"
 		\w3m "${g_url}${opts}&q="$(echo "$*" | sed -e "s/ /+/g") ;
+	}
+	eow() {
+		local eow_url="http://eow.alc.co.jp" 
+		local opts="/search?"
+		\w3m "${eow_url}${opts}q="$(echo "$*" | sed -e "s/ /+/g") ;
 	}
 fi
 
