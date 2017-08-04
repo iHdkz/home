@@ -25,8 +25,7 @@ function cd {
 		echo -e $(tput setaf 5)"many files exist"$(tput sgr0)
 	fi
 }
-
-function clrs { echo -n "\[$(tput sgr0)\]" && [[ $# != 0 ]] && echo -n "\[$(tput setaf $1)\]" ; }
+function clrs { echo -n "\[$(tput sgr0)\]"$([[ $# != 0 ]] && echo -n "\[$(tput setaf $1)\]") ; }
 ###
 
 PS1=$(clrs 9)'$([[ $? != 0 ]] && echo -ne "X")'

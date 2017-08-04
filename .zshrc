@@ -9,12 +9,10 @@ setopt auto_menu magic_equal_subst
 
 #cdpath=( ~ )
 manpath=(/usr/pkg/man $MANPATH)
-
 fpath=(${HOME}/.local/functions $fpath)
 autoload -Uz conf.sh	&& conf.sh
 autoload -Uz iab.zsh	&& iab.zsh
 autoload -U  incr.zsh	&& incr.zsh
-
 autoload -Uz compinit #	&& compinit -u
 
 PROMPT="%F{cyan}%(!.#.>)%(!.#.>)%f "
