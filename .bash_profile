@@ -6,10 +6,9 @@
 # Set up Japanese environment
 SHELL=$(which bash)
 
-[[ -f $HOME/.profile ]] && . $HOME/.profile
-
-__BASHCOMPLETION=/opt/local/etc/profile.d/bash_completion.sh
-[[ -f ${__BASHCOMPLETION} ]] && . ${__BASHCOMPLETION}
+chk_and_source() { [[ -f "$1" ]] && . "$1" ; }
+chk_and_source "$HOME/.profile"
+chk_and_source "/opt/local/etc/profile.d/bash_completion.sh"
 
 echo ".bash_profile loded"
 
