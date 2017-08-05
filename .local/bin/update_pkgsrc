@@ -1,0 +1,10 @@
+#/bin/sh
+
+update_pkgsrc() { \cd /usr/pkgsrc && cvs update -dP ; }
+if [ -d /usr/pkgsrc ] ; then
+	update_pkgsrc
+else
+	echo "this computer does not have pkgsrc."
+fi
+
+unset update_pkgsrc
