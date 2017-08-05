@@ -1,11 +1,11 @@
 
+__chk_os() { local osname="$(uname -s)" && [ "$osname" != "${osname#*$1*}" ] ; }
 __ls_call() {
-	local __OSNAME=$(uname)
-	local __LS_OPT='-BF --color=auto --show-control-char' #GNU ls
-	[ -x \gls ] && echo "\gls ""${__LS_OPT}" && return
-	[ "${__OSNAME}" != "${__OSNAME%darwin*}" ] && __LS_OPT='-G'
-	[ "${__OSNAME}" != "${__OSNAME#*BSD}"    ] && __LS_OPT='-Fwx'
-	echo "\ls ""${__LS_OPT}"
+	local __ls_opt='-BF --color=auto --show-control-char' #GNU ls
+	[ ! -z "$(which gls)" ] && echo "\gls ""${__ls_opt}" && return
+	__chk_os "Darwin"	&& __ls_opt='-G'
+	__chk_os "BSD"		&& __ls_opt='-CdFw'
+	echo "\ls ""${__ls_opt}"
 }
 
 alias ls="$(__ls_call)"
@@ -25,7 +25,7 @@ alias ...='cd ../..'
 alias ....='cd ../../..'
 
 #alias less=${PAGER:=\less}
-[ ! -z $(which vim) ]  && alias vi="\vim"
+[ ! -z "$(which vim)" ]  && alias vi="\vim"
 
 if [ ! -z "$(which w3m)" ] ; then
 	PAGER="\w3m"
@@ -44,10 +44,12 @@ if [ ! -z "$(which w3m)" ] ; then
 fi
 
 ### pkgsrc settings
-if [ "$(uname -s)" = "NetBSD" ] ; then
-	alias get_pkgsrc="cd /usr && cvs -q -z3 -d anoncvs@anoncvs.NetBSD.org:/cvsroot checkout -P pkgsrc"
-	alias update_pkgsrc="cd /usr/pkgsrc && cvs update -dP"
-	alias mk_pkg_summary="cd /usr/pkgsrc/packages && /usr/pkg/sbin/pkg_info -X | gzip > ./pkg_summary.gz"
+if __chk_os "BSD" ; then
+	get_pkgsrc() { \cd /usr && cvs -q -z3 -d anoncvs@anoncvs.NetBSD.org:/cvsroot checkout -P pkgsrc ; }
+	update_pkgsrc() { \cd /usr/pkgsrc && cvs update -dP ; }
+	mk_pkg_summary() {
+		\cd /usr/pkgsrc/packages/All && /usr/pkg/sbin/pkg_info -X *.tgz | gzip > ./pkg_summary.gz
+	}
 fi
 
 ### Zsh options
@@ -61,16 +63,17 @@ show_color_codes() {
 	local c=0
 	while [ $c -lt 256 ] ; do
 		tput setaf $c ; echo -n "$c "
-		c=$(expr 1 + $c)
+		c=$(( 1 + $c))
 	done
 	tput sgr0 ; echo
 }
 
 set_title() {
-	local frmt="\033]0;%s\007"
-	[ "${TERM}" != "${TERM#*screen*}" ] && frmt="\033k%s\033\\"
+	local frmt="\033]0;%s\007" ; [ "$TERM" != "${TERM#*screen*}" ] && frmt="\033k%s\033\\"
 	printf $frmt "$@"
 }
 
 abbrev_pwd() { \pwd | \sed "s#^$HOME#\~#;s#^\(\~*/[^/]*/\).*\(/[^/]*\)#\1...\2#" ; }
 
+unset __chk_os
+unset __ls_call
