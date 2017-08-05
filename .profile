@@ -25,7 +25,7 @@ is_contain_in() {
 		*	) false ;;
 	esac
 }
-add_new_path() { echo ""$( [ -d "$1" ] && ! is_contain_in "$1" "$PATH" && echo "$PATH:$1") ; }
+add_new_path() { echo "$PATH"$( [ -d "$1" ] && ! is_contain_in "$1" "$PATH" && echo ":$1") ; }
 
 PATH=$(add_new_path "/sbin")
 PATH=$(add_new_path "/usr/sbin")
@@ -35,7 +35,7 @@ export PATH
 # set PATH so it includes user's private bin if it exists
 # [ -d ${HOME}/bin ] && PATH=${HOME}/bin:${PATH}
 
-if is_contain_in "BSD" "$(uname -s)" ; then
+if is_contain_in "NetBSD" "$(uname -s)" ; then
 	#BSD_SITE="ftp://ftp.NetBSD.org/pub/"
 	BSD_SITE="https://ihdkz.github.io/raspi"
 	PKG_PATH="${BSD_SITE}/pkgsrc/packages/$(uname -s)/$(uname -m)/8.0/All"
