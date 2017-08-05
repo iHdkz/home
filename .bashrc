@@ -16,7 +16,7 @@ shopt -u cdspell cdable_vars sourcepath # unset options
 shopt -s checkwinsize checkhash extglob # set options
 shopt -s hostcomplete no_empty_cmd_completion
 
-source ${HOME}/.local/functions/conf.sh
+source ${HOME}/.local/etc/conf.sh
 ###
 # define functions
 function cd {

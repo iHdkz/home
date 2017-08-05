@@ -9,7 +9,7 @@ setopt auto_menu magic_equal_subst
 
 #cdpath=( ~ )
 manpath=(/usr/pkg/man $MANPATH)
-fpath=(${HOME}/.local/functions $fpath)
+fpath=(${HOME}/.local/etc $fpath)
 autoload -Uz conf.sh	&& conf.sh
 autoload -Uz iab.zsh	&& iab.zsh
 autoload -U  incr.zsh	&& incr.zsh
