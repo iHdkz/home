@@ -4,7 +4,7 @@
 # runs your .bashrc and is recommended by the bash info pages.
 
 # Set up Japanese environment
-SHELL=$(which bash)
+#SHELL=$(which bash)
 
 chk_and_source() { [[ -f "$1" ]] && . "$1" ; }
 chk_and_source "$HOME/.profile"

@@ -21,7 +21,7 @@ source ${HOME}/.local/etc/conf.sh
 # define functions
 function cd {
 	if builtin cd "${1:-$HOME}" ; then
-		[[ $(\ls |\wc -l) -le 100 ]] && ls && return
+		[[ $(\ls -1 | \wc -l) -le 100 ]] && ls && return
 		echo -e $(tput setaf 5)"many files exist"$(tput sgr0)
 	fi
 }

@@ -59,3 +59,6 @@ fi
 # if running bash and including .bashrc if it exists
 #[ -n "$BASH_VERSION" ] && [ -f "$HOME/.bashrc" ] && . $HOME/.bashrc
 
+unset is_contain_in
+unset add_new_path
+
