@@ -28,6 +28,7 @@ is_contain_in() {
 add_new_path() { echo "$PATH"$( [ -d "$1" ] && ! is_contain_in "$1" "$PATH" && echo ":$1") ; }
 
 PATH=$(add_new_path "/sbin")
+PATH=$(add_new_path "/usr/pkg/sbin")
 PATH=$(add_new_path "/usr/sbin")
 PATH=$(add_new_path "/usr/X11R7/bin")
 export PATH
