@@ -31,6 +31,7 @@ PATH=$(add_new_path "/sbin")
 PATH=$(add_new_path "/usr/pkg/sbin")
 PATH=$(add_new_path "/usr/sbin")
 PATH=$(add_new_path "/usr/X11R7/bin")
+PATH=$(add_new_path "$HOME/.local/bin")
 export PATH
 
 # set PATH so it includes user's private bin if it exists
