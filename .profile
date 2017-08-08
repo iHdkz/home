@@ -17,7 +17,7 @@ GTK_IM_MODULE=uim	; export GTK_IM_MODULE
 PYTHONPATH=$HOME/.python.d		; export PYTHONPATH
 PYTHONSTARTUP=$HOME/.pythonrc.py	; export PYTHONSTARTUP
 
-GITHUB="https://github.com/iHdkz/"	; export GITHUB
+GITHUB="ssh://git@github.com/iHdkz"	; export GITHUB
 
 is_contain_in() {
 	case "$2" in
