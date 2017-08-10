@@ -28,7 +28,7 @@ function cd {
 function clrs { echo -n "\[$(tput sgr0)\]"$([[ $# != 0 ]] && echo -n "\[$(tput setaf $1)\]") ; }
 ###
 
-PS1=$(clrs 9)'$([[ $? != 0 ]] && echo -ne "X")'
+PS1=$(clrs 9)'$([[ $? != 0 ]] && echo -ne "X" || echo " ")'
 export PS1=$PS1$(clrs 2)['$(abbrev_pwd)']"$(clrs 44): $(clrs)"
 export PS2=$(clrs 111)-:$(clrs)
 export PROMPT_COMMAND='set_title "[$(abbrev_pwd)]" ;'

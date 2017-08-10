@@ -16,28 +16,23 @@ GTK_IM_MODULE=uim	; export GTK_IM_MODULE
 
 PYTHONPATH=$HOME/.python.d		; export PYTHONPATH
 PYTHONSTARTUP=$HOME/.pythonrc.py	; export PYTHONSTARTUP
-
 GITHUB="ssh://git@github.com/iHdkz"	; export GITHUB
 
-is_contain_in() {
-	case "$2" in
-		*"$1"*	) true  ;;
-		*	) false ;;
-	esac
-}
-add_new_path() { echo "$PATH"$( [ -d "$1" ] && ! is_contain_in "$1" "$PATH" && echo ":$1") ; }
+is_contain_in() { [ "$2" != "${2#*$1*}" ] ; }
+chk_uname() { is_contain_in "$1" "$(uname -s)" ; }
+add_path() { echo "$2"$( [ -d "$1" ] && ! is_contain_in "$1" "$2" && echo ":$1") ; }
 
-PATH=$(add_new_path "/sbin")
-PATH=$(add_new_path "/usr/pkg/sbin")
-PATH=$(add_new_path "/usr/sbin")
-PATH=$(add_new_path "/usr/X11R7/bin")
-PATH=$(add_new_path "$HOME/.local/bin")
+PATH=$(add_path "/sbin"		   "$PATH")
+PATH=$(add_path "/usr/pkg/sbin"    "$PATH")
+PATH=$(add_path "/usr/sbin"	   "$PATH")
+PATH=$(add_path "/usr/X11R7/bin"   "$PATH")
+PATH=$(add_path "$HOME/.local/bin" "$PATH")
 export PATH
 
 # set PATH so it includes user's private bin if it exists
 # [ -d ${HOME}/bin ] && PATH=${HOME}/bin:${PATH}
 
-if is_contain_in "NetBSD" "$(uname -s)" ; then
+if chk_uname "NetBSD" ; then
 	#BSD_SITE="ftp://ftp.NetBSD.org/pub/"
 	BSD_SITE="https://ihdkz.github.io/raspi"
 	PKG_PATH="${BSD_SITE}/pkgsrc/packages/$(uname -s)/$(uname -m)/8.0/All"
@@ -45,22 +40,23 @@ if is_contain_in "NetBSD" "$(uname -s)" ; then
 fi
 
 # set PATH so it includes additional installed bin if it exists
-if is_contain_in "Darwin" "$(uname -s)" ; then
+if chk_uname "Darwin" ; then
 	__MACPATH__=/opt/local
-	PATH=$(add_new_path "/opt/local/bin")
-	PATH=$(add_new_path "/opt/local/sbin")
-	PATH=$(add_new_path "/opt/local/lib/fpc/bin")
-	PATH=$(add_new_path "/Applications/Racket v6.1.1/bin")
-	PATH=$(add_new_path "$HOME/Library/Haskell/bin")
+	PATH=$(add_path "/opt/local/bin"		  "$PATH")
+	PATH=$(add_path "/opt/local/sbin"		  "$PATH")
+	PATH=$(add_path "/opt/local/lib/fpc/bin"	  "$PATH")
+	PATH=$(add_path "$HOME/Library/Haskell/bin"	  "$PATH")
+	PATH=$(add_path "/Applications/Racket v6.1.1/bin" "$PATH")
 	# Finished adapting your PATH environment variable for use with MacPorts.
 
 	[ -z "$INFOPATH" ] && export INFOPATH=${__MACPATH__}/share/info
-	PYTHONPATH="$PYTHONPATH":${__MACPATH__}/Library/Frameworks/Python.framework/Versions/2.7/lib/python2.7/site-packages
+	PYTHONPATH=$(add_path "${__MACPATH__}/Library/Frameworks/Python.framework/Versions/2.7/lib/python2.7/site-packages" "$PATH")
 fi
 
 # if running bash and including .bashrc if it exists
 #[ -n "$BASH_VERSION" ] && [ -f "$HOME/.bashrc" ] && . $HOME/.bashrc
 
 unset is_contain_in
+unset chk_uname
 unset add_new_path
 

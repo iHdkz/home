@@ -6,10 +6,12 @@
 # Set up Japanese environment
 #SHELL=$(which bash)
 
-chk_and_source() { [[ -f "$1" ]] && . "$1" ; }
+echo "$HOME/.bash_profile loading..."
+
+chk_and_source() { [[ -f "$1" ]] && . "$1" && echo " load $1"; }
 chk_and_source "$HOME/.profile"
+chk_and_source "$HOME/.bashrc"
 chk_and_source "/opt/local/etc/profile.d/bash_completion.sh"
 
-echo ".bash_profile loded"
-
 #[[ -z ${TMUX} ]] && [[ $SHLVL == 1 ]] && [[ -x $(which tmux) ]] && exec tmux
+echo "loaded."
