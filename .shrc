@@ -6,13 +6,7 @@
 
 [ "${-}" = "${-#*i}" ] && return
 
-usertype() {
-	if id | grep "^uid=0(" > /dev/null 2>&1 ; then
-		echo "#"
-	else
-		echo "$"
-	fi }
-
+usertype() { id | grep "^uid=0(" > /dev/null 2>&1 && echo "#" || echo "$" ; }
 HOST=${HOST:=$(hostname)}
 PS1="${HOST%%.*}$(usertype) "
 
