@@ -6,9 +6,9 @@
 # Set up Japanese environment
 #SHELL=$(which bash)
 
-echo "$HOME/.bash_profile loading..."
+echo -n "$HOME/.bash_profile loading... "
 
-chk_and_source() { [[ -f "$1" ]] && . "$1" && echo " load $1"; }
+chk_and_source() { [[ -f "$1" ]] && . "$1" && echo -n "$1, "; }
 chk_and_source "$HOME/.profile"
 chk_and_source "$HOME/.bashrc"
 chk_and_source "/opt/local/etc/profile.d/bash_completion.sh"
