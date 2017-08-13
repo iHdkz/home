@@ -1,14 +1,14 @@
 
-__chk_os() { local osname="$(uname -s)" && [ "$osname" != "${osname#*$1*}" ] ; }
-__ls_call() {
-	local __ls_opt='-BF --color=auto --show-control-char' #GNU ls
-	[ ! -z "$(which gls)" ] && echo "\gls ""${__ls_opt}" && return
-	__chk_os "Darwin"	&& __ls_opt='-G'
-	__chk_os "BSD"		&& __ls_opt='-CdFw'
-	echo "\ls ""${__ls_opt}"
+_chk_os() { local osname="$(uname -s)" && [ "$osname" != "${osname#*$1*}" ] ; }
+_ls_call() {
+	local ls_opt='-CF --color=auto --show-control-char' #GNU ls
+	[ ! -z "$(which gls)" ] && echo "\gls ""${ls_opt}" && return
+	_chk_os "Darwin"	&& ls_opt='-G'
+	_chk_os "BSD"		&& ls_opt='-CdFw'
+	echo "\ls ""${ls_opt}"
 }
 
-alias ls="$(__ls_call)"
+alias ls="$(_ls_call)"
 alias l.="ls .*"
 alias la="ls -a"
 alias ll="ls -hl"
@@ -43,27 +43,22 @@ if [ ! -z "$(which w3m)" ] ; then
 	}
 fi
 
-### pkgsrc settings
-if __chk_os "BSD" ; then
-	get_pkgsrc() { \cd /usr && cvs -q -z3 -d anoncvs@anoncvs.NetBSD.org:/cvsroot checkout -P pkgsrc ; }
-	update_pkgsrc() { \cd /usr/pkgsrc && cvs update -dP ; }
-	mk_pkg_summary() {
-		\cd /usr/pkgsrc/packages/All && /usr/pkg/sbin/pkg_info -X *.tgz | gzip > ./pkg_summary.gz
-	}
-fi
-
 ### Zsh options
 if [ ! -z "$ZSH_NAME" ]; then
 	alias -s gp="gnuplot"
-	alias -s gnu="gnuplot"
+	alias -s gnu="gnuplot" 
+#	function zshow_color_codes {
+#		for c in {000..255}
+#		do
+#			echo -n "\e[38;5;${c}m $c" ; [ $(($c%16)) -eq 15 ] && echo 
+#		done
+#	}
 fi
 
 ### define functions ###
 show_color_codes() {
-	local c=0
-	while [ $c -lt 256 ] ; do
-		tput setaf $c ; echo -n "$c "
-		c=$(( 1 + $c))
+	for c in $(seq 1 256) ; do
+		printf $(tput setaf $c)"%4s" $c
 	done
 	tput sgr0 ; echo
 }
@@ -72,8 +67,7 @@ set_title() {
 	local frmt="\033]0;%s\007" ; [ "$TERM" != "${TERM#*screen*}" ] && frmt="\033k%s\033\\"
 	printf $frmt "$@"
 }
-
 abbrev_pwd() { \pwd | \sed "s#^$HOME#\~#;s#^\(\~*/[^/]*/\).*\(/[^/]*\)#\1...\2#" ; }
 
-unset __chk_os
-unset __ls_call
+unset _chk_os
+unset _ls_call
