@@ -9,7 +9,9 @@ umask 022
 
 ENV=$HOME/.shrc		; export ENV
 LANG=ja_JP.UTF-8 	; export LANG
-LC_MESSAGES=C		; export LC_MESSAGES
+LC_CTYPE=C
+LC_COLLATE=C
+LC_MESSAGES=C
 
 XMODIFIERS="@im=uim"	; export XMODIFIERS
 GTK_IM_MODULE=uim	; export GTK_IM_MODULE
