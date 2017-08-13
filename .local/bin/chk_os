@@ -1,6 +1,3 @@
 #/bin/sh
 
-chk_os() { local _os="$(uname -s)" ; [ "$_os" != "${_os#*$1*}" ] ; }
-chk_os $1
-
-unset chk_os
+osname="$(uname -s)" && [ "$osname" != "${osname#*$1*}" ] 

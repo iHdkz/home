@@ -1,13 +1,3 @@
 #/bin/sh
 
-get_pkgsrc() {
-	cd /usr && cvs -q -z3 -d anoncvs@anoncvs.NetBSD.org:/cvsroot checkout -P pkgsrc
-}
-
-if ./chk_os "NetBSD" ; then
-	get_pkgsrc
-else
-	echo "it can not get pkgsrc."
-fi
-
-unset get_pkgsrc
+\cd /usr && cvs -q -z3 -d anoncvs@anoncvs.NetBSD.org:/cvsroot checkout -P pkgsrc

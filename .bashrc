@@ -25,11 +25,10 @@ function cd {
 		echo -e $(tput setaf 5)"many files exist"$(tput sgr0)
 	fi
 }
-function clrs { echo -n "\[$(tput sgr0)\]"$([[ $# != 0 ]] && echo -n "\[$(tput setaf $1)\]") ; }
+function clrs { [[ $# != 0 ]] && echo -n "\[$(tput setaf $1)\]" || echo -n "\[$(tput sgr0)\]" ; }
 ###
 
-PS1=$(clrs 9)'$([[ $? != 0 ]] && echo -ne "X" || echo " ")'
-export PS1=$PS1$(clrs 2)['$(abbrev_pwd)']"$(clrs 44): $(clrs)"
+export PS1=$(clrs 1)'$([[ $? != 0 ]] && echo -n "X" || echo -n " ")'$(clrs 2)['$(abbrev_pwd)']"$(clrs): "
 export PS2=$(clrs 111)-:$(clrs)
 export PROMPT_COMMAND='set_title "[$(abbrev_pwd)]" ;'
 #function update_teminal_cwd is defined in /etc/bashrc
