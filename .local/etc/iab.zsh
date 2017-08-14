@@ -3,8 +3,9 @@
 __IAB="done"
 setopt extended_glob
 
-typeset -g -A abbreviations
-abbreviations=(
+iabalias() { [[ $# == 1 ]] && [[ $1 == *=* ]] && abbreviations[${1%=*}]=${1#*=} ; }
+typeset -g -A abbreviations=()
+abbreviations+=(
 "G"    "| grep"
 "X"    "| xargs"
 #"T"    "| tail"
@@ -14,10 +15,10 @@ abbreviations=(
 #"S"    "| sed"
 "E"    "2>&1 > /dev/null"
 "N"    "> /dev/null"
-"ccg"  "cc -ansi -Wall -pedantic-errors"
-"_safe" "-ansi -Wall -pedantic-errors"
-"_gsl" "-lgsl -lgslcblas -lm"
 )
+iabalias ccg="cc -ansi -Wall -pedantic-errors"
+iabalias _safe="-ansi -Wall -pedantic-errors"
+iabalias _gsl="-lgsl -lgslcblas -lm"
 
 magic-abbrev-expand() {
 	local MATCH
@@ -26,9 +27,7 @@ magic-abbrev-expand() {
 	zle self-insert
 }
 
-no-magic-abbrev-expand() {
-	LBUFFER+=' '
-}
+no-magic-abbrev-expand() { LBUFFER+=' ' ; }
 
 zle -N magic-abbrev-expand
 zle -N no-magic-abbrev-expand
