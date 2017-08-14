@@ -16,7 +16,6 @@ RPROMPT=$RPROMPT"%F{magenta}%(3~,%-1~/.../%1~,%~)%f]"
 manpath=(/usr/pkg/man $MANPATH)
 fpath=(${HOME}/.local/etc $fpath)
 autoload -Uz conf.sh	&& conf.sh
-autoload -Uz iab.zsh	&& iab.zsh
 autoload -U  incr.zsh	&& incr.zsh
 autoload -Uz compinit #	&& compinit -u
 autoload -Uz colors	&& colors
