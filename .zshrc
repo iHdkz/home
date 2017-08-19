@@ -9,8 +9,8 @@ setopt auto_menu magic_equal_subst
 
 PROMPT="%F{cyan}%(!.#.>)%(!.#.>)%f "
 PROMPT2="%F{cyan}--%f "
-RPROMPT="%{%(?.%F{white}.%F{red})%}X%f["${SSH_CLIENT:+"%F{blue}remote:%f"}
-RPROMPT=$RPROMPT"%F{magenta}%(3~,%-1~/.../%1~,%~)%f]"
+RPROMPT="%{%(?.%F{white}.%F{red})%}X%f"\
+[${SSH_CLIENT:+"%F{blue}remote:%f"}"%F{magenta}%(3~,%-1~/.../%1~,%~)%f"]
 
 #cdpath=( ~ )
 manpath=(/usr/pkg/man $MANPATH)
