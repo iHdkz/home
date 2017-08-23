@@ -38,12 +38,10 @@ IconManagerHighlight	"#000000"
 IconManagerGeometry	"=1024x20-0+0" 8
 SqueezeTitle
 
+IconManagerDontShow { "xclock" }
 NoTitle		{ "TWM Icon Manager" "xclock" }
 NoTitleHighlit	{ "TWM Icon Manager" }
-AutoRaise {
-	"TWM Icon Manager"
-	"xterm"
-	}
+AutoRaise	{ "TWM Icon Manager" }
 
 Color
 {
@@ -79,7 +77,7 @@ menu "TwmMenu"
 	"Twm"		f.title
 	"Operations"	f.menu "TwmOperations"
 	""		f.nop
-	"Xterm"		f.exec "exec xterm -fs 16 -fa "M+ 2m" -fd "M+ 2m" &"
+	"Xterm"		f.exec "exec xterm &"
 	""		f.nop
 	"Show Iconmgr"	f.showiconmgr
 	"Hide Iconmgr"	f.hideiconmgr
@@ -123,7 +121,6 @@ menu "IconmgrOperations"
 	""		f.nop
 	"Kill Window"	f.destroy
 }
-
 #
 # Define some useful functions for motion-based actions.
 #

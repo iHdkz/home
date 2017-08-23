@@ -9,7 +9,7 @@ umask 022
 
 ENV=$HOME/.shrc		; export ENV
 LANG=ja_JP.UTF-8 	; export LANG
-LC_CTYPE=C		; export LC_CTYPE
+#LC_CTYPE=C		; export LC_CTYPE
 LC_COLLATE=C		; export LC_COLLATE
 LC_MESSAGES=C		; export LC_MESSAGES
 
@@ -35,10 +35,12 @@ export PATH
 # [ -d ${HOME}/bin ] && PATH=${HOME}/bin:${PATH}
 
 if chk_uname "NetBSD" ; then
-	#BSD_SITE=ftp://ftp.NetBSD.org/pub/
-	#BSD_SITE=http://cdn.NetBSD.org/pub
-	BSD_SITE=https://ihdkz.github.io/raspi
-	PKG_PATH="${BSD_SITE}/pkgsrc/packages/$(uname -s)/$(uname -m)/8.0/All"
+	FTP_SITE=ftp://ftp.NetBSD.org/pub
+	CDN_SITE=http://cdn.NetBSD.org/pub
+	MY_SITE=https://ihdkz.github.io/raspi
+	#PKGSRC_TREE="/pkgsrc/packages/$(uname -s)/$(uname -m)/$(uname -r | cut -f '1 2' -d.)/All"
+	PKGSRC_TREE="pkgsrc/packages/$(uname -s)/$(uname -m)/8.0/All"
+	PKG_PATH="${MY_SITE}/${PKGSRC_TREE};${CDN_SITE}/${PKGSRC_TREE}"
 	export PKG_PATH
 fi
 

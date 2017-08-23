@@ -1,3 +1,0 @@
-#/bin/sh
-
-\cd /usr && cvs -q -z3 -d anoncvs@anoncvs.NetBSD.org:/cvsroot checkout -P pkgsrc

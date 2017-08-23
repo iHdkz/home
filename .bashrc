@@ -27,7 +27,7 @@ function clrs { [[ $# != 0 ]] && echo -n "\[$(tput setaf $1)\]" || echo -n "\[$(
 ###
 export PS1=$(clrs 1)'$([[ $? != 0 ]] && echo -n "X" || echo -n " ")'$(clrs 2)['$(abbrev_pwd)']"$(clrs): "
 export PS2=$(clrs 5)-$(clrs)": "
-#export PS4='+($BASH_SOURCE:$LINENO): ${FUNCNAME:+$FUNCNAME(): }'
+export PS4='+($BASH_SOURCE:$LINENO): ${FUNCNAME:+$FUNCNAME(): }'
 export PROMPT_COMMAND='set_title "[$(abbrev_pwd)]" ;'
 #function update_teminal_cwd is defined in /etc/bashrc
 

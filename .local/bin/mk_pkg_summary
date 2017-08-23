@@ -1,3 +1,0 @@
-#/bin/sh
-
-\cd /usr/pkgsrc/packages/All && /usr/pkg/sbin/pkg_info -X *.tgz | gzip > ./pkg_summary.gz

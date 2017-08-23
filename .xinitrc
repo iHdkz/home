@@ -32,11 +32,18 @@ if [ -d /etc/X11/xinit/xinitrc.d ] ; then
 	unset f
 fi
 
+SHELL=$(which bash)
+#uim-xim &
+#uim-toolbar-gtk * &
+
 setxkbmap -model jp106 -layout jp
 xsetq +fp $HOME/.local/fonts/mplus
 xsetq fp rehash
 
 display -flatten -window root /usr/X11R7/include/X11/pixmaps/NetBSD-flag.png
 #/usr/X11R7/include/X11/pixmaps
-/usr/X11R7/bin/xterm -fs 16 -fa "M+ 2m" -geometry 115x33+0+0 -name login &
+xclock -digital -geometry -0-0 &
+/usr/X11R7/bin/xterm -fs 16 -fa "M+ 2m" -fd "M+ 2m" -geometry 115x31+0+0 -name login &
+/usr/X11R7/bin/xterm -fs 16 -fa "M+ 2m" -fd "M+ 2m" &
 exec ctwm
+
