@@ -29,7 +29,7 @@ alias ....='cd ../../..'
 
 if [ ! -z "$(which w3m)" ] ; then
 	PAGER="\w3m"
-	alias less=$PAGER
+	alias less=${PAGER:=\vim -R}
 	alias man="\w3mman"
 	ggl() {
 		local g_url="https://www.google.com"
@@ -80,10 +80,9 @@ show_color_codes() {
 	tput sgr0 ; echo
 }
 
-set_title() {
-	local frmt="\033]0;%s\007" ; [ "$TERM" != "${TERM#*screen*}" ] && frmt="\033k%s\033\\"
-	printf $frmt "$@"
-}
+set_title() { printf "\033]0;%s\007" "$@" ; }
+set_screen_tab() { printf "\033k%s\033\\" "$@" ; }
+set_title_tab() { [ "$TERM" != "${TERM#*screen*}" ] && set_screen_tab "$@" || set_title "$@" ; }
 abbrev_pwd() { \pwd | \sed "s#^$HOME#\~#;s#^\(\~*/[^/]*/\).*\(/[^/]*\)#\1...\2#" ; }
 
 unset _chk_os
