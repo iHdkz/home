@@ -1,0 +1,15 @@
+#!/bin/bash
+
+while getopts b:e: OPT
+do
+	case $OPT in
+		b) begin_byte=$OPTARG
+			;;
+		e) end_byte=$OPTARG
+			;;
+		/?) break
+			;;
+	esac
+done
+shift $((OPTIND -1))
+tail -c +$end_byte $1 | head -c $begin_byte
