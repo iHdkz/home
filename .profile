@@ -16,8 +16,9 @@ LC_MESSAGES=C		; export LC_MESSAGES
 XMODIFIERS="@im=uim"	; export XMODIFIERS
 GTK_IM_MODULE=uim	; export GTK_IM_MODULE
 
-PYTHONPATH=$HOME/.python.d		; export PYTHONPATH
-PYTHONSTARTUP=$HOME/.pythonrc.py	; export PYTHONSTARTUP
+PYTHONPATH="$HOME/.config/python.d"	; export PYTHONPATH
+PYTHONSTARTUP="$HOME/.pythonrc.py"	; export PYTHONSTARTUP
+NODE_PATH="$HOME/.config/node_modules"	; export NODE_PATH
 GITHUB=ssh://git@github.com/iHdkz	; export GITHUB
 
 is_contained_in() { [ "$2" != "${2#*$1*}" ] ; }
@@ -54,7 +55,7 @@ if chk_uname "Darwin" ; then
 	# Finished adapting your PATH environment variable for use with MacPorts.
 
 	[ -z "$INFOPATH" ] && export INFOPATH=/opt/local/share/info
-	PYTHONPATH=$(add_path /opt/local/Library/Frameworks/Python.framework/Versions/2.7/lib/python2.7/site-packages "$PYTHONPATH")
+#	PYTHONPATH=$(add_path /opt/local/Library/Frameworks/Python.framework/Versions/2.7/lib/python2.7/site-packages "$PYTHONPATH")
 fi
 
 # if running bash and including .bashrc if it exists
