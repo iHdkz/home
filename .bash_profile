@@ -3,14 +3,20 @@
 # This file is sourced by bash for login shells.  The following line
 # runs your .bashrc and is recommended by the bash info pages.
 
+echo -n "$HOME/.bash_profile loading... "
 # Set up Japanese environment
-SHELL=$(which bash)
+#SHELL=$(which bash)
 
-[[ -f $HOME/.profile ]] && . $HOME/.profile
+chk_and_source() { [[ -f "$1" ]] && . "$1" && echo -n "$1, " ; }
+chk_and_source $HOME/.profile
+chk_and_source $HOME/.bashrc
 
-__BASHCOMPLETION=/opt/local/etc/profile.d/bash_completion.sh
-[[ -f ${__BASHCOMPLETION} ]] && . ${__BASHCOMPLETION}
+## BASH COMPLETION
+chk_and_source /opt/local/etc/profile.d/bash_completion.sh
+chk_and_source /usr/pkg/share/bash-completion/bash_completion
+##
 
-echo ".bash_profile loded"
+#[[ -z ${TMUX} ]] && [[ $SHLVL == 1 ]] && [[ -x $(which tmux) ]] && exec tmux
+echo "loaded."
 
-[[ -z ${TMUX} ]] && [[ $SHLVL == 1 ]] && [[ -x $(which tmux) ]] && exec tmux
+exec tmux -c zsh
