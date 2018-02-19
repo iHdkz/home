@@ -1,55 +1,47 @@
 #
 
+NoDefaults
 NoGrabServer
 RestartPreviousState
 DecorateTransients
-#RandomPlacement
+RandomPlacement
 StartIconified
 
-TitleFont	"mplus_j12r"
-ResizeFont	"mplus_j12r"
-MenuFont	"mplus_j12r"
-IconFont	"mplus_j10r"
-IconManagerFont	"mplus_j10r"
-#TitleFont	"-adobe-helvetica-bold-r-normal--*-120-*-*-*-*-*-*"
-#ResizeFont	"-adobe-helvetica-bold-r-normal--*-120-*-*-*-*-*-*"
-#MenuFont	"-adobe-helvetica-bold-r-normal--*-120-*-*-*-*-*-*"
-#IconFont	"-adobe-helvetica-bold-r-normal--*-100-*-*-*-*-*-*"
-#IconManagerFont "-adobe-helvetica-bold-r-normal--*-100-*-*-*"
+TitleFont	"-mplus-hlvw-bold-r-normal--*-120-*-*-*-*-*-*"
+ResizeFont	"-mplus-hlvw-bold-r-normal--*-120-*-*-*-*-*-*"
+MenuFont	"-mplus-hlvw-bold-r-normal--*-120-*-*-*-*-*-*"
+IconFont	"-mplus-hlvw-bold-r-normal--*-100-*-*-*-*-*-*"
+IconManagerFont "-mplus-hlvw-bold-r-normal--*-100-*-*-*"
 
 # Settings effecting window borders etc -----------------------------------
 #
-BorderWidth  2 		 # Number of pixels for border around entire window
-FramePadding 1		 # Number of pixels between titlebar buttons & frame
-TitleButtonBorderWidth 0 # Number of pixels for button border
-TitlePadding 15		 # Number of pixels around title buttons
-ButtonIndent 1 		 # Larger seems to squash buttons together
-MenuBorderWidth 2 	 # Number of pixels for menu border
-NoMenuShadows 		 # No shadow behind the menu
+BorderWidth		 2 # Number of pixels for border around entire window
+FramePadding		 8 # Number of pixels between titlebar buttons & frame
+TitleButtonBorderWidth 	 0 # Number of pixels for button border
+TitlePadding		10 # Number of pixels around title buttons
+ButtonIndent		 1 # Larger seems to squash buttons together
+MenuBorderWidth		 2 # Number of pixels for menu border
+NoMenuShadows 		   # No shadow behind the menu
 
 # Title bar buttons
 
 IconDirectory    "~/.local/icons" # Directory for non default icons
 LeftTitleButton  "resize.xbm"=f.resize
 RightTitleButton "min.xbm"=f.iconify
-RightTitleButton "O.xbm"=f.fullzoom
+RightTitleButton "max.xbm"=f.fullzoom
 RightTitleButton "X.xbm"=f.delete
 
 # -------------------------------------------------------------------------
 #ClientBorderWidth
 ShowIconManager
-IconManagerHighlight "#000000"
+IconManagerHighlight	"#000000"
+IconManagerGeometry	"=1024x20-0+0" 8
 SqueezeTitle
 
-NoTitle
-{
-	"TWM Icon Manager"
-}
-
-NoTitleHighlit
-{
-	"TWM Icon Manager"
-}
+IconManagerDontShow { "xclock" }
+NoTitle		{ "TWM Icon Manager" "xclock" }
+NoTitleHighlit	{ "TWM Icon Manager" }
+AutoRaise	{ "TWM Icon Manager" }
 
 Color
 {
@@ -74,7 +66,7 @@ Color
 	IconBorderColor		"#000000"
 
 	IconManagerBackground	"#4E4E4E"
-	IconManagerForeground	"White"
+	IconManagerForeground	"gray"
 }
 
 #
@@ -93,6 +85,7 @@ menu "TwmMenu"
 	"Restart"	f.restart
 	"Exit"		f.quit
 }
+
 menu "TwmOperations"
 {
 	"Iconify"	f.iconify
@@ -108,6 +101,26 @@ menu "TwmOperations"
 	"Delete"	f.delete
 }
 
+menu "IconmgrOperations"
+{
+	"Iconify"	f.iconify
+	"Resize"	f.resize
+	"Delete Window"	f.delete
+	""		f.nop
+	"up"		f.upiconmgr
+	"down"		f.downiconmgr
+	"right"		f.righticonmgr
+	"left"		f.lefticonmgr
+	"forward"	f.forwiconmgr
+	"back"		f.backiconmgr
+	""		f.nop
+	"circledown"	f.circledown
+	"circleup"	f.circleup
+	"raise"		f.raise
+	"lower"		f.lower
+	""		f.nop
+	"Kill Window"	f.destroy
+}
 #
 # Define some useful functions for motion-based actions.
 #
@@ -121,20 +134,26 @@ Function "move-or-iconify" { f.move f.deltastop f.iconify }
 #
 
 Button1 = m : window|icon : f.function "move-or-lower"
-Button2 = m : window|icon : f.iconify
+#Button2 = m : window|icon : f.iconify
 Button3 = m : window|icon : f.function "move-or-raise"
 
 Button1 =   : title : f.function "move-or-raise"
-#Button2 =   : title : f.raiselower
+Button2 =   : title | icon  : f.identify
 Button3 =   : title | frame : f.menu "TwmMenu"
 
 Button1 =   : icon 	: f.function "move-or-iconify"
-Button1 =   : iconmgr	: f.iconify
+
+Button1 =   : iconmgr	: f.raiselower
+Button2 =   : iconmgr   : f.iconify
+Button3 =   : iconmgr	: f.menu "IconmgrOperations"
 
 # Mouse settings and Window beahviours ------------------------------------
 #
 # Button1=left, Button2=middle, Button3=right, m=alt, c=ctrl, s=shift
 
+Function "toggle-windows" { f.forwiconmgr f.lower }
+"Tab" = m : all : f.function "toggle-windows"
+"Escape" = m : all : f.delete
 # The root window actions i.e. clicking on the backgound
 Button1 = : root : f.menu "TwmMenu"
 Button2 = : root : f.menu "TwmOperations"
@@ -143,8 +162,3 @@ Button3 = : root : f.menu "TwmWindows"
 # Left click the window title to lower / raise + gain focus or move
 Movedelta 1
 
-Button3 = : title | frame : f.menu "TwmOperations"
-#Button2 = : title|frame : f.menu "WindowMenu"
-
-DefaultFunction f.nop
-# -------------------------------------------------------------------------

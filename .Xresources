@@ -1,0 +1,7 @@
+xterm*termName:			xterm-256color
+xterm*saveLines:		2000
+xterm*faceSize:			16
+xterm*faceName:			M+ 2m
+xterm*faceNameDoublesize:	M+ 2m
+xterm*selectToClipboard:	true
+

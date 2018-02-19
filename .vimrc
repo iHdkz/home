@@ -1,27 +1,19 @@
 ".vimrc file.
 filetype plugin on
 filetype indent on
-
 syntax on
 colorscheme mycolor "located at $HOME/.vim/after/colors/mycolor.vim
 
-set nocompatible number
-"set cursorline
-set autoindent smartindent
-set autowrite backup writebackup
-set nostartofline showmatch
+set nocompatible autoindent smartindent number " cursorline
+set nostartofline showmatch autowrite backup writebackup
 set incsearch ignorecase smartcase wrapscan hlsearch
-set helpheight=10 cmdheight=1
-
+set helpheight=10 cmdheight=1 history=1000
 set wildmenu wildmode=list:longest,full
-set history=1000
-
 set clipboard=unnamed,unnamedplus
 
 set statusline=[%n]\ %f\ %(\ %M%R%H!%)[%{&fileformat}][%{&fileencoding}]
 set statusline+=<r=%l\,c=%c%V>\ ASCII=%b\ HEX=%B
-set laststatus=2
-set showcmd showmode
+set laststatus=2 showcmd showmode
 
 if &encoding !=# 'utf-8' | set encoding=japan fileencoding=japan | endif
 

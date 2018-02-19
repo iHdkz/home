@@ -1,0 +1,3 @@
+#/bin/sh
+
+osname="$(uname -s)" && [ "$osname" != "${osname#*$1*}" ] 
