@@ -14,6 +14,7 @@ set clipboard=unnamed,unnamedplus
 set statusline=[%n]\ %f\ %(\ %M%R%H!%)[%{&fileformat}][%{&fileencoding}]
 set statusline+=<r=%l\,c=%c%V>\ ASCII=%b\ HEX=%B
 set laststatus=2 showcmd showmode
+set secure
 
 if &encoding !=# 'utf-8' | set encoding=japan fileencoding=japan | endif
 
@@ -36,3 +37,4 @@ nnoremap g* g*zz
 nnoremap g# g#zz
 
 nnoremap <ESC><ESC> :nohlsearch<ESC>
+

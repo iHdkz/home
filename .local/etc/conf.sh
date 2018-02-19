@@ -2,7 +2,7 @@
 _chk_os() { local osname="$(uname -s)" && [ "$osname" != "${osname#*$1*}" ] ; }
 _ls_call() {
 	local ls_opt='-CF --color=auto --show-control-char' #GNU ls
-	[ ! -z "$(which gls)" ] && echo "\gls ""${ls_opt}" && return
+	[ -x "$(which gls)" ] && echo "\gls ""${ls_opt}" && return
 	_chk_os "Darwin"	&& ls_opt='-G'
 	_chk_os "BSD"		&& ls_opt='-CdFw'
 	echo "\ls ""${ls_opt}"
@@ -25,9 +25,12 @@ alias ...='cd ../..'
 alias ....='cd ../../..'
 
 #alias less=${PAGER:=\less}
-[ ! -z "$(which vim)" ]  && alias vi="\vim"
+[ -x "$(which vim)"  ] && alias vi="\vim"
+[ -x "$(which nvim)" ] && alias vi="\nvim"
 
-if [ ! -z "$(which w3m)" ] ; then
+alias venvpy3="source ~/.local/venvpy3/bin/activate"
+
+if [ -x "$(which w3m)" ] ; then
 	PAGER="\w3m"
 	alias less=${PAGER:=\vim -R}
 	alias man="\w3mman"
