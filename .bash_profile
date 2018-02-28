@@ -18,3 +18,5 @@ chk_and_source /usr/pkg/share/bash-completion/bash_completion
 
 #[[ -z ${TMUX} ]] && [[ $SHLVL == 1 ]] && [[ -x $(which tmux) ]] && exec tmux
 echo "loaded."
+
+exec tmux -c zsh
