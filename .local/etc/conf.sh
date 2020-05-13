@@ -2,7 +2,7 @@
 _chk_os() { local osname="$(uname -s)" && [ "$osname" != "${osname#*$1*}" ] ; }
 _ls_call() {
 	local ls_opt='-CF --color=auto --show-control-char' #GNU ls
-	[ -x "$(which gls)" ] && echo "\gls ""${ls_opt}" && return
+	[ -x "$(which gls)" ]	&& echo "\gls ""${ls_opt}" && return
 	_chk_os "Darwin"	&& ls_opt='-G'
 	_chk_os "BSD"		&& ls_opt='-CdFw'
 	echo "\ls ""${ls_opt}"
@@ -29,6 +29,7 @@ alias ....='cd ../../..'
 [ -x "$(which nvim)" ] && alias vi="\nvim"
 
 alias venvpy3="source ~/.local/venvpy3/bin/activate"
+alias r5rs="\plt-r5rs"
 
 if [ -x "$(which w3m)" ] ; then
 	PAGER="\w3m"
@@ -44,49 +45,64 @@ if [ -x "$(which w3m)" ] ; then
 		local opts="/search?"
 		\w3m "${eow_url}${opts}q="$(echo "$*" | sed -e "s/ /+/g") ;
 	}
-fi
-
-### Zsh options
-if [ ! -z "$ZSH_NAME" ] ; then
-	alias -s gp="gnuplot"
-	alias -s gnu="gnuplot" 
-	##
-	zshow_color_codes() { 
-		for c in "{000..255}" ; do
-			echo -n "\e[38;5;${c}m $c" ; [ $(($c%16)) -eq 15 ] && echo 
+	dumpweb() {(
+		while getopts o: arg ; do
+			# echo arg=$arg, oa=$OPTARG
+			case $arg in
+				o)  exec 1> $OPTARG ;;
+				\?) echo "Usage: $0 [-o OutFile] URLs...." 1>&2
+					exit 2
+					;;
+			esac
 		done
-	}
-	##
-	if [[ -f ./iab.zsh ]] ; then
-		autoload -Uz iab.zsh	&& iab.zsh
-		##
-		ialias G="| grep"
-		ialias X="| xargs"
-		#ialias T="| tail"
-		#ialias C="| cat"
-		#ialias W="| wc"
-		#ialias A="| awk"
-		#ialias S="| sed"
-		ialias E="2>&1 > /dev/null"
-		ialias N="> /dev/null"
-		ialias ccg="cc -ansi -Wall -pedantic-errors"
-		ialias _safe="-ansi -Wall -pedantic-errors"
-		ialias _gsl="-lgsl -lgslcblas -lm"
+		shift $((OPTIND-1))
+		for url in "$@" ; do
+			w3m -dump $url
+		done
+		)}
 	fi
-fi
 
-### define functions ###
-show_color_codes() {
-	for c in $(seq 1 256) ; do
-		printf $(tput setaf $c)"%4s" $c
-	done
-	tput sgr0 ; echo
-}
+	### Zsh options
+	if [ ! -z "$ZSH_NAME" ] ; then
+		alias -s gp="gnuplot"
+		alias -s gnu="gnuplot" 
+		##
+		zshow_color_codes() { 
+			for c in "{000..255}" ; do
+				echo -n "\e[38;5;${c}m $c" ; [ $(($c%16)) -eq 15 ] && echo 
+			done
+		}
+		##
+		if [[ -f "${HOME}/.local/etc/iab.zsh" ]] ; then
+			autoload -Uz iab.zsh	&& iab.zsh
+			##
+			ialias G="| grep"
+			ialias X="| xargs"
+			#ialias T="| tail"
+			#ialias C="| cat"
+			#ialias W="| wc"
+			#ialias A="| awk"
+			#ialias S="| sed"
+			ialias E="2>&1 > /dev/null"
+			ialias N="> /dev/null"
+			ialias ccg="cc -ansi -Wall -pedantic-errors"
+			ialias _safe="-ansi -Wall -pedantic-errors"
+			ialias _gsl="-lgsl -lgslcblas -lm"
+		fi
+	fi
 
-set_title() { printf "\033]0;%s\007" "$@" ; }
-set_screen_tab() { printf "\033k%s\033\\" "$@" ; }
-set_title_tab() { [ "$TERM" != "${TERM#*screen*}" ] && set_screen_tab "$@" || set_title "$@" ; }
-abbrev_pwd() { \pwd | \sed "s#^$HOME#\~#;s#^\(\~*/[^/]*/\).*\(/[^/]*\)#\1...\2#" ; }
+	### define functions ###
+	show_color_codes() {
+		for c in $(seq 1 256) ; do
+			printf $(tput setaf $c)"%4s" $c
+		done
+		tput sgr0 ; echo
+	}
 
-unset _chk_os
-unset _ls_call
+	set_title() 	 { printf "\033]0;%s\007" "$@" ; }
+	set_screen_tab() { printf "\033k%s\033\\" "$@" ; }
+	set_title_tab()  { [ "$TERM" != "${TERM#*screen*}" ] && set_screen_tab "$@" || set_title "$@" ; }
+	abbrev_pwd()	 { \pwd | \sed "s#^$HOME#\~#;s#^\(\~*/[^/]*/\).*\(/[^/]*\)#\1...\2#" ; }
+
+	unset _chk_os
+	unset _ls_call

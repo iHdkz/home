@@ -2,8 +2,6 @@
 # Python Startup Script
 import readline
 import rlcompleter
-import atexit
-import os
 
 # turn on the completer
 if 'libedit' in readline.__doc__:
@@ -12,22 +10,29 @@ else:
 	readline.parse_and_bind("tab: complete")
 
 # display histories
-histfile = os.path.join(os.environ['HOME'], '.history.py')
+#histfile = os.path.join(os.environ['HOME'], '.history.py')
 
 try:
-	readline.read_history_file(histfile)
+    readline.read_history_file()
 except IOError:
-	pass
+    pass
 
-atexit.register(readline.write_history_file, histfile)
+import sys
+import datetime
+import atexit
+readline.add_history("#_" + sys.version.split(" ")[0] + \
+                     "_" + str(datetime.datetime.now()))
+atexit.register(readline.write_history_file)
 
-del os, histfile, readline, rlcompleter, atexit
+if sys.version_info >= (3, 0): sys.ps1 = "]]> "
 
-import prompt
-prompt.Prompt.set_ps1("<greenLight>>>> <reset>")
-del prompt
+del rlcompleter
+del readline
+del atexit
+del datetime
+del sys
 
 # gnuplot.py
-from Gnuplot import Gnuplot
-from numpy import *
-from scipy import *
+#from Gnuplot import Gnuplot
+#from numpy import *
+#from scipy import *

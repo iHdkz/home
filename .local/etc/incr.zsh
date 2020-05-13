@@ -26,6 +26,7 @@ function limit-completion
 		compstate[list]=""
 		echo -n "\e[32m" # tput AF 2
 		zle -M "too many matches."
+		return
 	fi
 }
 

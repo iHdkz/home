@@ -1,18 +1,20 @@
-#/usr/bin/env zsh
+#!/usr/bin/env zsh
 
 setopt extended_glob
 
-ialias() { [[ $# == 1 ]] && [[ $1 == *=* ]] && abbreviations[${1%%=*}]=${1#*=} ; }
-typeset -gA abbreviations=()
+typeset -gA abbreviations
 
-magic-abbrev-expand() {
+function ialias() {
+	[[ $# == 1 ]] && [[ $1 == *=* ]] && abbreviations[${1%%=*}]=${1#*=} ;
+}
+
+function magic-abbrev-expand() {
 	local MATCH
 	LBUFFER=${LBUFFER%%(#m)[-_a-zA-Z0-9]#}
 	LBUFFER+=${abbreviations[$MATCH]:-$MATCH}
-	zle self-insert
-}
+	zle self-insert ; }
 
-no-magic-abbrev-expand() { LBUFFER+=' ' ; }
+function no-magic-abbrev-expand() { LBUFFER+=' ' ; }
 
 zle -N magic-abbrev-expand
 zle -N no-magic-abbrev-expand

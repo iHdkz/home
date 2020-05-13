@@ -7,64 +7,32 @@
 ### To customize gnuplot's initial state for an individual user,
 ### place commands in a private file ~/.gnuplot instead.
 
-if(exist("__INITIALIZATION__") != 0) exit;
-__INITIALIZATION__ = "done";
+if(exist("__init__") != 0) exit;
+__init__ = "done";
 
 reset;
-###
-### Language initialization
-###
-# set locale
-# set encoding locale
-#set xrange [-1:1]
-#set yrange [-1:1]
-#set size ratio 1;	print "set size ratio 1";
-set size square;	print "set size square";
-set grid;		print "set grid";
-set key right bottom;	print "set key right bottom";
+# the imaginary unit in complex number.
+i = {0.0,1.0};
 
-###
-### Macro definitions
-###
-set macros;	print "set macros";
-urng = "[-1:1]"
+# set locale;
+# set encoding locale;
+#set xrange [-C:C];
+#set yrange [-C:C];
+#set size ratio 1;
+set size square;	#print "set size square";
+set size ratio -1;	#print "set size ratio -1";
+#set grid;		print "set grid";
+set key right bottom;	#print "key right bottom";
+set macros;		#print "set macros";
+#set noautoscale;
 
-pts = "with points";
-dts = "with dots";
-vts = "with vectors";
+#set isosample 100;
+#set contour base;
+#set cntrparam levels incremental -10,1.5,10;
+#set view map;
+#set nosurface;
 
-ls1 = "linestyle 1";
-ls2 = "linestyle 2";
-ls3 = "linestyle 3";
-
-###
-### Default line colors and repeat cycle
-###
-rgb(r,g,b) = sprintf("#%02x%02x%02x",r%256,g%256,b%256);
-hsv(h,s,v) = sprintf("#%06x",hsv2rgb(h,s,v))
-
-set linetype 1 linewidth 1 linecolor rgb "red-orange"
-set linetype 2 linewidth 1 linecolor rgb "dark-violet"
-#set linetype 3 linewidth 1 linecolor rgb "#56b4e9"
-#set linetype 4 linewidth 1 linecolor rgb "#e69f00"
-#set linetype 5 linewidth 1 linecolor rgb "#f0e442"
-#set linetype 6 linewidth 1 linecolor rgb "#0072b2"
-#set linetype 7 linewidth 1 linecolor rgb "#e51e10"
-#set linetype 8 linewidth 1 linecolor rgb "black"
-set linetype cycle 8
-
-#set style line 1 linecolor rgb 'black' pt 5   # square
-#set style line 2 linecolor rgb 'black' pt 7   # circle
-#set style line 3 linecolor rgb 'black' pt 9   # triangle
-###
-### Initialize the default loadpath for shared gnuplot scripts and data.
-### Please confirm that this path is correct before uncommented the line below.
-###
-set loadpath "/opt/local/share/doc/gnuplot/demo" "~/.gnuplot.d/";
-
-mode_inter = "set autoscale;" .  "unset xrange;" .  "unset yrange;"
-mode_disc  = "__N = 50;" . "set sample __N;" . "set xrange [0: __N - 1];"
-mode_anim  = "set noautoscale;"
+#set object 1 circle at 0,0 size a fc rgb "gray" fs solid front
 ###
 ### Some commonly used functions that are not built in
 ###
@@ -77,11 +45,21 @@ func_P="P(n,r)=(r<=1 ? n : n*P(n-1,r-1));"
 func_bindist="bindist(n,r,p)=C(n,r)*(p**r)*((1.0-p)**(n-r));"
 
 ###
-### Other preferences
+### Default line colors and repeat cycle
 ###
-# set clip two
+rgb(r,g,b) = sprintf("#%02x%02x%02x",r%256,g%256,b%256);
+hsv(h,s,v) = sprintf("#%06x",hsv2rgb(h,s,v))
 
-# the imaginary unit in complex number.
-i = {0.0,1.0};
+set linetype 1 linewidth 1 linecolor rgb "red-orange"
+set linetype 2 linewidth 1 linecolor rgb "dark-violet"
+set linetype cycle 8
 
-#
+#set style line 1 linecolor rgb 'black' pt 5   # square
+#set style line 2 linecolor rgb 'black' pt 7   # circle
+#set style line 3 linecolor rgb 'black' pt 9   # triangle
+###
+### Initialize the default loadpath for shared gnuplot scripts and data.
+### Please confirm that this path is correct before uncommented the line below.
+###
+set loadpath "/opt/local/share/doc/gnuplot/demo" "~/.gnuplot.d/";
+

@@ -1,16 +1,16 @@
 umask 022
 
 HISTFILE=${HOME}/.zhistory
-HISTSIZE=10000
-SAVEHIST=10000
-setopt hist_ignore_dups extended_history
+HISTSIZE=1000
+#SAVEHIST=50
+setopt hist_ignore_dups hist_expire_dups_first
 setopt auto_pushd notify no_beep
 setopt auto_menu magic_equal_subst
 
-PROMPT="%F{cyan}%(!.#.>)%(!.#.>)%f "
+PROMPT="%F{cyan}%(!|#|>)%(!|#|>)%f "
 PROMPT2="%F{cyan}--%f "
-RPROMPT="%{%(?.%F{white}.%F{red})%}X%f"\
-[${SSH_CLIENT:+"%F{blue}remote:%f"}"%F{magenta}%(3~,%-1~/.../%1~,%~)%f"]
+RPROMPT="%{%(?|%F{white}|%F{red})%}X%f"
+RPROMPT=${RPROMPT}[${SSH_CLIENT:+"%F{blue}remote:%f"}"%F{magenta}%(3~|%-1~/.../%1~|%~)%f"]
 
 #cdpath=( ~ )
 manpath=(/usr/pkg/man $MANPATH)

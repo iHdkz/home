@@ -1,0 +1,7 @@
+#!/usr/bin/tclsh
+
+set f [open [lindex $argv 0] r]
+while {[gets $f line] != -1} {
+	puts $line
+}
+close $f

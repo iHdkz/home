@@ -15,3 +15,13 @@
 
 complex double id(complex double c) { return c; }
 EXPORT_GPFUNC_C(s, id);
+
+complex double mandel(double ballradius, complex double A, complex double z, int n)
+{
+	return (cabs(z) < ballradius && n <= 1000) ? mandel(ballradius, A, z*z+A, n+1) : n;
+}
+complex double mandelb(complex double A, complex double z)
+{
+	return mandel(2.0, A, z, 0);
+}
+EXPORT_GPFUNC_CC(mandelbrot, mandelb);

@@ -3,11 +3,11 @@
 # This file is sourced by bash for login shells.  The following line
 # runs your .bashrc and is recommended by the bash info pages.
 
-echo -n "$HOME/.bash_profile loading... "
+echo "$HOME/.bash_profile loading... "
 # Set up Japanese environment
 #SHELL=$(which bash)
 
-chk_and_source() { [[ -f "$1" ]] && . "$1" && echo -n "$1, " ; }
+chk_and_source() { [[ -f "$1" ]] && . "$1" && echo "	-> $1 loaded." ; }
 chk_and_source $HOME/.profile
 chk_and_source $HOME/.bashrc
 
@@ -17,6 +17,7 @@ chk_and_source /usr/pkg/share/bash-completion/bash_completion
 ##
 
 #[[ -z ${TMUX} ]] && [[ $SHLVL == 1 ]] && [[ -x $(which tmux) ]] && exec tmux
-echo "loaded."
+echo ".bash_profile loaded."
 
-exec tmux -c zsh
+exec zsh
+#exec tmux -c zsh

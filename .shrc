@@ -15,6 +15,6 @@ set -o emacs
 # set -o tabcomplete, so check before trying to use it.
 ( set -o tabcomplete 2>/dev/null ) && set -o tabcomplete
 
-chk_and_source() { [ -f "$1" ] && . "$1" ] ; }
+chk_and_source() { [ -f "$1" ] && . "$1" ; }
 chk_and_source $HOME/.local/etc/conf.sh
 
