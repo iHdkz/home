@@ -36,6 +36,7 @@ PATH=$(add_path /usr/X11R7/bin   "$PATH")
 PATH=$(add_path $HOME/.local/bin "$PATH")
 # GO-lang PATH
 PATH=$(add_path $GOPATH/bin	 "$PATH")
+
 export PATH
 
 # set PATH so it includes user's private bin if it exists
