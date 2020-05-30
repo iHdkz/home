@@ -5,13 +5,12 @@
 # including some apparently interactive shells such as scp and rcp
 # that can't tolerate any output.
 
-# PATH=$PATH:$HOME/.local/bin
 umask 022
 
 # outputting anything in those cases.
 # Shell is non-interactive.  Be done now
 [[ $- != *i* ]] && return
-source ${HOME}/.local/etc/conf.sh
+source ${HOME}/.config/etc/conf.sh
 
 shopt -u cdspell cdable_vars sourcepath # unset options
 shopt -s checkwinsize checkhash extglob # set options

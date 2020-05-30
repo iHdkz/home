@@ -28,7 +28,6 @@ alias ....='cd ../../..'
 [ -x "$(which vim)"  ] && alias vi="\vim"
 [ -x "$(which nvim)" ] && alias vi="\nvim"
 
-alias venvpy3="source ~/.local/venvpy3/bin/activate"
 alias r5rs="\plt-r5rs"
 
 if [ -x "$(which w3m)" ] ; then
@@ -73,7 +72,7 @@ if [ -x "$(which w3m)" ] ; then
 			done
 		}
 		##
-		if [[ -f "${HOME}/.local/etc/iab.zsh" ]] ; then
+		if [[ -f "${HOME}/.config/etc/iab.zsh" ]] ; then
 			autoload -Uz iab.zsh	&& iab.zsh
 			##
 			ialias G="| grep"

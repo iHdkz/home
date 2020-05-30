@@ -33,7 +33,7 @@ PATH=$(add_path /sbin		 "$PATH")
 PATH=$(add_path /usr/pkg/sbin    "$PATH")
 PATH=$(add_path /usr/sbin	 "$PATH")
 PATH=$(add_path /usr/X11R7/bin   "$PATH")
-PATH=$(add_path $HOME/.local/bin "$PATH")
+PATH=$(add_path $HOME/.config/bin "$PATH")
 # GO-lang PATH
 PATH=$(add_path $GOPATH/bin	 "$PATH")
 

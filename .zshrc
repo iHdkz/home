@@ -14,7 +14,7 @@ RPROMPT=${RPROMPT}[${SSH_CLIENT:+"%F{blue}remote:%f"}"%F{magenta}%(3~|%-1~/.../%
 
 #cdpath=( ~ )
 manpath=(/usr/pkg/man $MANPATH)
-fpath=(${HOME}/.local/etc $fpath)
+fpath=(${HOME}/.config/etc $fpath)
 autoload -Uz conf.sh	&& conf.sh
 autoload -U  incr.zsh	&& incr.zsh
 autoload -Uz compinit #	&& compinit -u
@@ -32,3 +32,5 @@ function __pwd_title { [[ $TERM != "screen" ]] && set_title $(abbrev_pwd) ; }
 #title "$(pwd | sed "s#^$HOME#\~#;s#^\(\~*/[^/]*/\).*\(/[^/]*\)#\1...\2#")"
 
 [ ! -v TMUX ] && exec tmux
+eval "$(rbenv init -)"
+source "$HOME/.config/venvpy/bin/activate"
