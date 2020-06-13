@@ -34,6 +34,7 @@ PATH=$(add_path /usr/pkg/sbin    "$PATH")
 PATH=$(add_path /usr/sbin	 "$PATH")
 PATH=$(add_path /usr/X11R7/bin   "$PATH")
 PATH=$(add_path $HOME/.config/bin "$PATH")
+PATH=$(add_path $HOME/.local/bin "$PATH")
 # GO-lang PATH
 PATH=$(add_path $GOPATH/bin	 "$PATH")
 
@@ -57,7 +58,6 @@ if chk_uname "Darwin" ; then
 	PATH=$(add_path "/opt/local/bin"	 	  "$PATH")
 	PATH=$(add_path "/opt/local/sbin"	 	  "$PATH")
 	PATH=$(add_path "/opt/local/lib/fpc/bin" 	  "$PATH")
-	PATH=$(add_path "$HOME/Library/Haskell/bin"	  "$PATH")
 	PATH=$(add_path "/Applications/Racket v6.1.1/bin" "$PATH")
 	# Finished adapting your PATH environment variable for use with MacPorts.
 
