@@ -11,6 +11,7 @@ _ls_call() {
 alias ls="$(_ls_call)"
 alias l.="ls .*"
 alias la="ls -a"
+alias lall="ls -all"
 alias ll="ls -hl"
 alias lla="ls -ahl"
 alias mv='\mv -iv'
