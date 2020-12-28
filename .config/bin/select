@@ -1,4 +1,0 @@
-#!/usr/bin/tclsh
-
-set a [lindex $argv 2]
-puts $a

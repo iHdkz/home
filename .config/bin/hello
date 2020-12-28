@@ -1,3 +1,0 @@
-#!/usr/bin/wish
-button .hello -text Hello -command {puts stdout "hello world!"}
-pack .hello -padx 20 -pady 10
