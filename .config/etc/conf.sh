@@ -60,49 +60,49 @@ if [ -x "$(which w3m)" ] ; then
 			w3m -dump $url
 		done
 		)}
-	fi
+fi
 
-	### Zsh options
-	if [ ! -z "$ZSH_NAME" ] ; then
-		alias -s gp="gnuplot"
-		alias -s gnu="gnuplot" 
-		##
-		zshow_color_codes() { 
-			for c in "{000..255}" ; do
-				echo -n "\e[38;5;${c}m $c" ; [ $(($c%16)) -eq 15 ] && echo 
-			done
-		}
-		##
-		if [[ -f "${HOME}/.config/etc/iab.zsh" ]] ; then
-			autoload -Uz iab.zsh	&& iab.zsh
-			##
-			ialias G="| grep"
-			ialias X="| xargs"
-			#ialias T="| tail"
-			#ialias C="| cat"
-			#ialias W="| wc"
-			#ialias A="| awk"
-			#ialias S="| sed"
-			ialias E="2>&1 > /dev/null"
-			ialias N="> /dev/null"
-			ialias ccg="cc -ansi -Wall -pedantic-errors"
-			ialias _safe="-ansi -Wall -pedantic-errors"
-			ialias _gsl="-lgsl -lgslcblas -lm"
-		fi
-	fi
-
-	### define functions ###
-	show_color_codes() {
-		for c in $(seq 1 256) ; do
-			printf $(tput setaf $c)"%4s" $c
+### Zsh options
+if [ ! -z "$ZSH_NAME" ] ; then
+	alias -s gp="gnuplot"
+	alias -s gnu="gnuplot" 
+	##
+	zshow_color_codes() { 
+		for c in "{000..255}" ; do
+			echo -n "\e[38;5;${c}m $c" ; [ $(($c%16)) -eq 15 ] && echo 
 		done
-		tput sgr0 ; echo
 	}
+	##
+	if [[ -f "${HOME}/.config/etc/iab.zsh" ]] ; then
+		autoload -Uz iab.zsh	&& iab.zsh
+		##
+		ialias G="| grep"
+		ialias X="| xargs"
+		#ialias T="| tail"
+		#ialias C="| cat"
+		#ialias W="| wc"
+		#ialias A="| awk"
+		#ialias S="| sed"
+		ialias E="2>&1 > /dev/null"
+		ialias N="> /dev/null"
+		ialias ccg="cc -ansi -Wall -pedantic-errors"
+		ialias _safe="-ansi -Wall -pedantic-errors"
+		ialias _gsl="-lgsl -lgslcblas -lm"
+	fi
+fi
 
-	set_title() 	 { printf "\033]0;%s\007" "$@" ; }
-	set_screen_tab() { printf "\033k%s\033\\" "$@" ; }
-	set_title_tab()  { [ "$TERM" != "${TERM#*screen*}" ] && set_screen_tab "$@" || set_title "$@" ; }
-	abbrev_pwd()	 { \pwd | \sed "s#^$HOME#\~#;s#^\(\~*/[^/]*/\).*\(/[^/]*\)#\1...\2#" ; }
+### define functions ###
+show_color_codes() {
+	for c in $(seq 1 256) ; do
+		printf $(tput setaf $c)"%4s" $c
+	done
+	tput sgr0 ; echo
+}
 
-	unset _chk_os
-	unset _ls_call
+set_title() 	 { printf "\033]0;%s\007" "$@" ; }
+set_screen_tab() { printf "\033k%s\033\\" "$@" ; }
+set_title_tab()  { [ "$TERM" != "${TERM#*screen*}" ] && set_screen_tab "$@" || set_title "$@" ; }
+abbrev_pwd()	 { \pwd | \sed "s#^$HOME#\~#;s#^\(\~*/[^/]*/\).*\(/[^/]*\)#\1...\2#" ; }
+
+unset _chk_os
+unset _ls_call

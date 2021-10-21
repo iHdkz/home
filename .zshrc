@@ -31,14 +31,12 @@ function __and_ls { [[ $(\ls -1 |\wc -l) -le 50 ]] && ls || echo "${fg[green]}ma
 function __pwd_title { [[ $TERM != "screen" ]] && set_title $(abbrev_pwd) ; }
 #title "$(pwd | sed "s#^$HOME#\~#;s#^\(\~*/[^/]*/\).*\(/[^/]*\)#\1...\2#")"
 
-if [[ -o INTERACTIVE ]] ; then
-	if [[ -z "$TMUX" ]] ; then
-		tmux ls && exec tmux attach || exec tmux new-session -s main
-	fi
-
-	eval "$(rbenv init -)"
-	source "$HOME/.config/venvpy/3.8/bin/activate" 
-
-	# heroku autocomplete setup
-	# #HEROKU_AC_ZSH_SETUP_PATH=/Users/hide/Library/Caches/heroku/autocomplete/zsh_setup && test -f $HEROKU_AC_ZSH_SETUP_PATH && source $HEROKU_AC_ZSH_SETUP_PATH;
+if [[ -o INTERACTIVE ]] && [[ -z "$TMUX" ]] ; then
+	$(tmux ls > /dev/null) && tmux attach || tmux new-session -s main
 fi
+
+#eval "$(rbenv init -)"
+source "$HOME/.config/venvpy/3.9/bin/activate" 
+
+# heroku autocomplete setup
+# #HEROKU_AC_ZSH_SETUP_PATH=/Users/hide/Library/Caches/heroku/autocomplete/zsh_setup && test -f $HEROKU_AC_ZSH_SETUP_PATH && source $HEROKU_AC_ZSH_SETUP_PATH;
