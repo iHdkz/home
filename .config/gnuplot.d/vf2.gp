@@ -1,4 +1,4 @@
-
+#!/usr/bin/env gnuplot -persist -dc
 set isosample 10;
 set sample 10;
 #set size square;
@@ -14,3 +14,4 @@ im(x,y) = imag(dFdz(x,y))
 delta = 0.5
 
 plot '++' using 1:2:(delta*rl($1,$2)):(delta*im($1,$2)) with vectors
+pause -1

@@ -11,3 +11,4 @@ conform(zeta)=zeta+a**2/zeta
 
 plot real(f(t)),imag(f(t)), real(conform(f(t))),imag(conform(f(t))) with vectors
 
+pause -1

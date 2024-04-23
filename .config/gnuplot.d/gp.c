@@ -1,17 +1,17 @@
 #include <stdio.h>
 #include <stdlib.h>
-#define GP_PATH "/opt/local/bin/gnuplot"
 
-int main(void)
-{
-	FILE *gp; //gpはプログラム変数
-	gp = popen(GP_PATH " -persist", "w");
+int main(int argc, char* argv[]) {
+	FILE *gp = popen("gnuplot -persist", "w");
 
-	fprintf(gp, "plot x*x\n");
-	fflush(gp);
+	fprintf(gp, "set size square\n");
+	for(size_t it = 0; it != 12000; ++it) {
+		fprintf(gp, "plot sin(%f *x)\n", (double)it/12000);
+		fprintf(gp, "pause 0.01\n");
+		fflush(NULL);
+	}
 
 	fprintf(gp, "exit\n");
-
 	pclose(gp);
 	return 0;
 }

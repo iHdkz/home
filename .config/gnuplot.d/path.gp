@@ -14,8 +14,13 @@ gmm=200;
 a=15;
 
 if(exist("cntr") == 0) cntr=-50;
-g(z)=w+i*gmm/(2*pi*(z-cntr))-q*a**2/(2*pi*((z-cntr)**2))
+
+f(x) = 0.01*x*x
+path = f(cntr)
+
+g(z)=w+i*gmm/(2*pi*(z-path))-q*a**2/(2*pi*((z-path)**2))
 #g(z)=w-q*a**2/(2*pi*((z-cntr)**2))
+
 vfilter(val,absmax)=abs(val) > absmax ? 0 : val
 rfield(z)=vfilter( real(g(z)),5);
 ifield(z)=vfilter(-imag(g(z)),5);
