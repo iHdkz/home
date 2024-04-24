@@ -37,14 +37,15 @@ SHELL=$(which bash)
 #uim-toolbar-gtk * &
 
 setxkbmap -model jp106 -layout jp
-xsetq +fp $HOME/.local/fonts/mplus
-xsetq fp rehash
+xset +fp $HOME/.local/fonts/mplus
+xset fp rehash
 
 #display -flatten -window root /usr/X11R7/include/X11/pixmaps/NetBSD-flag.png
-xv -root -quit /usr/X11R7/include/X11/pixmaps/NetBSD-flag.png &
+#xv -root -quit /usr/X11R7/include/X11/pixmaps/NetBSD-flag.png &
+feh --no-fehbg --bg-scale "HOME/.config/wallpaper/gentoo-cow-gdm-remake.svg"
 #/usr/X11R7/include/X11/pixmaps
 xclock -digital -geometry -0-0 &
-/usr/X11R7/bin/xterm -fs 16 -fa "M+ 2m" -fd "M+ 2m" -geometry 115x31+0+0 -name login &
-/usr/X11R7/bin/xterm -fs 16 -fa "M+ 2m" -fd "M+ 2m" &
-exec ctwm
+xterm -fs 16 -fa "M+ 2m" -fd "M+ 2m" -geometry 115x31+0+0 -name login &
+xterm -fs 16 -fa "M+ 2m" -fd "M+ 2m" &
 
+exec ctwm
