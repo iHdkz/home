@@ -1,0 +1,17 @@
+#!/bin/sh
+
+if [[ -z $TMUX && $- == *l* ]]; then
+	TMUXID="`tmux list-sessions`"
+	if [[ -z "$TMUXID" ]]; then
+		tmux new-session -s main
+	fi
+	CREATE_NEW_SESSION="Create New Session"
+	TMUXID="$TMUXID\n${CREATE_NEW_SESSION}:"
+	TMUXID="`echo $TMUXID | fzf | cut -d: -f1`"
+	if [[ "$TMUXID" = "${CREATE_NEW_SESSION}" ]]; then
+		tmux new-session -s main
+	else
+		tmux attach-session -t "$TMUXID"
+	fi
+fi
+

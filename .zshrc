@@ -31,20 +31,6 @@ function __and_ls { [[ $(\ls -1 |\wc -l) -le 50 ]] && ls || echo "${fg[green]}ma
 function __pwd_title { [[ $TERM != "screen" ]] && set_title $(abbrev_pwd) ; }
 #title "$(pwd | sed "s#^$HOME#\~#;s#^\(\~*/[^/]*/\).*\(/[^/]*\)#\1...\2#")"
 
-if [[ -z $TMUX && $- == *l* ]]; then
-	TMUXID="`tmux list-sessions`"
-	if [[ -z "$TMUXID" ]]; then
-		tmux new-session -s main
-	fi
-	CREATE_NEW_SESSION="Create New Session"
-	TMUXID="$TMUXID\n${CREATE_NEW_SESSION}:"
-	TMUXID="`echo $TMUXID | fzf | cut -d: -f1`"
-	if [[ "$TMUXID" = "${CREATE_NEW_SESSION}" ]]; then
-		tmux new-session -s main
-	else
-		tmux attach-session -t "$TMUXID"
-	fi
-fi
-
 source "$HOME/.config/venvpy/3.9/bin/activate" 
+source "$HOME/.config/bin/activatetmux"
 
