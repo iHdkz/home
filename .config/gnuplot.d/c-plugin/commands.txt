@@ -1,5 +1,0 @@
-#setting link files
-gcc -Isrc -c hoge.c
-
-#to complie shared file
-gcc -Isrc -shared -o plugin.so plugin.c
