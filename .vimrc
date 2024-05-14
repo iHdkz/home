@@ -10,6 +10,8 @@ set incsearch ignorecase smartcase wrapscan hlsearch
 set helpheight=10 cmdheight=1 history=1000
 set wildmenu wildmode=list:longest,full
 set clipboard=unnamed,unnamedplus
+set background=dark "light
+"set list listchars=tab:\▸\-
 
 set statusline=[%n]\ %F\%(\ %M%R%H!%)
 set statusline+=%<[%{&fileformat}][%{&fileencoding}]
@@ -29,11 +31,11 @@ endif
 
 augroup BinaryXXD
 	autocmd!
-	autocmd BufReadPre 	*.bin let &binary =1
+	autocmd BufReadPre	*.bin let &binary =1
 	autocmd BufReadPost	* if &binary | silent %!xxd -g 1
 	autocmd BufReadPost	* set ft=xxd | endif
-	autocmd BufWritePre 	* if &binary | %!xxd -r | endif
-	autocmd BufWritePost 	* if &binary | silent %!xxd -g 1
+	autocmd BufWritePre	* if &binary | %!xxd -r | endif
+	autocmd BufWritePost	* if &binary | silent %!xxd -g 1
 	autocmd BufWritePost	* set nomod  | endif
 augroup END
 
