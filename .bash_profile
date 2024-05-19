@@ -16,7 +16,4 @@ chk_and_source /opt/local/etc/profile.d/bash_completion.sh
 chk_and_source /usr/pkg/share/bash-completion/bash_completion
 ##
 
-#[[ -z ${TMUX} ]] && [[ $SHLVL == 1 ]] && [[ -x $(which tmux) ]] && exec tmux
 echo ".bash_profile loaded."
-
-#exec zsh
