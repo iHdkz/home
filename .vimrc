@@ -4,20 +4,20 @@ filetype indent on
 syntax on
 "colorscheme mycolor "located at $HOME/.vim/after/colors/mycolor.vim
 
-set nocompatible autoindent smartindent number " cursorline
+set nocompatible number background=dark "light
+set autoindent smartindent cindent " cursorline
 set nostartofline showmatch autowrite backup writebackup
 set incsearch ignorecase smartcase wrapscan hlsearch
 set helpheight=10 cmdheight=1 history=1000
 set wildmenu wildmode=list:longest,full
 set clipboard=unnamed,unnamedplus
-set background=dark "light
+"set expandtab tabstop=4 softtabstop=0 shiftwidth=4
 "set list listchars=tab:\▸\-
 
 set statusline=[%n]\ %F\%(\ %M%R%H!%)
 set statusline+=%<[%{&fileformat}][%{&fileencoding}]
 set statusline+=<r=%l\,c=%c%V>(%P)%=\ ASCII=%b\ HEX=0x%02B
 set laststatus=2 showcmd showmode
-set secure
 set visualbell t_vb= "for WSL
 
 if &encoding !=# 'utf-8' | set encoding=japan fileencoding=japan | endif
@@ -66,3 +66,4 @@ nnoremap <Tab>h :tabprevious<ESC>
 
 nnoremap <Tab>c :tabnew<Space>
 nnoremap <Tab>o :tabonly<ESC>
+
