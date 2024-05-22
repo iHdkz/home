@@ -1,0 +1,16 @@
+load("mactex-utilities.lisp");
+
+gdd:matrix( [g11, g12, g13, g14],
+            [g21, g22, g23, g24],
+            [g31, g32, g33, g34],
+            [g41, g42, g43, g44]);
+
+guu:ratsimp(invert(gdd));
+/* x:matrix( [x1], [x2], [x3], [x4]);  */
+
+X:x(t)=r(t)*cos(p(t));
+Y:y(t)=r(t)*sin(p(t));
+
+X:matrix([x],[y],[z]);
+
+load("ode.mac");

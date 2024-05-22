@@ -1,0 +1,13 @@
+f(t):=exp(a*t);
+\1_1:integrate(f(t),t,t0,t);
+\1_1:ratsimp(\1);
+
+\1_2:integrate(sin(a*t),t,t0,t);
+\1_2:ratsimp(\2);
+
+\1_3:integrate(cos(a*t),t,t0,t);
+\1_3:ratsimp(\3);
+
+\3_1:m*'diff(v,t)=-m*g-b*v;
+\3_2:ode2(\3_1,v,t);
+
