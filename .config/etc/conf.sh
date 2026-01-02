@@ -2,9 +2,9 @@
 _chk_os() { local osname="$(uname -s)" && [ "$osname" != "${osname#*$1*}" ] ; }
 _ls_call() {
 	local ls_opt='-CF --color=auto --show-control-char' #GNU ls
-	[ -x "$(which gls)" ]	&& echo "\gls ""${ls_opt}" && return
-	_chk_os "Darwin"	&& ls_opt='-G'
-	_chk_os "BSD"		&& ls_opt='-CdFw'
+	[ -x "$(which gls 2> /dev/null)" ] && echo "\gls ""${ls_opt}" && return
+	_chk_os "Darwin" && ls_opt='-G'
+	_chk_os "BSD"	 && ls_opt='-CdFw'
 	echo "\ls ""${ls_opt}"
 }
 
@@ -25,13 +25,16 @@ alias lftp="\lftp -e 'set bmk:save-passwords on && set cmd:prompt \[\e[34m\]\w\[
 alias ...='cd ../..'
 alias ....='cd ../../..'
 
+_chk_os "Linux" && alias pbcopy="xsel --clipboard --input"
+_chk_os "Linux" && alias pbpaste="xsel --clipboard --output"
+
 #alias less=${PAGER:=\less}
-[ -x "$(which vim)"  ] && alias vi="\vim"
-[ -x "$(which nvim)" ] && alias vi="\nvim"
+[ -x "$(which vim 2> /dev/null)"  ] && alias vi="\vim"
+[ -x "$(which nvim 2> /dev/null)" ] && alias vi="\nvim"
 
 alias r5rs="\plt-r5rs"
 
-if [ -x "$(which w3m)" ] ; then
+if [ -x "$(which w3m 2>/dev/null)" ] ; then
 	PAGER="\w3m"
 	alias less=${PAGER:=\vim -R}
 	alias man="\w3mman"

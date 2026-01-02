@@ -14,7 +14,7 @@ RPROMPT=${RPROMPT}[${SSH_CONNECTION:+"%F{blue}remote:%f"}"%F{magenta}%(3~|%-1~/.
 
 #cdpath=( ~ )
 manpath=(/usr/pkg/man $MANPATH)
-fpath=(${HOME}/.config/etc $fpath)
+fpath=("${MYCONFIG:?not bind MYCONFIG}/etc" $fpath)
 autoload -Uz conf.sh	&& conf.sh
 autoload -U  incr.zsh	&& incr.zsh
 autoload -Uz compinit #	&& compinit -u
@@ -31,6 +31,4 @@ function __and_ls { [[ $(\ls -1 |\wc -l) -le 50 ]] && ls || echo "${fg[green]}ma
 function __pwd_title { [[ $TERM != "screen" ]] && set_title $(abbrev_pwd) ; }
 #title "$(pwd | sed "s#^$HOME#\~#;s#^\(\~*/[^/]*/\).*\(/[^/]*\)#\1...\2#")"
 
-source "$HOME/.config/venvpy/3.9/bin/activate" 
-source "$HOME/.config/bin/activatetmux"
-
+source "${MYCONFIG:?not bind MYCONFIG}/bin/activate"

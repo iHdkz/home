@@ -20,23 +20,25 @@ LANG=ja_JP.UTF-8 	; export LANG
 LC_COLLATE=C		; export LC_COLLATE
 LC_MESSAGES=C		; export LC_MESSAGES
 
-XMODIFIERS="@im=uim"	; export XMODIFIERS
-GTK_IM_MODULE=uim	; export GTK_IM_MODULE
+GTK_IM_MODULE=ibus    ; export GTK_IM_MODULE
+QT_IM_MODULE=ibus	  ; export QT_IM_MODULE
+XMODIFIERS="@im=ibus" ; export XMODIFIERS
 
-GITHUB="ssh://git@github.com/iHdkz"	; export GITHUB
-PYTHONPATH="$HOME/.config/python.d"	; export PYTHONPATH
-PYTHONSTARTUP="$HOME/.pythonrc.py"	; export PYTHONSTARTUP
-NODE_PATH="$HOME/.config/node_modules"	; export NODE_PATH
-GOPATH="$HOME/.config/go"		; export GOPATH
+MYCONFIG="$HOME/.config"	          ; export MYCONFIG
+GITHUB="ssh://git@github.com/iHdkz"   ; export GITHUB
+PYTHONSTARTUP="$HOME/.pythonrc.py"    ; export PYTHONSTARTUP
+PYTHONPATH="${MYCONFIG}/python.d"     ; export PYTHONPATH
+NODE_PATH="${MYCONFIG}/node_modules"  ; export NODE_PATH
+GOPATH="${MYCONFIG}/go"			      ; export GOPATH
 
-PATH=$(add_path /sbin		 "$PATH")
-PATH=$(add_path /usr/pkg/sbin    "$PATH")
-PATH=$(add_path /usr/sbin	 "$PATH")
-PATH=$(add_path /usr/X11R7/bin   "$PATH")
+PATH=$(add_path /sbin		      "$PATH")
+PATH=$(add_path /usr/pkg/sbin     "$PATH")
+PATH=$(add_path /usr/sbin	      "$PATH")
+PATH=$(add_path /usr/X11R7/bin    "$PATH")
 PATH=$(add_path $HOME/.config/bin "$PATH")
-PATH=$(add_path $HOME/.local/bin "$PATH")
+PATH=$(add_path $HOME/.local/bin  "$PATH")
 # GO-lang PATH
-PATH=$(add_path $GOPATH/bin	 "$PATH")
+PATH=$(add_path $GOPATH/bin	      "$PATH")
 
 export PATH
 
