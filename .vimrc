@@ -19,7 +19,7 @@ set statusline+=%<[%{&fileformat}][%{&fileencoding}]%y
 set statusline+=<r=%l\,c=%c%V>(%P)%=\ ASCII=%b\ HEX=0x%02B
 set laststatus=2 showcmd showmode
 set visualbell t_vb= "for WSL
-set completeopt=menuone,noinsert
+set completeopt=menuone,noinsert 
 
 if &encoding !=# 'utf-8' | set encoding=japan fileencoding=japan | endif
 
@@ -31,7 +31,10 @@ if has('vim_starting')
 endif
 
 if has('gui_running')
-    "For GUI
+    set guioptions-=mTrRlL
+    set guifont=Cascadia_Mono:h18:cANSI:qDRAFT
+    set belloff=all
+    colorscheme tender
 endif
 
 augroup BinaryXXD
@@ -45,9 +48,18 @@ augroup BinaryXXD
 augroup END
 
 augroup vimrc
+    autocmd!
+    autocmd Filetype python   setlocal expandtab tabstop=4 shiftwidth=4 softtabstop=4
+    autocmd Filetype python   nnoremap <Leader>c :Python<CR>
     autocmd Filetype haskell  setlocal expandtab tabstop=4 shiftwidth=4 softtabstop=4
     autocmd FileType markdown setlocal expandtab tabstop=4 shiftwidth=4 softtabstop=4
 augroup END
+
+command! Python call <SID>python()
+function! s:python()
+    :w
+    :!python %
+endfunction
 
 inoremap <expr><CR>    pumvisible() ? "<C-y>"  : "<CR>"
 inoremap <expr><C-n>   pumvisible() ? "<Down>" : "<C-n>"
@@ -76,15 +88,22 @@ nnoremap g# g#zz
 
 nnoremap <ESC><ESC> :nohlsearch<ESC>
 
-nnoremap <Tab>j :+tabmove<ESC>
-nnoremap <Tab>k :-tabmove<ESC>
-nnoremap <Tab>l :tabnext<ESC>
-nnoremap <Tab>h :tabprevious<ESC>
-
-nnoremap <Tab>c :tabnew<Space>
-nnoremap <Tab>o :tabonly<ESC>
-
 nnoremap <silent> <Space><Space> "zyiw:let @/ = '\<' . @z . '\>'<CR>:set hlsearch<CR>
 
-nnoremap <silent> <C-j> :bprev<CR>
-nnoremap <silent> <C-k> :bnext<CR>
+nnoremap <silent> <Tab> :bprev<CR>
+nnoremap <silent> <S-Tab> :bnext<CR>
+
+let $FZF_DEFAULT_OPT="--layout=reverse"
+let g:fzf_layout = {'up':'~90%', 'window': { 'width':0.8, 'height':0.8, 'yoffset':0.5,'xoffset':0.5,'border':'sharp' } }
+
+let mapleader="\<Space>"
+nnoremap <Leader>r :source ~/.vimrc<CR>:nohlsearch<CR>
+nnoremap <Leader>j :+tabmove<ESC>
+nnoremap <Leader>k :-tabmove<ESC>
+nnoremap <Leader>l :tabnext<ESC>
+nnoremap <Leader>h :tabprevious<ESC>
+nnoremap <Leader>t :tabnew<ESC>
+nnoremap <Leader>w :tabclose<ESC>
+nnoremap <Leader>o :tabonly<ESC>
+
+nnoremap <Leader>q :bwipeout<ESC>
