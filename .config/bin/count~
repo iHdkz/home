@@ -1,8 +1,0 @@
-#!/bin/sh
-
-it=0
-while :
-do
-	it=`expr $it + 1`
-	print $it
-done
