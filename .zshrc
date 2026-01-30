@@ -1,5 +1,7 @@
 umask 022
 
+bindkey -e
+
 HISTFILE=${HOME}/.zhistory
 HISTSIZE=1000
 #SAVEHIST=50
@@ -14,21 +16,23 @@ RPROMPT=${RPROMPT}[${SSH_CONNECTION:+"%F{blue}remote:%f"}"%F{magenta}%(3~|%-1~/.
 
 #cdpath=( ~ )
 manpath=(/usr/pkg/man $MANPATH)
-fpath=("${MYCONFIG:?not bind MYCONFIG}/etc" $fpath)
-autoload -Uz conf.sh	&& conf.sh
-autoload -U  incr.zsh	&& incr.zsh
+fpath=("${MYCONFIG:=$HOME/.config}/etc" $fpath)
+autoload -Uz sh-config.sh && sh-config.sh
+autoload -U  incr.zsh     && incr.zsh
 autoload -Uz compinit #	&& compinit -u
-autoload -Uz colors	&& colors
+autoload -Uz colors       && colors
 
 #function hooking.
 autoload -Uz add-zsh-hook
-add-zsh-hook preexec	__default_color
-add-zsh-hook chpwd	__and_ls
-add-zsh-hook chpwd	__pwd_title
+add-zsh-hook preexec __default_color
+add-zsh-hook chpwd   __and_ls
+add-zsh-hook chpwd   __pwd_title
 
 function __default_color { print -nR ${reset_color} ; }
 function __and_ls { [[ $(\ls -1 |\wc -l) -le 50 ]] && ls || echo "${fg[green]}many files exist" ; }
-function __pwd_title { [[ $TERM != "screen" ]] && set_title $(abbrev_pwd) ; }
+function __pwd_title { [[ $TERM != "*screen*" ]] && set_title $(abbrev_pwd) ; }
 #title "$(pwd | sed "s#^$HOME#\~#;s#^\(\~*/[^/]*/\).*\(/[^/]*\)#\1...\2#")"
 
-source "${MYCONFIG:?not bind MYCONFIG}/bin/activate"
+source <(fzf --zsh)
+source $MYCONFIG/etc/fzf-config.zsh
+source "$MYCONFIG/bin/activate" #activate python
