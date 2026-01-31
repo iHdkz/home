@@ -25,13 +25,17 @@ alias lftp="\lftp -e 'set bmk:save-passwords on && set cmd:prompt \[\e[34m\]\w\[
 alias ...='cd ../..'
 alias ....='cd ../../..'
 
-_chk_os "Linux" && alias pbcopy="xsel --clipboard --input"
-_chk_os "Linux" && alias pbpaste="xsel --clipboard --output"
+[ -x "$(which xsel)" ] && alias pbcopy="xsel --clipboard --input"
+[ -x "$(which xsel)" ] && alias pbpaste="xsel --clipboard --output"
+[ -n "$WSLENV" ] && alias pbcopy="clip.exe"                                 #for WSL2
+[ -n "$WSLENV" ] && alias pbpaste="powershell.exe -command 'Get-Clipboard'" #for WSL2
 
 #alias less=${PAGER:=\less}
-[ -x "$(which vim 2> /dev/null)"  ] && alias vi="\vim"
-[ -x "$(which nvim 2> /dev/null)" ] && alias vi="\nvim"
+[ -x "$(which vim 2> /dev/null)"  ] && EDITOR='vim'
+[ -x "$(which nvim 2> /dev/null)" ] && EDITOR='nvim'
+alias vi=$EDITOR
 
+[ -x "$(which bat 2> /dev/null)" ] && alias bat="\bat --style=numbers,grid"
 alias r5rs="\plt-r5rs"
 
 if [ -x "$(which w3m 2>/dev/null)" ] ; then
@@ -66,11 +70,11 @@ if [ -x "$(which w3m 2>/dev/null)" ] ; then
 fi
 
 ### Zsh options
-if [ ! -z "$ZSH_NAME" ] ; then
+if [ -n "$ZSH_NAME" ] ; then
 	alias -s gp="gnuplot"
 	alias -s gnu="gnuplot" 
 	##
-	zshow_color_codes() { 
+	function zshow_color_codes() { 
 		for c in "{000..255}" ; do
 			echo -n "\e[38;5;${c}m $c" ; [ $(($c%16)) -eq 15 ] && echo 
 		done
