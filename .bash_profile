@@ -9,17 +9,21 @@ echo "$HOME/.bash_profile loading... "
 
 chk_and_source() { [[ -f "$1" ]] && . "$1" && echo "	-> $1 loaded." ; }
 chk_and_source $HOME/.profile
-chk_and_source "${MYCONFIG:?not bind MYCONFIG}/etc/sh-config.sh"
-chk_and_source "${MYCONFIG}/etc/colour_settings.sh"
-chk_and_source $HOME/.bashrc
+chk_and_source "${MYCONFIG:=$HOME/.config}/etc/sh-config.sh"
+chk_and_source "${MYCONFIG}/etc/color-settings.sh"
 
+chk_and_source "$MYCONFIG/bin/tmux-activate"
+
+[[ -x "$(which zsh 2> /dev/null)" ]] && exec zsh
+
+###########################
+## BASH SETTINGS
+###################
 ## BASH COMPLETION
 chk_and_source /opt/local/etc/profile.d/bash_completion.sh
 chk_and_source /usr/pkg/share/bash-completion/bash_completion
 ##
 
-#chk_and_source "$MYCONFIG/bin/activatetmux"
-
-[[ -x "$(which zsh 2> /dev/null)" ]] && exec zsh
+chk_and_source $HOME/.bashrc
 echo ".bash_profile loaded."
 
