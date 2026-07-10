@@ -1,0 +1,8 @@
+# --- swaylock Catppuccin Mocha Theme ---
+
+# 背景画像の設定（絶対パスで指定します）
+image=~/.config/swaylock/gentoo-wall.jpg
+
+# 画像の表示方法 (fill: 画面いっぱいに拡大/縮小して隙間なく埋める)
+scaling=fill
+
