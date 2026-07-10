@@ -1,7 +1,16 @@
-xterm*termName:			xterm-256color
-xterm*saveLines:		2000
-xterm*faceSize:			16
-xterm*faceName:			M+ 2m
+xterm*termName:			    xterm-256color
+xterm*saveLines:		    10000
+xterm*faceSize:			    20
+xterm*faceName:			    M+ 2m
 xterm*faceNameDoublesize:	M+ 2m
 xterm*selectToClipboard:	true
 
+URxvt.saveLines:        10000
+URxvt.visualBell:       true
+URxvt.cursorBlink:      false
+URxvt.cursorUnderline:  false
+URxvt.pointerBlank:     true
+
+URxvt.font:             xft:MigMix 2M-20
+URxvt.scrollBar:        false
+URxvvt.print-pipe:      "cat > /dev/null"

@@ -20,9 +20,20 @@ LANG=ja_JP.UTF-8 	; export LANG
 LC_COLLATE=C		; export LC_COLLATE
 LC_MESSAGES=C		; export LC_MESSAGES
 
-GTK_IM_MODULE=ibus    ; export GTK_IM_MODULE
-QT_IM_MODULE=ibus	  ; export QT_IM_MODULE
-XMODIFIERS="@im=ibus" ; export XMODIFIERS
+#GTK_IM_MODULE=ibus       ; export GTK_IM_MODULE
+#QT_IM_MODULE=ibus        ; export QT_IM_MODULE
+#XMODIFIERS="@im=ibus"    ; export XMODIFIERS
+#IBUS_ENABLE_SYNC_MODE=1  ; export IBUS_ENABLE_SYNC_MODE
+
+XDG_RUNTIME_DIR="/run/user/$(id -u)"  ; export XDG_RUNTIME_DIR
+
+# Waylandネイティブ動作の強制・優先
+XDG_SESSION_TYPE=wayland      ; export XDG_SESSION_TYPE
+QT_QPA_PLATFORM="wayland;xcb" ; export QT_QPA_PLATFORM
+MOZ_ENABLE_WAYLAND=1          ; export MOZ_ENABLE_WAYLAND
+
+# （オプション）Javaアプリで画面が真っ白になる問題の回避
+_JAVA_AWT_WM_NONREPARENTING=1 ; export _JAVA_AWT_WM_NONREPARENTING
 
 MYCONFIG="$HOME/.config"	          ; export MYCONFIG
 GITHUB="ssh://git@github.com/iHdkz"   ; export GITHUB
@@ -30,7 +41,6 @@ PYTHONSTARTUP="$HOME/.pythonrc.py"    ; export PYTHONSTARTUP
 PYTHONPATH="${MYCONFIG}/python.d"     ; export PYTHONPATH
 NODE_PATH="${MYCONFIG}/node_modules"  ; export NODE_PATH
 GOPATH="${MYCONFIG}/go"			      ; export GOPATH
-
 PATH=$(add_path /sbin		      "$PATH")
 PATH=$(add_path /usr/pkg/sbin     "$PATH")
 PATH=$(add_path /usr/sbin	      "$PATH")
@@ -39,6 +49,7 @@ PATH=$(add_path $HOME/.config/bin "$PATH")
 PATH=$(add_path $HOME/.local/bin  "$PATH")
 # GO-lang PATH
 PATH=$(add_path $GOPATH/bin	      "$PATH")
+PATH=$(add_path $HOME/.cargo/bin  "$PATH")
 
 export PATH
 

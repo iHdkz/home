@@ -21,6 +21,16 @@ font pango:monospace 18
 # text rendering and scalability on retina/hidpi displays (thanks to pango).
 #font pango:DejaVu Sans Mono 8
 
+######################################################
+### Start up
+###
+
+# LightDM の root アクセシビリティプロパティ残骸を削除する
+exec --no-startup-id xprop -root -remove AT_SPI_BUS
+
+# GNOME Keyring デーモンの起動
+exec --no-startup-id /usr/bin/gnome-keyring-daemon --start --components=pkcs11,secrets,ssh
+
 # Start XDG autostart .desktop files using dex. See also
 # https://wiki.archlinux.org/index.php/XDG_Autostart
 exec --no-startup-id dex --autostart --environment i3
@@ -30,13 +40,19 @@ exec --no-startup-id dex --autostart --environment i3
 
 # xss-lock grabs a logind suspend inhibit lock and will use i3lock to lock the
 # screen before suspend. Use loginctl lock-session to lock your screen.
-exec --no-startup-id xss-lock --transfer-sleep-lock -- i3lock --nofork
+exec --no-startup-id xss-lock --transfer-sleep-lock -- i3lock --nofork -i ~/.config/i3/gentoo-bg_65.png
+exec --no-startup-id xautolock -time 30 -detectsleep "i3lock -i ~/.config/i3/gentoo-bg_65.png"
 
 # NetworkManager is the most popular way to manage wireless networks on Linux,
 # and nm-applet is a desktop environment-independent system tray GUI for it.
+#exec --no-startup-id light-locker --lock-after-screensaver=5 --late-locking &
+
 exec --no-startup-id nm-applet
 
 exec --no-startup-id dunst
+
+exec --no-startup-id ibus-daemon -drxR
+
 
 # Use pactl to adjust volume in PulseAudio.
 set $refresh_i3status killall -SIGUSR1 i3status
@@ -47,11 +63,22 @@ bindsym XF86AudioMicMute exec --no-startup-id pactl set-source-mute @DEFAULT_SOU
 
 # start launcher
 bindsym $mod+Shift+Tab $execi sh -c "rofi -show run"
-bindsym $mod+r $execi sh -c "rofi -show drun"
+bindsym $mod+r         $execi sh -c "rofi -show drun"
+
+for_window [class="pcmanfm-qt"] floating enable, resize set 1024 780
+bindsym $mod+e         $execi pcmanfm-qt
 # change focus
-bindsym $mod+Tab $execi sh -c "rofi -show window"
-bindsym $Alt+Tab workspace next
+bindsym $mod+Tab       $execi sh -c "rofi -show window"
+bindsym $Alt+Tab       workspace next
 bindsym $Alt+Shift+Tab workspace prev
+
+#bindsym $mod+l exec light-locker-command -l
+bindsym $mod+l exec i3lock -i ~/.config/i3/gentoo-bg_65.png
+# PrintScreenキーで画面全体をPicturesフォルダに保存
+bindsym Print exec maim ~/Pictures/screenshot_$(date +%Y%m%d_%H%M%S).png
+
+# Shift + PrintScreenキーで選択範囲をクリップボードにコピー（即座にブラウザ等に貼り付け可能）
+bindsym $mod+Shift+s exec maim -s | xclip -selection clipboard -t image/png
 
 # Use Mouse+$mod to drag floating windows to their wanted position
 floating_modifier $mod
@@ -61,13 +88,14 @@ floating_modifier $mod
 tiling_drag modifier titlebar
 
 # start a terminal
-bindsym $mod+Return exec i3-sensible-terminal
+bindsym $mod+Return exec alacritty
 
 # kill focused window
 bindsym $mod+q kill
+bindsym $Alt+F4 kill
 
 # start dmenu (a program launcher)
-bindsym $mod+d exec --no-startup-id dmenu_run
+#bindsym $mod+d exec --no-startup-id dmenu_run
 # A more modern dmenu replacement is rofi:
 # bindcode $mod+40 exec "rofi -modi drun,run -show drun"
 # There also is i3-dmenu-desktop which only displays applications shipping a
@@ -75,24 +103,19 @@ bindsym $mod+d exec --no-startup-id dmenu_run
 # bindcode $mod+40 exec --no-startup-id i3-dmenu-desktop
 
 # change focus
-bindsym $mod+h focus left
-bindsym $mod+j focus down
-bindsym $mod+k focus up
-bindsym $mod+l focus right
+bindsym $mod+Shift+h focus left
+bindsym $mod+Shift+j focus down
+bindsym $mod+Shift+k focus up
+bindsym $mod+Shift+l focus right
 
 
 # alternatively, you can use the cursor keys:
-bindsym $mod+Left focus left
-bindsym $mod+Down focus down
-bindsym $mod+Up focus up
+bindsym $mod+Left  focus left
+bindsym $mod+Down  focus down
+bindsym $mod+Up    focus up
 bindsym $mod+Right focus right
 
 # move focused window
-bindsym $mod+Shift+h move left
-bindsym $mod+Shift+j move down
-bindsym $mod+Shift+k move up
-bindsym $mod+Shift+l move right
-
 # alternatively, you can use the cursor keys:
 bindsym $mod+Shift+Left  move left
 bindsym $mod+Shift+Down  move down
@@ -105,14 +128,13 @@ bindsym $mod+Shift+v split h
 # split in vertical orientation
 bindsym $mod+v split v
 
-
 # enter fullscreen mode for the focused container
 bindsym $mod+f fullscreen toggle
 
 # change container layout (stacked, tabbed, toggle split)
 bindsym $mod+s layout stacking
 bindsym $mod+w layout tabbed
-bindsym $mod+e layout toggle split
+#bindsym $mod+e layout toggle split
 
 # toggle tiling / floating
 bindsym $mod+Shift+space floating toggle
@@ -124,7 +146,6 @@ bindsym $mod+space focus mode_toggle
 # focus the parent container
 bindsym $mod+a focus parent
 
-bindsym $Alt+F4 kill
 
 # focus the child container
 #bindsym $mod+d focus child
@@ -143,16 +164,16 @@ set $ws9 "9"
 set $ws10 "10"
 
 # switch to workspace
-bindsym $mod+1 workspace number $ws1
-bindsym $mod+2 workspace number $ws2
-bindsym $mod+3 workspace number $ws3
-bindsym $mod+4 workspace number $ws4
-bindsym $mod+5 workspace number $ws5
-bindsym $mod+6 workspace number $ws6
-bindsym $mod+7 workspace number $ws7
-bindsym $mod+8 workspace number $ws8
-bindsym $mod+9 workspace number $ws9
-bindsym $mod+0 workspace number $ws10
+bindsym $Alt+1 workspace number $ws1
+bindsym $Alt+2 workspace number $ws2
+bindsym $Alt+3 workspace number $ws3
+bindsym $Alt+4 workspace number $ws4
+bindsym $Alt+5 workspace number $ws5
+bindsym $Alt+6 workspace number $ws6
+bindsym $Alt+7 workspace number $ws7
+bindsym $Alt+8 workspace number $ws8
+bindsym $Alt+9 workspace number $ws9
+bindsym $Alt+0 workspace number $ws10
 
 # move focused container to workspace
 bindsym $mod+Shift+1 move container to workspace number $ws1
@@ -169,9 +190,10 @@ bindsym $mod+Shift+0 move container to workspace number $ws10
 # reload the configuration file
 bindsym $mod+Shift+c reload
 # restart i3 inplace (preserves your layout/session, can be used to upgrade i3)
-bindsym $mod+Shift+s restart
+#bindsym $mod+Shift+s restart
 # exit i3 (logs you out of your X session)
 bindsym $mod+Shift+e exec "i3-nagbar -t warning -m 'You pressed the exit shortcut. Do you really want to exit i3? This will end your X session.' -B 'Yes, exit i3' 'i3-msg exit'"
+
 
 # resize window (you can also use the mouse for that)
 bindsym $mod+Shift+r mode "RESIZE"
@@ -204,12 +226,8 @@ mode "resize" {
 # Start i3bar to display a workspace bar (plus the system information i3status
 # finds out, if available)
 bar {
-        status_command i3blocks
+        status_command i3blocks -c ~/.config/i3/i3blocks.conf
 }
-
-assign [class="microsoft-edge-stable"] workspace $ws2
-exec --no-startup-id microsoft-edge-stable
-#exec --no-startup-id fcitx5
 
 set $bg           #1C1E27
 set $fg           #CACACC
@@ -237,8 +255,18 @@ focus_follows_mouse no
 
 for_window [class="^.*"] border pixel 2
 
-gaps top 6
-gaps bottom 6
-gaps right 6
-gaps left 6
-gaps inner 6
+gaps top 3
+gaps bottom 3
+gaps right 3
+gaps left 3
+gaps inner 3
+
+exec --no-startup-id alacritty --command "$HOME/.config/bin/tmux-activate"
+assign [class="Alacritty"] workspace $ws1
+
+exec --no-startup-id microsoft-edge-stable
+assign [class="Microsoft-edge"] workspace $ws2
+
+assign [class="dev.zed.Zed"] workspace $ws3
+assign [class="libreoffice-startcenter"] workspace $ws4
+

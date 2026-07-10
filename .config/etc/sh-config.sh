@@ -25,23 +25,38 @@ alias lftp="\lftp -e 'set bmk:save-passwords on && set cmd:prompt \[\e[34m\]\w\[
 alias ...='cd ../..'
 alias ....='cd ../../..'
 
-[ -x "$(which xsel)" ] && alias pbcopy="xsel --clipboard --input"
-[ -x "$(which xsel)" ] && alias pbpaste="xsel --clipboard --output"
-[ -n "$WSLENV" ] && alias pbcopy="clip.exe"                                 #for WSL2
-[ -n "$WSLENV" ] && alias pbpaste="powershell.exe -command 'Get-Clipboard'" #for WSL2
+#alias zed="env -u WAYLAND_DISPLAY XMODIFIERS=@im=fcitx QT_IM_MODULE=fcitx zedit"
+
+if [ -n "$WAYLAND_DISPLAY" ] ; then
+    alias pbcopy="wl-copy"
+    alias pbpaste="wl-paste"
+elif [ -n "$WSLENV" ] ; then
+    alias pbcopy="clip.exe"                                 #for WSL2
+    alias pbpaste="powershell.exe -command 'Get-Clipboard'" #for WSL2
+elif [ -x "$(which xsel)" ] ; then
+    alias pbcopy="xsel --clipboard --input"
+    alias pbpaste="xsel --clipboard --output"
+fi
 
 #alias less=${PAGER:=\less}
 [ -x "$(which vim 2> /dev/null)"  ] && EDITOR='vim'
 [ -x "$(which nvim 2> /dev/null)" ] && EDITOR='nvim'
 alias vi=$EDITOR
 
+VISUAL=$EDITOR
+export EDITOR
+export VISUAL
+
+MANPAGER="\nvim +Man! "
+export MANPAGER
+
 [ -x "$(which bat 2> /dev/null)" ] && alias bat="\bat --style=numbers,grid"
 alias r5rs="\plt-r5rs"
 
 if [ -x "$(which w3m 2>/dev/null)" ] ; then
-	PAGER="\w3m"
-	alias less=${PAGER:=\vim -R}
-	alias man="\w3mman"
+	#PAGER="\w3m"
+	#alias less=${PAGER:=\vim -R}
+	#alias man="\w3mman"
 	ggl() {
 		local g_url="https://www.google.com"
 		local opts="/search?"

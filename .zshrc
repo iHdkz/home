@@ -17,10 +17,13 @@ RPROMPT=${RPROMPT}[${SSH_CONNECTION:+"%F{blue}remote:%f"}"%F{magenta}%(3~|%-1~/.
 #cdpath=( ~ )
 manpath=(/usr/pkg/man $MANPATH)
 fpath=("${MYCONFIG:=$HOME/.config}/etc" $fpath)
-autoload -Uz sh-config.sh && sh-config.sh
-autoload -U  incr.zsh     && incr.zsh
-autoload -Uz compinit #	&& compinit -u
-autoload -Uz colors       && colors
+#autoload -Uz compinit #	&& compinit -u
+autoload -Uz colors         && colors
+#autoload -U  incr.zsh       && incr.zsh
+source $MYCONFIG/etc/sh-config.sh
+source $MYCONFIG/etc/fzf-config.zsh
+#source $HOME/.config/etc/zsh-autocomplete/zsh-autocomplete.plugin.zsh
+#source $HOME/.config/etc/zsh-autosuggestions/zsh-autosuggestions.zsh
 
 #function hooking.
 autoload -Uz add-zsh-hook
@@ -33,6 +36,5 @@ function __and_ls { [[ $(\ls -1 |\wc -l) -le 50 ]] && ls || echo "${fg[green]}ma
 function __pwd_title { [[ $TERM != "*screen*" ]] && set_title $(abbrev_pwd) ; }
 #title "$(pwd | sed "s#^$HOME#\~#;s#^\(\~*/[^/]*/\).*\(/[^/]*\)#\1...\2#")"
 
-source <(fzf --zsh)
-source $MYCONFIG/etc/fzf-config.zsh
-source "$MYCONFIG/bin/activate" #activate python
+#source "$MYCONFIG/bin/activate" #activate python
+eval $(keychain --eval --quiet id_ed25519)

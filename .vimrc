@@ -90,7 +90,7 @@ nnoremap <ESC><ESC> :nohlsearch<ESC>
 
 nnoremap <silent> <Space><Space> "zyiw:let @/ = '\<' . @z . '\>'<CR>:set hlsearch<CR>
 
-nnoremap <silent> <Tab> :bprev<CR>
+nnoremap <silent> <Tab>   :bprev<CR>
 nnoremap <silent> <S-Tab> :bnext<CR>
 
 let $FZF_DEFAULT_OPT="--layout=reverse"

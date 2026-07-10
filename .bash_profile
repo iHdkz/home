@@ -12,9 +12,7 @@ chk_and_source $HOME/.profile
 chk_and_source "${MYCONFIG:=$HOME/.config}/etc/sh-config.sh"
 chk_and_source "${MYCONFIG}/etc/color-settings.sh"
 
-chk_and_source "$MYCONFIG/bin/tmux-activate"
-
-[[ -x "$(which zsh 2> /dev/null)" ]] && exec zsh
+#chk_and_source "$MYCONFIG/bin/tmux-activate"
 
 ###########################
 ## BASH SETTINGS

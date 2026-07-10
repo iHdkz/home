@@ -10,7 +10,8 @@ umask 022
 # outputting anything in those cases.
 # Shell is non-interactive.  Be done now
 [[ $- != *i* ]] && return
-source ${HOME}/.config/etc/conf.sh
+
+source "${HOME}/.config/etc/sh-config.sh"
 
 shopt -u cdspell cdable_vars sourcepath # unset options
 shopt -s checkwinsize checkhash extglob # set options
