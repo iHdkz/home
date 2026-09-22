@@ -38,4 +38,3 @@ function __pwd_title { [[ $TERM != "*screen*" ]] && set_title $(abbrev_pwd) ; }
 #title "$(pwd | sed "s#^$HOME#\~#;s#^\(\~*/[^/]*/\).*\(/[^/]*\)#\1...\2#")"
 
 source "$MYCONFIG/bin/activate" #activate python
-eval $(keychain --eval --quiet id_ed25519)
