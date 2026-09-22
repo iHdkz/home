@@ -41,15 +41,16 @@ PYTHONSTARTUP="$HOME/.pythonrc.py"    ; export PYTHONSTARTUP
 PYTHONPATH="${MYCONFIG}/python.d"     ; export PYTHONPATH
 NODE_PATH="${MYCONFIG}/node_modules"  ; export NODE_PATH
 GOPATH="${MYCONFIG}/go"			      ; export GOPATH
+
 PATH=$(add_path /sbin		      "$PATH")
 PATH=$(add_path /usr/pkg/sbin     "$PATH")
 PATH=$(add_path /usr/sbin	      "$PATH")
 PATH=$(add_path /usr/X11R7/bin    "$PATH")
 PATH=$(add_path $HOME/.config/bin "$PATH")
 PATH=$(add_path $HOME/.local/bin  "$PATH")
-# GO-lang PATH
-PATH=$(add_path $GOPATH/bin	      "$PATH")
+
 PATH=$(add_path $HOME/.cargo/bin  "$PATH")
+PATH=$(add_path $GOPATH/bin	      "$PATH")
 
 export PATH
 
@@ -70,7 +71,7 @@ fi
 if chk_uname "Darwin" ; then
 	PATH=$(add_path "/opt/local/bin"	 	  "$PATH")
 	PATH=$(add_path "/opt/local/sbin"	 	  "$PATH")
-	PATH=$(add_path "/opt/local/lib/fpc/bin" 	  "$PATH")
+	PATH=$(add_path "/opt/local/lib/fpc/bin"  "$PATH")
 	PATH=$(add_path "/Applications/Racket v6.1.1/bin" "$PATH")
 	# Finished adapting your PATH environment variable for use with MacPorts.
 

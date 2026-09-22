@@ -64,15 +64,22 @@ exec dunst
 
 exec fcitx5 -d --replace
 
+exec ~/.cargo/bin/sway-alttab-gui daemon --mode all --release-key alt
+
 #bindsym Muhenkan exec fcitx5-remote -c
 #bindsym Henkan   exec fcitx5-remote -o
 
 # --- 自動ロックと画面オフ (swayidle) ---
 exec swayidle -w \
     timeout 600 'swaylock -f' \
-    timeout 900 'swaymsg "output * dpms off"' resume 'swaymsg "output * dpms on"' \
-    before-sleep 'swaylock -f' \
+    timeout 900 'swaymsg "output * dpms off"' \
+    resume      'swaymsg "output * dpms on"' \
     lock 'swaylock -f'
+
+bindswitch lid:on output * dpms off,exec swaylock -f, 
+
+bindswitch --locked lid:off output * dpms on
+bindsym --locked Escape output * dpms on
 
 # Use pactl to adjust volume in PulseAudio.
 bindsym XF86AudioRaiseVolume exec pactl set-sink-volume @DEFAULT_SINK@ +10%
@@ -88,8 +95,7 @@ for_window [class="pcmanfm-qt"] floating enable, resize set 1024 780
 bindsym $mod+e         exec pcmanfm-qt
 # change focus
 bindsym $mod+Tab       exec ~/.config/sway/wofi-window.sh
-bindsym $Alt+Tab       workspace next
-bindsym $Alt+Shift+Tab workspace prev
+bindsym $Alt+Tab       exec ~/.cargo/bin/sway-alttab-gui show
 
 #bindsym $mod+l exec light-locker-command -l
 bindsym $mod+l exec swaylock
@@ -263,31 +269,7 @@ set $darkgrey     #6C6F93
 # Start i3bar to display a workspace bar (plus the system information i3status
 # finds out, if available)
 bar {
-#swaybar_command waybar
-    status_command i3blocks -c ~/.config/sway/i3blocks.conf
-    position bottom
-    
-    # 使用するフォント（Nerd Fontを指定してアイコンを表示させます）
-    font pango:Symbols Nerd Font, Migmix 2M 18
-
-    # バーのパディング（隙間）とセパレータの無効化
-    workspace_min_width 30
-    separator_symbol "|"
-
-    # --- Catppuccin Mocha カラーテーマ ---
-    colors {
-        # 全体の背景と文字色
-        background #c2955c
-        statusline #cdd6f4
-        separator  #818284
-
-        # ワークスペースボタンの色 (ボーダー, 背景, 文字色)
-        focused_workspace  #89b4fa #89b4fa #1e1e2e
-        active_workspace   #313244 #ed9878 #cdd6f4
-        inactive_workspace #1e1e2e #695843 #a6adc8
-        urgent_workspace   #f38ba8 #f38ba8 #1e1e2e
-        binding_mode       #f9e2af #f9e2af #1e1e2e
-    }
+    swaybar_command waybar
 }
 
 # focus color
@@ -334,7 +316,7 @@ for_window [app_id="pcmanfm-qt"] move position center
 exec alacritty --command herdr
 assign [app_id="Alacritty"] workspace $ws1
 
-exec microsoft-edge-stable --ozone-platform-hint=auto
+exec env LANG=ja_JP.UTF-8 microsoft-edge-stable --ozone-platform-hint=auto
 #exec microsoft-edge-stable --ozone-platform-hint=auto --enable-features=WaylandWindowDecorations
 assign [app_id="microsoft-edge"] workspace $ws2
 
@@ -344,3 +326,4 @@ assign [app_id="libreoffice-writer"] workspace $ws4
 
 output * bg ~/.config/swaylock/gentoo-wall.jpg fill
 
+exec dbus-update-activation-environment WAYLAND_DISPLAY XDG_CURRENT_DESKTOP=sway

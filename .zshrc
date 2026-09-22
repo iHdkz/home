@@ -2,12 +2,13 @@ umask 022
 
 bindkey -e
 
-HISTFILE=${HOME}/.zhistory
-HISTSIZE=1000
-#SAVEHIST=50
+HISTFILE=${HOME}/.zsh_history
+HISTSIZE=10000
+SAVEHIST=10000
 setopt hist_ignore_dups hist_expire_dups_first
 setopt auto_pushd notify no_beep
 setopt auto_menu magic_equal_subst
+setopt append_history inc_append_history share_history hist_ignore_dups
 
 PROMPT="%F{cyan}"${SSH_CONNECTION:+"%F{magenta}"}"%(!|#|>)%(!|#|>)%f "
 PROMPT2="%F{cyan}--%f "
@@ -36,5 +37,5 @@ function __and_ls { [[ $(\ls -1 |\wc -l) -le 50 ]] && ls || echo "${fg[green]}ma
 function __pwd_title { [[ $TERM != "*screen*" ]] && set_title $(abbrev_pwd) ; }
 #title "$(pwd | sed "s#^$HOME#\~#;s#^\(\~*/[^/]*/\).*\(/[^/]*\)#\1...\2#")"
 
-#source "$MYCONFIG/bin/activate" #activate python
+source "$MYCONFIG/bin/activate" #activate python
 eval $(keychain --eval --quiet id_ed25519)
