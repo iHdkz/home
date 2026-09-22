@@ -1,0 +1,96 @@
+/* =====================================
+   Gruvbox Dark Color Palette
+   ===================================== */
+@define-color bg       #282828;
+@define-color bg1      #3c3836;
+@define-color fg       #ebdbb2;
+@define-color gray     #a89984;
+@define-color red      #cc241d;
+@define-color green    #98971a;
+@define-color yellow   #d79921;
+@define-color blue     #458588;
+@define-color purple   #b16286;
+@define-color aqua     #689d6a;
+
+/* =====================================
+   Base Styles
+   ===================================== */
+* {
+    border: none;
+    border-radius: 0;
+    font-family: "MigMix 2M", "Font Awesome 6 Free", "Font Awesome 6 Brands", sans-serif;
+    font-size: 24px;
+    min-height: 0;
+}
+
+window#waybar {
+    background-color: @bg;
+    color: @fg;
+    border-bottom: 2px solid @bg1;
+}
+
+/* =====================================
+   Modules
+   ===================================== */
+#workspaces button {
+    padding: 0 10px;
+    background-color: transparent;
+    color: @gray;
+    border-top: 2px solid transparent;
+}
+
+#workspaces button:hover {
+    background-color: @bg1;
+}
+
+#workspaces button.focused {
+    color: @yellow;
+    border-top: 2px solid @yellow;
+}
+
+#workspaces button.urgent {
+    color: @red;
+}
+
+#mode {
+    background-color: @purple;
+    color: @bg;
+    padding: 0 10px;
+}
+
+#clock, #cpu, #memory, #pulseaudio, #network, #tray {
+    padding: 0 15px;
+    font-family: monospace;
+}
+
+#window {
+    color: @aqua;
+    font-weight: bold;
+}
+
+#battery {
+    background-color: @bg;
+    color: @fg;
+    padding: 0 15px;
+}
+
+/* 充電中の色（緑） */
+#battery.charging, #battery.plugged {
+    color: @green;
+}
+
+/* 残量30%以下の色（黄） */
+#battery.warning:not(.charging) {
+    color: @yellow;
+}
+
+/* 残量15%以下の色（赤） */
+#battery.critical:not(.charging) {
+    color: @red;
+    font-weight: bold;
+}
+#clock { background-color: @bg; color: @fg; }
+#cpu { background-color: @bg; color: @yellow; }
+#memory { background-color: @bg; color: @green; }
+#pulseaudio { background-color: @bg; color: @blue; }
+#network { background-color: @bg; color: @purple; }
